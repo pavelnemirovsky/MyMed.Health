@@ -50,11 +50,19 @@ export default function Home() {
             <div className="sketch-stats-inline">
               <div className="sketch-stat-box sketch-rotation-1">
                 <div className="sketch-stat-number">400M</div>
-                <div className="sketch-stat-label">People Affected</div>
+                <div className="sketch-stat-label">People Affected (Last 10 Years)</div>
               </div>
               <div className="sketch-stat-box sketch-rotation-2">
                 <div className="sketch-stat-number">1.63B</div>
                 <div className="sketch-stat-label">Phone/Text Attempts</div>
+              </div>
+              <div className="sketch-stat-box sketch-rotation-4">
+                <div className="sketch-stat-number">1-3%</div>
+                <div className="sketch-stat-label">Success Rate</div>
+              </div>
+              <div className="sketch-stat-box sketch-rotation-5">
+                <div className="sketch-stat-number">$1.03T</div>
+                <div className="sketch-stat-label">Stolen Annually</div>
               </div>
             </div>
           </div>
@@ -82,38 +90,6 @@ export default function Home() {
                   <circle cx="70" cy="30" r="6" fill="#fff"/>
                 </svg>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Facts Section - Sketch Style */}
-      <section className="facts-sketch">
-        <div className="sketch-container">
-          <div className="facts-label-sketch">THE FACTS</div>
-          <div className="facts-content-sketch">
-            <div className="statement-container-sketch">
-              {statements.map((statement, index) => (
-                <div
-                  key={index}
-                  className={`statement-sketch ${index === currentIndex ? 'active' : ''}`}
-                  aria-hidden={index !== currentIndex}
-                  style={{ transform: `rotate(${(index - 1) * 0.5}deg)` }}
-                >
-                  <div className="statement-title-sketch">{statement.title}</div>
-                  <p className="statement-text-sketch">{statement.text}</p>
-                </div>
-              ))}
-            </div>
-            <div className="statement-indicators-sketch">
-              {statements.map((_, index) => (
-                <button
-                  key={index}
-                  className={`indicator-sketch ${index === currentIndex ? 'active' : ''}`}
-                  onClick={() => setCurrentIndex(index)}
-                  aria-label={`Statement ${index + 1}`}
-                />
-              ))}
             </div>
           </div>
         </div>
@@ -150,25 +126,41 @@ export default function Home() {
             <div className="solution-card-sketch sketch-rotation-7">
               <div className="card-number-sketch">03</div>
               <div className="card-content-sketch">
-                <h3>Scam Detection Tools</h3>
-                <p>Learn to recognize and avoid common scams</p>
-              </div>
-            </div>
-            
-            <div className="solution-card-sketch sketch-rotation-8">
-              <div className="card-number-sketch">04</div>
-              <div className="card-content-sketch">
-                <h3>Verification Resources</h3>
-                <p>Quick ways to verify suspicious communications</p>
+                <h3>Scan & Verify Tools</h3>
+                <p>Scan text/SMS messages and verify callers by number</p>
               </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          <div className="solution-footer-sketch">
-            <div className="mission-text-sketch">
-              We believe everyone deserves protection from scammers, regardless of technical expertise.
+      {/* Facts Section - Sketch Style */}
+      <section className="facts-sketch">
+        <div className="sketch-container">
+          <div className="facts-label-sketch">THE FACTS</div>
+          <div className="facts-content-sketch">
+            <div className="statement-container-sketch">
+              {statements.map((statement, index) => (
+                <div
+                  key={index}
+                  className={`statement-sketch ${index === currentIndex ? 'active' : ''}`}
+                  aria-hidden={index !== currentIndex}
+                >
+                  <div className="statement-title-sketch">{statement.title}</div>
+                  <p className="statement-text-sketch">{statement.text}</p>
+                </div>
+              ))}
             </div>
-            <div className="status-sketch">COMING SOON</div>
+            <div className="statement-indicators-sketch">
+              {statements.map((_, index) => (
+                <button
+                  key={index}
+                  className={`indicator-sketch ${index === currentIndex ? 'active' : ''}`}
+                  onClick={() => setCurrentIndex(index)}
+                  aria-label={`Statement ${index + 1}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -188,6 +180,10 @@ export default function Home() {
             <div className="stat-item-sketch sketch-rotation-11">
               <div className="stat-value-sketch">1.63B</div>
               <div className="stat-desc-sketch">Phone/Text Scam Attempts</div>
+            </div>
+            <div className="stat-item-sketch sketch-rotation-12">
+              <div className="stat-value-sketch">1-3%</div>
+              <div className="stat-desc-sketch">Success Rate</div>
             </div>
           </div>
         </div>

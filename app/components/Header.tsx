@@ -6,7 +6,7 @@ export default function Header() {
   return (
     <header className="header">
       <Link href="/" className="header-brand">
-        STOP SCAMS NOW
+        STOP SCAMS <span className="header-brand-red">NOW</span>
       </Link>
       <Link href="/report" className="header-tagline">
         REPORT NOW

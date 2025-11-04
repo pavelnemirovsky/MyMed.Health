@@ -1,0 +1,30 @@
+{
+  "name": "stop-scams-now",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "dev:turbo": "next dev --turbopack",
+    "build": "next build",
+    "build:cf": "next build && npm run pages:build",
+    "start": "next start",
+    "lint": "next lint",
+    "pages:build": "GENERATE_SOURCEMAP=false npx @cloudflare/next-on-pages",
+    "preview": "npm run build:cf && wrangler pages dev .vercel/output/static"
+  },
+  "dependencies": {
+    "next": "^15.5.5",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.17",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^15.5.2",
+    "eslint-plugin-next-on-pages": "^1.13.8",
+    "typescript": "^5"
+  }
+}
+

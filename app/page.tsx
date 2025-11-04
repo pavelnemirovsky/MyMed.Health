@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -21,6 +21,7 @@ export default function Home() {
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -30,6 +31,19 @@ export default function Home() {
     return () => clearInterval(interval);
   }, [statements.length]);
 
+  const handleVideoHover = () => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play();
+    }
+  };
+
+  const handleVideoLeave = () => {
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
+  };
+
   return (
     <>
       <Header />
@@ -37,67 +51,95 @@ export default function Home() {
       {/* Hero Section - Sketch Style */}
       <section className="hero-sketch" style={{ position: 'relative', zIndex: 1, background: '#fff', marginTop: '60px' }}>
         <div className="sketch-container">
-          <div className="hero-main-sketch">
-            <div className="sketch-title-wrapper">
-              <h1 className="sketch-title">
-                PROTECT YOUR<br />
-                FAMILY IN<br />
-                <span className="sketch-highlight">5 MINUTES</span>
-              </h1>
-              <div className="sketch-underline"></div>
+          {/* Hero Main Content - Two Column Layout */}
+          <div className="hero-main-content">
+            {/* Left Side - Title */}
+            <div className="hero-left">
+              <div className="sketch-title-wrapper">
+                <h1 className="sketch-title">
+                  PROTECT YOUR<br />
+                  FAMILY IN<br />
+                  <span className="sketch-highlight">5 MINUTES</span>
+                </h1>
+                <div className="sketch-underline"></div>
+              </div>
             </div>
-            
-            <div className="sketch-stats-inline">
-              <div className="sketch-stat-box sketch-rotation-1">
-                <div className="sketch-stat-number">400M</div>
-                <div className="sketch-stat-label">People Affected (Last 10 Years)</div>
-              </div>
-              <div className="sketch-stat-box sketch-rotation-2">
-                <div className="sketch-stat-number">1.63B</div>
-                <div className="sketch-stat-label">Phone/Text Attempts</div>
-              </div>
-              <div className="sketch-stat-box sketch-rotation-4">
-                <div className="sketch-stat-number">1-3%</div>
-                <div className="sketch-stat-label">Success Rate</div>
-              </div>
-              <div className="sketch-stat-box sketch-rotation-5">
-                <div className="sketch-stat-number">$1.03T</div>
-                <div className="sketch-stat-label">Stolen Annually</div>
+
+            {/* Right Side - Video */}
+            <div className="hero-right">
+              <div 
+                className="hero-video-container"
+                onMouseEnter={handleVideoHover}
+                onMouseLeave={handleVideoLeave}
+              >
+                <video 
+                  ref={videoRef}
+                  className="hero-video"
+                  autoPlay 
+                  playsInline 
+                  muted
+                  preload="auto"
+                  onEnded={(e) => {
+                    e.currentTarget.pause();
+                  }}
+                >
+                  <source src="/Video_Generation_Request.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
               </div>
             </div>
           </div>
-
-          <div className="sketch-sidebar">
-            <div className="sketch-note sketch-rotation-3">
-              <div className="note-title">60%</div>
-              <div className="note-text">of Scams Use Phone/SMS</div>
+          
+          {/* Stats Below Title and Video */}
+          <div className="sketch-stats-inline">
+            <div className="sketch-stat-box sketch-rotation-1">
+              <div className="sketch-stat-number">400M</div>
+              <div className="sketch-stat-label">People Affected (Last 10 Years)</div>
             </div>
-            <div className="dice-container-sketch">
-              <div className="dice-sketch dice-1-sketch">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="10" y="10" width="80" height="80" rx="8" fill="#dc2626" stroke="#000" strokeWidth="2"/>
-                  <circle cx="30" cy="30" r="6" fill="#fff"/>
-                  <circle cx="70" cy="70" r="6" fill="#fff"/>
-                  <circle cx="50" cy="50" r="6" fill="#fff"/>
-                </svg>
+            <div className="sketch-stat-box sketch-rotation-2">
+              <div className="sketch-stat-number">1.63B</div>
+              <div className="sketch-stat-label">Phone/Text Attempts (60% of all attempts)</div>
+            </div>
+            <div className="sketch-stat-box sketch-rotation-4">
+              <div className="sketch-stat-number">1-3%</div>
+              <div className="sketch-stat-label">Success Rate</div>
+            </div>
+            <div className="sketch-stat-box sketch-rotation-5">
+              <div className="sketch-stat-number">$1.03T</div>
+              <div className="sketch-stat-label">Stolen Annually</div>
+            </div>
+          </div>
+          
+          {/* Facts Section - Sketch Style */}
+          <div className="facts-content-hero">
+            <div className="facts-label-sketch">THE FACTS</div>
+            <div className="facts-content-sketch">
+              <div className="statement-container-sketch">
+                {statements.map((statement, index) => (
+                  <div
+                    key={index}
+                    className={`statement-sketch ${index === currentIndex ? 'active' : ''}`}
+                    aria-hidden={index !== currentIndex}
+                  >
+                    <div className="statement-title-sketch">{statement.title}</div>
+                    <p className="statement-text-sketch">{statement.text}</p>
+                  </div>
+                ))}
               </div>
-              <div className="dice-sketch dice-2-sketch">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="10" y="10" width="80" height="80" rx="8" fill="#000" stroke="#000" strokeWidth="2"/>
-                  <circle cx="30" cy="30" r="6" fill="#fff"/>
-                  <circle cx="70" cy="70" r="6" fill="#fff"/>
-                  <circle cx="30" cy="70" r="6" fill="#fff"/>
-                  <circle cx="70" cy="30" r="6" fill="#fff"/>
-                </svg>
+              <div className="statement-indicators-sketch">
+                {statements.map((_, index) => (
+                  <button
+                    key={index}
+                    className={`indicator-sketch ${index === currentIndex ? 'active' : ''}`}
+                    onClick={() => setCurrentIndex(index)}
+                    aria-label={`Statement ${index + 1}`}
+                  />
+                ))}
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Solution Section - Sketch Style */}
-      <section className="solution-sketch">
-        <div className="sketch-container">
+          
+          {/* Solution Section - Sketch Style */}
           <div className="solution-header-sketch">
             <h2 className="solution-title-sketch sketch-rotation-4">THE SOLUTION</h2>
             <div className="solution-underline-sketch"></div>
@@ -129,37 +171,6 @@ export default function Home() {
                 <h3>Scan & Verify Tools</h3>
                 <p>Scan text/SMS messages and verify callers by number</p>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Facts Section - Sketch Style */}
-      <section className="facts-sketch">
-        <div className="sketch-container">
-          <div className="facts-label-sketch">THE FACTS</div>
-          <div className="facts-content-sketch">
-            <div className="statement-container-sketch">
-              {statements.map((statement, index) => (
-                <div
-                  key={index}
-                  className={`statement-sketch ${index === currentIndex ? 'active' : ''}`}
-                  aria-hidden={index !== currentIndex}
-                >
-                  <div className="statement-title-sketch">{statement.title}</div>
-                  <p className="statement-text-sketch">{statement.text}</p>
-                </div>
-              ))}
-            </div>
-            <div className="statement-indicators-sketch">
-              {statements.map((_, index) => (
-                <button
-                  key={index}
-                  className={`indicator-sketch ${index === currentIndex ? 'active' : ''}`}
-                  onClick={() => setCurrentIndex(index)}
-                  aria-label={`Statement ${index + 1}`}
-                />
-              ))}
             </div>
           </div>
         </div>

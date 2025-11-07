@@ -25,10 +25,7 @@ export default function Footer() {
             <h3 className="footer-section-title">Contacts</h3>
             <ul className="footer-links">
               <li>
-                <a href="mailto:info@stopscamsnow.com">info@stopscamsnow.com</a>
-              </li>
-              <li>
-                <a href="mailto:report@stopscamsnow.com">report@stopscamsnow.com</a>
+                <a href="mailto:report@stopscamsnow.org">report@stopscamsnow.org</a>
               </li>
               <li>
                 <a href="tel:+1234567890">+1 (234) 567-890</a>

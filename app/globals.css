@@ -32,7 +32,7 @@ body {
   min-height: 100%;
 }
 
-body::before {
+body.home-page::before {
   content: '';
   position: fixed;
   top: 0;
@@ -1603,7 +1603,7 @@ a {
 /* Footer */
 .footer {
   background: #fff;
-  padding: 3rem 1.5rem 2rem;
+  padding: 1.5rem 1.5rem 2rem;
   text-align: left;
   position: relative;
   z-index: 1;
@@ -1748,7 +1748,10 @@ a {
   min-height: calc(100vh - 60px);
   padding: 2rem 1.5rem;
   margin-top: 60px;
+  background: #fff;
+  position: relative;
 }
+
 
 .report-container {
   max-width: 800px;
@@ -1940,6 +1943,11 @@ a {
 .dashboard-main {
   background: #fff;
   min-height: calc(100vh - 60px);
+  position: relative;
+}
+
+.dashboard-main::before {
+  display: none;
 }
 
 .dashboard-header {

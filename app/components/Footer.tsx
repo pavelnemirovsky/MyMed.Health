@@ -1,6 +1,13 @@
+'use client';
+
 import Link from 'next/link';
 
 export default function Footer() {
+  const handleSocialClick = (e: React.MouseEvent<HTMLAnchorElement>, platform: string) => {
+    e.preventDefault();
+    alert(`Coming Soon: ${platform} will be available soon!`);
+  };
+
   return (
     <footer className="footer">
       <div className="footer-container">
@@ -16,7 +23,6 @@ export default function Footer() {
               <li><Link href="/">Home</Link></li>
               <li><Link href="/report">Report a Scam</Link></li>
               <li><Link href="/about">About Us</Link></li>
-              <li><Link href="/resources">Resources</Link></li>
             </ul>
           </div>
 
@@ -28,7 +34,7 @@ export default function Footer() {
                 <a href="mailto:report@stopscamsnow.org">report@stopscamsnow.org</a>
               </li>
               <li>
-                <a href="tel:+1234567890">+1 (234) 567-890</a>
+                <a href="tel:+18333728311">1-833-FRAUD-11</a>
               </li>
             </ul>
           </div>
@@ -37,10 +43,38 @@ export default function Footer() {
           <div className="footer-section">
             <h3 className="footer-section-title">Connect With Us</h3>
             <div className="footer-social">
-              <a href="#" className="footer-social-link" aria-label="Facebook">Facebook</a>
-              <a href="#" className="footer-social-link" aria-label="Twitter">Twitter</a>
-              <a href="#" className="footer-social-link" aria-label="LinkedIn">LinkedIn</a>
-              <a href="#" className="footer-social-link" aria-label="Instagram">Instagram</a>
+              <a 
+                href="#" 
+                className="footer-social-link" 
+                aria-label="Facebook"
+                onClick={(e) => handleSocialClick(e, 'Facebook')}
+              >
+                Facebook
+              </a>
+              <a 
+                href="#" 
+                className="footer-social-link" 
+                aria-label="X"
+                onClick={(e) => handleSocialClick(e, 'X')}
+              >
+                X
+              </a>
+              <a 
+                href="#" 
+                className="footer-social-link" 
+                aria-label="LinkedIn"
+                onClick={(e) => handleSocialClick(e, 'LinkedIn')}
+              >
+                LinkedIn
+              </a>
+              <a 
+                href="#" 
+                className="footer-social-link" 
+                aria-label="Instagram"
+                onClick={(e) => handleSocialClick(e, 'Instagram')}
+              >
+                Instagram
+              </a>
             </div>
           </div>
         </div>

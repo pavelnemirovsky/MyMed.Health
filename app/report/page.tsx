@@ -1,13 +1,16 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 export default function ReportPage() {
+  const router = useRouter();
   const [isAnonymous, setIsAnonymous] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [reportId, setReportId] = useState<string | null>(null);
   
   const [formData, setFormData] = useState({
     name: '',
@@ -50,24 +53,14 @@ export default function ReportPage() {
       });
 
       if (response.ok) {
+        const data = await response.json();
+        setReportId(data.reportId || null);
         setSubmitStatus('success');
-        // Reset form after 3 seconds
+        
+        // Redirect to home page after 5 seconds
         setTimeout(() => {
-          setFormData({
-            name: '',
-            email: '',
-            phone: '',
-            scamType: '',
-            scamDate: '',
-            scamMethod: '',
-            scammerContact: '',
-            description: '',
-            amountLost: '',
-            location: '',
-            additionalInfo: '',
-          });
-          setSubmitStatus('idle');
-        }, 3000);
+          router.push('/');
+        }, 5000);
       } else {
         setSubmitStatus('error');
       }
@@ -91,7 +84,87 @@ export default function ReportPage() {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="report-form">
+          {/* Success Message with Report ID */}
+          {submitStatus === 'success' && (
+            <div className="report-success-container" style={{
+              border: '4px solid #22c55e',
+              padding: '3rem 2rem',
+              background: '#f0fdf4',
+              textAlign: 'center',
+              marginBottom: '2rem',
+              clipPath: 'polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px))',
+              transform: 'rotate(-0.5deg)'
+            }}>
+              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>✓</div>
+              <h2 style={{
+                fontSize: 'clamp(1.5rem, 3vw, 2rem)',
+                fontWeight: '900',
+                letterSpacing: '0.05em',
+                textTransform: 'uppercase',
+                color: '#166534',
+                marginBottom: '1rem'
+              }}>
+                REPORT SUBMITTED SUCCESSFULLY
+              </h2>
+              <p style={{
+                fontSize: 'clamp(1rem, 2vw, 1.125rem)',
+                color: '#166534',
+                marginBottom: '2rem',
+                opacity: 0.9
+              }}>
+                Thank you for helping us protect others. Your report has been received.
+              </p>
+              {reportId && (
+                <div style={{
+                  background: '#fff',
+                  border: '3px solid #22c55e',
+                  padding: '1.5rem 2rem',
+                  display: 'inline-block',
+                  marginBottom: '1.5rem',
+                  clipPath: 'polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px))'
+                }}>
+                  <div style={{
+                    fontSize: '0.875rem',
+                    fontWeight: '700',
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    color: '#666',
+                    marginBottom: '0.5rem'
+                  }}>
+                    YOUR REPORT ID
+                  </div>
+                  <div style={{
+                    fontSize: 'clamp(1.5rem, 4vw, 2.5rem)',
+                    fontWeight: '900',
+                    letterSpacing: '0.05em',
+                    color: '#166534',
+                    fontFamily: 'monospace'
+                  }}>
+                    {reportId}
+                  </div>
+                </div>
+              )}
+              <p style={{
+                fontSize: '0.875rem',
+                color: '#166534',
+                opacity: 0.8,
+                fontStyle: 'italic'
+              }}>
+                You will be redirected to the home page in a few seconds...
+              </p>
+            </div>
+          )}
+
+          {/* Error Message */}
+          {submitStatus === 'error' && (
+            <div className="form-message error" style={{ marginBottom: '2rem' }}>
+              There was an error submitting your report. Please try again.
+            </div>
+          )}
+
+          {/* Form - Hidden when success */}
+          {submitStatus !== 'success' && (
+            <form onSubmit={handleSubmit} className="report-form">
             {/* Anonymous Toggle */}
             <div className="form-section">
               <label className="form-toggle">
@@ -272,20 +345,9 @@ export default function ReportPage() {
               >
                 {isSubmitting ? 'Submitting...' : 'Submit Report'}
               </button>
-              
-              {submitStatus === 'success' && (
-                <div className="form-message success">
-                  Thank you! Your report has been submitted successfully.
-                </div>
-              )}
-              
-              {submitStatus === 'error' && (
-                <div className="form-message error">
-                  There was an error submitting your report. Please try again.
-                </div>
-              )}
             </div>
           </form>
+          )}
         </div>
       </main>
 

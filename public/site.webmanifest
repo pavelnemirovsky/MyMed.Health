@@ -1,0 +1,54 @@
+{
+  "name": "Stop Scams Now - Help Your Parents Stay Safe",
+  "short_name": "Stop Scams Now",
+  "description": "Help your parents stay safe from scammers. Simple tools to protect your parents from phone and SMS scams",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#dc2626",
+  "categories": ["utilities", "security", "education"],
+  "icons": [
+    {
+      "src": "/logo-vertical.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo-vertical.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Report a Scam",
+      "short_name": "Report",
+      "description": "Report a scam to help protect your parents and others",
+      "url": "/report",
+      "icons": [
+        {
+          "src": "/logo-vertical.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Protection Dashboard",
+      "short_name": "Dashboard",
+      "description": "Set up protection to help your parents stay safe",
+      "url": "/dashboard",
+      "icons": [
+        {
+          "src": "/logo-vertical.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}
+

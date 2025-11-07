@@ -1,8 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { config } from '../config';
 
 interface FamilyMember {
   name: string;
@@ -11,6 +13,7 @@ interface FamilyMember {
 }
 
 export default function Dashboard() {
+  const router = useRouter();
   const [familyMember, setFamilyMember] = useState<FamilyMember | null>(null);
   const [selectedDevices, setSelectedDevices] = useState<string[]>([]);
   const [deviceApplications, setDeviceApplications] = useState<Record<string, string[]>>({});
@@ -23,6 +26,18 @@ export default function Dashboard() {
     relationship: '',
     setupBy: '',
   });
+  
+  // Redirect to home if coming soon mode is enabled
+  useEffect(() => {
+    if (config.COMING_SOON_MODE) {
+      router.push('/');
+    }
+  }, [router]);
+
+  // Don't render dashboard content if coming soon mode is enabled
+  if (config.COMING_SOON_MODE) {
+    return null;
+  }
 
   const protectionLaws = [
     {
@@ -336,7 +351,7 @@ export default function Dashboard() {
               <div className="section-header-sketch">
                 <h2 className="section-title-sketch sketch-rotation-3">SET UP PROTECTION</h2>
                 <div className="solution-underline-sketch"></div>
-                <p className="section-intro">Tell us who you're setting up protection for and what devices they use</p>
+                <p className="section-intro">Tell us who you&apos;re setting up protection for and what devices they use</p>
               </div>
 
               <form className="family-form-sketch" onSubmit={handleFamilySubmit}>
@@ -555,7 +570,7 @@ export default function Dashboard() {
                       <span className="risk-text">{item.risk}</span>
                     </div>
                     <div className="checklist-actions-item">
-                      <button className="checklist-yes-button">Yes, I've done this</button>
+                      <button className="checklist-yes-button">Yes, I&apos;ve done this</button>
                       <button className="checklist-no-button">No, I need help</button>
                     </div>
                   </div>

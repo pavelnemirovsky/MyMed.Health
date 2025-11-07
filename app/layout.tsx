@@ -1,23 +1,77 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import ServiceWorkerRegistration from './components/ServiceWorkerRegistration';
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://stopscamsnow.org';
 
 export const metadata: Metadata = {
-  title: 'Stop Scams Now - Protect Your Family in 5 Minutes',
-  description: 'Simple tools anyone can use in less than 5 minutes to protect your family and friends from phone and SMS scams. Join us in fighting the $1 trillion global scam problem.',
-  keywords: ['scam prevention', 'phone scams', 'SMS scams', 'protect family', 'scam protection', 'fraud prevention', 'telephone scams', 'text scams'],
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: 'Help Your Parents Stay Safe - Stop Scams Now',
+    template: '%s | Stop Scams Now',
+  },
+  description: 'Help your parents stay safe from scammers. Simple tools and guides to protect your parents from phone scams, SMS scams, and fraud. We take on the responsibility of keeping them safe.',
+  keywords: ['help parents stay safe', 'protect parents from scams', 'parent scam protection', 'elderly scam prevention', 'protect mom from scams', 'protect dad from scams', 'phone scams parents', 'SMS scams elderly', 'scam protection for parents', 'fraud prevention parents'],
+  authors: [{ name: 'Stop Scams Now' }],
+  creator: 'Stop Scams Now',
+  publisher: 'Stop Scams Now',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   openGraph: {
-    title: 'Stop Scams Now - Protect Your Family in 5 Minutes',
-    description: 'Simple tools to protect your family from scams. Fight back against the $1 trillion global scam epidemic.',
     type: 'website',
+    locale: 'en_US',
+    url: siteUrl,
+    siteName: 'Stop Scams Now',
+    title: 'Help Your Parents Stay Safe - Stop Scams Now',
+    description: 'Help your parents stay safe from scammers. Simple tools and guides to protect your parents from phone scams, SMS scams, and fraud.',
+    images: [
+      {
+        url: '/logo-vertical.png',
+        width: 1200,
+        height: 630,
+        alt: 'Help Your Parents Stay Safe - Stop Scams Now',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Help Your Parents Stay Safe - Stop Scams Now',
+    description: 'Help your parents stay safe from scammers. Simple tools to protect your parents from phone and SMS scams.',
+    images: ['/logo-vertical.png'],
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Stop Scams Now - Protect Your Family in 5 Minutes',
-    description: 'Simple tools to protect your family from phone and SMS scams.',
+  icons: {
+    icon: [
+      { url: '/logo-vertical.png', sizes: '32x32', type: 'image/png' },
+      { url: '/logo-vertical.png', sizes: '16x16', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/logo-vertical.png', sizes: '180x180', type: 'image/png' },
+    ],
+    shortcut: '/logo-vertical.png',
+  },
+  manifest: '/site.webmanifest',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'Stop Scams Now',
+  },
+  other: {
+    'mobile-web-app-capable': 'yes',
+    'theme-color': '#dc2626',
   },
 };
 
@@ -29,6 +83,7 @@ export default function RootLayout({
   return (
     <html lang="en" style={{ height: '100%' }}>
       <body style={{ margin: 0, padding: 0, minHeight: '100%', height: 'auto' }}>
+        <ServiceWorkerRegistration />
         {children}
       </body>
     </html>

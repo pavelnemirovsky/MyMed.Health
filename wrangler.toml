@@ -9,3 +9,9 @@ pages_build_output_dir = ".vercel/output/static"
 #   { pattern = "/*", zone_name = "yourdomain.com" }
 # ]
 
+[[d1_databases]]
+binding = "DB" # This is the name that will be available in your code
+database_name = "ssn_production" # This is the name of your D1 database
+database_id = "384580b9-b15e-42db-abbb-f6b3fd5c2290" # Replace with your actual database ID
+migrations_table = "migrations" # Customize this value to change your applied migrations table name
+migrations_dir = "migrations" # Specify your custom migration directory

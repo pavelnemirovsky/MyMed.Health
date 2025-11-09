@@ -49,16 +49,18 @@ export default function Home() {
       <Header />
 
       {/* Coming Soon Hero Section */}
-      <section className="hero-sketch" style={{ position: 'relative', zIndex: 1, background: '#fff', marginTop: '60px', minHeight: 'calc(100vh - 60px)', display: 'flex', alignItems: 'center' }}>
+      <section className="hero-sketch" style={{ position: 'relative', zIndex: 1, background: '#fff', marginTop: '60px', minHeight: 'calc(100vh - 60px)', display: 'flex', alignItems: 'flex-start' }}>
         <div className="sketch-container" style={{ width: '100%' }}>
-          <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center', padding: '4rem 2rem 2rem 2rem' }}>
+          <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center', padding: '2rem 2rem 2rem 2rem' }}>
             {/* Coming Soon Badge */}
             <div className="coming-soon-badge" style={{ 
-              fontSize: '1rem', 
-              padding: '0.75rem 2rem', 
+              fontSize: '1.5rem', 
+              padding: '1rem 2.5rem', 
               marginBottom: '2rem',
               display: 'inline-block',
-              transform: 'rotate(-2deg)'
+              transform: 'rotate(-2deg)',
+              fontWeight: '800',
+              letterSpacing: '0.15em'
             }}>
               COMING SOON
             </div>

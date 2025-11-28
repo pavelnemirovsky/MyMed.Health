@@ -23,32 +23,6 @@
       "purpose": "any maskable"
     }
   ],
-  "screenshots": [],
-  "shortcuts": [
-    {
-      "name": "Report a Scam",
-      "short_name": "Report",
-      "description": "Report a scam to help protect your parents and others",
-      "url": "/report",
-      "icons": [
-        {
-          "src": "/logo-vertical.png",
-          "sizes": "192x192"
-        }
-      ]
-    },
-    {
-      "name": "Protection Dashboard",
-      "short_name": "Dashboard",
-      "description": "Set up protection to help your parents stay safe",
-      "url": "/dashboard",
-      "icons": [
-        {
-          "src": "/logo-vertical.png",
-          "sizes": "192x192"
-        }
-      ]
-    }
-  ]
+  "screenshots": []
 }
 

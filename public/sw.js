@@ -3,8 +3,6 @@ const CACHE_NAME = 'stop-scams-now-v1';
 const urlsToCache = [
   '/',
   '/about',
-  '/report',
-  '/dashboard',
   '/logo-vertical.png',
   '/logo-horizontal.png',
   '/globals.css',

@@ -19,14 +19,14 @@
 export const config = {
   // Coming Soon Mode
   // Set to true to show Coming Soon page, false to show full site
-  COMING_SOON_MODE: true,
+  COMING_SOON_MODE: false,
   
   // Site Information
   siteName: 'Stop Scams Now',
   siteTagline: 'Help Your Parents Stay Safe — We\'ll Take It from Here',
   
   // Contact Information
-  contactEmail: 'report@stopscamsnow.org',
+  contactEmail: 'report@mymed.health',
   contactPhone: '1-833-FRAUD-11',
   contactPhoneTel: '+18333728311',
   

@@ -97,7 +97,7 @@ export default function AboutPage() {
             <div className="mission-statement-section sketch-rotation-12">
               <p className="mission-statement-text">
                 <strong>Get in Touch:</strong> Have questions or want to learn more? Contact us at{' '}
-                <a href="mailto:report@stopscamsnow.org" style={{ color: '#dc2626', textDecoration: 'underline' }}>report@stopscamsnow.org</a>{' '}
+                <a href="mailto:report@mymed.health" style={{ color: '#dc2626', textDecoration: 'underline' }}>report@mymed.health</a>{' '}
                 or call{' '}
                 <a href="tel:+18333728311" style={{ color: '#dc2626', textDecoration: 'underline' }}>1-833-FRAUD-11</a>.
               </p>

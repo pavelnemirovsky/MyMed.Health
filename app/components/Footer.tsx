@@ -21,7 +21,6 @@ export default function Footer() {
             <h3 className="footer-section-title">Quick Links</h3>
             <ul className="footer-links">
               <li><Link href="/">Home</Link></li>
-              <li><Link href="/report">Report a Scam</Link></li>
               <li><Link href="/about">About Us</Link></li>
             </ul>
           </div>
@@ -31,7 +30,7 @@ export default function Footer() {
             <h3 className="footer-section-title">Contacts</h3>
             <ul className="footer-links">
               <li>
-                <a href="mailto:report@stopscamsnow.org">report@stopscamsnow.org</a>
+                <a href="mailto:report@mymed.health">report@mymed.health</a>
               </li>
               <li>
                 <a href="tel:+18333728311">1-833-FRAUD-11</a>

@@ -1,8 +1,5 @@
 User-agent: *
 Allow: /
 
-# Disallow dashboard from being indexed (it's a private tool)
-Disallow: /dashboard
-
-Sitemap: https://stopscamsnow.org/sitemap.xml
+Sitemap: https://mymed.health/sitemap.xml
 

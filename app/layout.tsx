@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import ServiceWorkerRegistration from './components/ServiceWorkerRegistration';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://stopscamsnow.org';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://mymed.health';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

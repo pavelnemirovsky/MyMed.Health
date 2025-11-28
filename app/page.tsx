@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { config } from './config';
-import FullLandingPage from './components/FullLandingPage';
+import HomePage from './components/HomePage';
 
 export default function Home() {
   useEffect(() => {
@@ -40,7 +40,7 @@ export default function Home() {
 
   // If Coming Soon mode is disabled, show full landing page
   if (!config.COMING_SOON_MODE) {
-    return <FullLandingPage />;
+    return <HomePage />;
   }
 
   // Coming Soon Page

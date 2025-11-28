@@ -1,8 +1,7 @@
-// Service Worker for Stop Scams Now PWA
-const CACHE_NAME = 'stop-scams-now-v1';
+// Service Worker for mymed.health PWA
+const CACHE_NAME = 'mymed-health-v1';
 const urlsToCache = [
   '/',
-  '/about',
   '/logo-vertical.png',
   '/logo-horizontal.png',
   '/globals.css',

@@ -1,85 +1,99 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 
 export default function Footer() {
-  const handleSocialClick = (e: React.MouseEvent<HTMLAnchorElement>, platform: string) => {
+  const [email, setEmail] = useState('');
+  const [subscribed, setSubscribed] = useState(false);
+
+  const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert(`Coming Soon: ${platform} will be available soon!`);
+    // Handle newsletter subscription
+    setSubscribed(true);
+    setEmail('');
   };
 
   return (
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-brand">
-          <div className="footer-logo">STOP SCAMS <span className="header-brand-red">NOW</span></div>
+          <div className="footer-logo">MedTracker<span className="footer-logo-accent"> by MyMed</span></div>
+          <p className="footer-tagline">Managing complex medical care, simply.</p>
         </div>
         
         <div className="footer-grid">
-          {/* Quick Links */}
+          {/* Menu */}
           <div className="footer-section">
-            <h3 className="footer-section-title">Quick Links</h3>
+            <h3 className="footer-section-title">Menu</h3>
             <ul className="footer-links">
               <li><Link href="/">Home</Link></li>
-              <li><Link href="/about">About Us</Link></li>
+              <li><Link href="/about">About</Link></li>
+              <li><Link href="#dashboard">Dashboard</Link></li>
+              <li><Link href="#calendar">Calendar</Link></li>
+              <li><Link href="#patients">Patients</Link></li>
+              <li><Link href="#documents">Documents</Link></li>
             </ul>
           </div>
 
-          {/* Contacts */}
+          {/* Legal */}
           <div className="footer-section">
-            <h3 className="footer-section-title">Contacts</h3>
+            <h3 className="footer-section-title">Legal</h3>
+            <ul className="footer-links">
+              <li><Link href="/privacy">Privacy Policy</Link></li>
+              <li><Link href="/terms">Terms of Service</Link></li>
+              <li><Link href="/security">Security</Link></li>
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div className="footer-section">
+            <h3 className="footer-section-title">Contact</h3>
             <ul className="footer-links">
               <li>
-                <a href="mailto:report@mymed.health">report@mymed.health</a>
+                <a href="mailto:support@mymed.health">support@mymed.health</a>
               </li>
               <li>
-                <a href="tel:+18333728311">1-833-FRAUD-11</a>
+                <a href="/contact">Contact Us</a>
               </li>
             </ul>
           </div>
 
-          {/* Connect With Us */}
+          {/* Newsletter */}
           <div className="footer-section">
-            <h3 className="footer-section-title">Connect With Us</h3>
-            <div className="footer-social">
-              <a 
-                href="#" 
-                className="footer-social-link" 
-                aria-label="Facebook"
-                onClick={(e) => handleSocialClick(e, 'Facebook')}
-              >
-                Facebook
-              </a>
-              <a 
-                href="#" 
-                className="footer-social-link" 
-                aria-label="X"
-                onClick={(e) => handleSocialClick(e, 'X')}
-              >
-                X
-              </a>
-              <a 
-                href="#" 
-                className="footer-social-link" 
-                aria-label="LinkedIn"
-                onClick={(e) => handleSocialClick(e, 'LinkedIn')}
-              >
-                LinkedIn
-              </a>
-              <a 
-                href="#" 
-                className="footer-social-link" 
-                aria-label="Instagram"
-                onClick={(e) => handleSocialClick(e, 'Instagram')}
-              >
-                Instagram
-              </a>
-            </div>
+            <h3 className="footer-section-title">Newsletter</h3>
+            {!subscribed ? (
+              <form onSubmit={handleNewsletterSubmit} className="footer-newsletter">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Your email"
+                  className="footer-newsletter-input"
+                  required
+                />
+                <button type="submit" className="footer-newsletter-button">Subscribe</button>
+              </form>
+            ) : (
+              <p className="footer-newsletter-success">Thanks for subscribing!</p>
+            )}
           </div>
         </div>
 
         <div className="footer-bottom">
-          <p className="footer-copyright">© {new Date().getFullYear()} Stop Scams Now. All rights reserved.</p>
+          <div className="footer-trust">
+            <div className="footer-hipaa-badge">
+              <span className="hipaa-badge-icon">🛡️</span>
+              <span className="hipaa-badge-text">HIPAA Certified</span>
+            </div>
+          </div>
+          <div className="footer-social">
+            <a href="#" className="footer-social-link" aria-label="Facebook">Facebook</a>
+            <a href="#" className="footer-social-link" aria-label="Twitter">Twitter</a>
+            <a href="#" className="footer-social-link" aria-label="LinkedIn">LinkedIn</a>
+            <a href="#" className="footer-social-link" aria-label="Instagram">Instagram</a>
+          </div>
+          <p className="footer-copyright">© {new Date().getFullYear()} MedTracker by MyMed. All rights reserved.</p>
         </div>
       </div>
     </footer>

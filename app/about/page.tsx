@@ -8,99 +8,86 @@ export default function AboutPage() {
     <>
       <Header />
 
-      <main className="report-page">
-        <div className="report-container">
-          <div className="report-header">
-            <h1 className="report-title sketch-rotation-1">ABOUT US</h1>
-            <div className="solution-underline-sketch" style={{ marginBottom: '2rem' }}></div>
-            <p className="report-subtitle">
-              We&apos;re on a mission to protect your loved ones from scammers. Learn more about who we are and what drives us.
+      <main className="about-page">
+        <div className="container">
+          {/* Hero Section */}
+          <section className="about-hero">
+            <h1 className="about-title">About Us</h1>
+            <p className="about-subtitle">
+              Born from personal experience, built with care
             </p>
-          </div>
+          </section>
+
+          {/* Our Story Section */}
+          <section className="about-section">
+            <div className="about-content">
+              <h2 className="about-section-title">Our Story</h2>
+              <p className="about-text">
+                The service has been created by two individuals who have been supporting their family members with different types of cancers for more than 15 years.
+              </p>
+              <p className="about-text">
+                Through years of managing complex medical care, navigating multiple specialists, tracking countless appointments, organizing medical documents, and coordinating care across different healthcare systems, we experienced firsthand how overwhelming and stressful it can be to manage serious medical conditions.
+              </p>
+              <p className="about-text">
+                We created MedTracker by MyMed because we believe that managing complex medical care shouldn&apos;t add to your stress. Our platform brings together everything you need—document organization, appointment tracking, reminders, and access to trusted medical providers—in one simple, secure place.
+              </p>
+            </div>
+          </section>
 
           {/* Mission Section */}
-          <section style={{ marginBottom: '4rem' }}>
-            <div className="statement-sketch sketch-rotation-2">
-              <div className="statement-title-sketch">OUR MISSION</div>
-              <p className="statement-text-sketch" style={{ maxHeight: 'none', overflow: 'visible' }}>
-                Stop Scams Now exists to help you protect your parents before scammers reach them. We believe that everyone deserves to feel safe and secure, especially older adults who are often targeted by sophisticated scammers. Our mission is to provide clear, simple tools that anyone can use to build awareness and protection—no technical expertise required.
+          <section className="about-section section-alt">
+            <div className="about-content">
+              <h2 className="about-section-title">Our Mission</h2>
+              <p className="about-text">
+                To simplify complex medical care management for patients and caregivers, reducing stress and ensuring nothing falls through the cracks. We work with Medical Care Providers in USA, Israel, and Europe to connect you with trusted specialists and help arrange second opinions when needed.
+              </p>
+              <p className="about-text">
+                We also take care of medical insurance while you travel, ensuring you&apos;re covered wherever your medical journey takes you.
               </p>
             </div>
           </section>
 
-          {/* What We Do Section */}
-          <section style={{ marginBottom: '4rem' }}>
-            <h2 className="section-title-sketch sketch-rotation-3" style={{ marginBottom: '2rem' }}>WHAT WE DO</h2>
-            <div className="solution-grid-sketch" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
-              <div className="solution-card-sketch sketch-rotation-4">
-                <div className="card-content-sketch">
-                  <h3>Free Protection Guides</h3>
-                  <p>We create easy-to-follow guides that help your parents understand common scam tactics and how to protect themselves. These guides are practical, actionable, and designed for people of all technical skill levels.</p>
+          {/* Values Section */}
+          <section className="about-section">
+            <div className="about-content">
+              <h2 className="about-section-title">Our Values</h2>
+              <div className="about-values-grid">
+                <div className="about-value-card">
+                  <div className="about-value-icon">❤️</div>
+                  <h3 className="about-value-title">Empathy</h3>
+                  <p className="about-value-text">We understand what you&apos;re going through because we&apos;ve been there ourselves.</p>
                 </div>
-              </div>
-              
-              <div className="solution-card-sketch sketch-rotation-5">
-                <div className="card-content-sketch">
-                  <h3>Safety Checklists</h3>
-                  <p>Our checklists help verify that your parents&apos; devices and accounts are properly secured. We make it simple to check their protection status and identify areas that need attention.</p>
+                <div className="about-value-card">
+                  <div className="about-value-icon">🔒</div>
+                  <h3 className="about-value-title">Security</h3>
+                  <p className="about-value-text">HIPAA certified and committed to protecting your medical information with the highest security standards.</p>
                 </div>
-              </div>
-              
-              <div className="solution-card-sketch sketch-rotation-6">
-                <div className="card-content-sketch">
-                  <h3>Scam Reporting</h3>
-                  <p>We collect scam reports to help protect others. When you report a scam, you&apos;re helping us identify patterns and warn others about new threats.</p>
+                <div className="about-value-card">
+                  <div className="about-value-icon">🌍</div>
+                  <h3 className="about-value-title">Global Reach</h3>
+                  <p className="about-value-text">Working with trusted Medical Care Providers across USA, Israel, and Europe.</p>
                 </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Why We Started Section */}
-          <section style={{ marginBottom: '4rem' }}>
-            <div className="statement-sketch sketch-rotation-7">
-              <div className="statement-title-sketch">WHY WE STARTED</div>
-              <p className="statement-text-sketch" style={{ maxHeight: 'none', overflow: 'visible' }}>
-                Scammers steal over $1 trillion globally every year, and older Americans lose $10–30 billion annually. These aren&apos;t just numbers—they represent real people who have been hurt, families who have lost savings, and loved ones who feel violated. We started Stop Scams Now because we believe prevention is better than recovery. By helping people recognize scams before they fall victim, we can protect millions of families from financial and emotional harm.
-              </p>
-            </div>
-          </section>
-
-          {/* Our Values Section */}
-          <section style={{ marginBottom: '4rem' }}>
-            <h2 className="section-title-sketch sketch-rotation-8" style={{ marginBottom: '2rem' }}>OUR VALUES</h2>
-            <div className="solution-grid-sketch" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))' }}>
-              <div className="solution-card-sketch sketch-rotation-9">
-                <div className="card-content-sketch">
-                  <h3>Simplicity</h3>
-                  <p>We believe protection should be simple. No complicated setups, no technical jargon—just clear, actionable steps anyone can follow.</p>
-                </div>
-              </div>
-              
-              <div className="solution-card-sketch sketch-rotation-10">
-                <div className="card-content-sketch">
-                  <h3>Accessibility</h3>
-                  <p>Our tools are free and available to everyone. We&apos;re committed to making scam protection accessible to all families, regardless of their technical skills or financial situation.</p>
-                </div>
-              </div>
-              
-              <div className="solution-card-sketch sketch-rotation-11">
-                <div className="card-content-sketch">
-                  <h3>Empowerment</h3>
-                  <p>We empower families to take control of their protection. You know your loved ones best—we provide the tools, you provide the care.</p>
+                <div className="about-value-card">
+                  <div className="about-value-icon">✨</div>
+                  <h3 className="about-value-title">Simplicity</h3>
+                  <p className="about-value-text">Designed to reduce cognitive load. Clean, intuitive interface that guides you step by step.</p>
                 </div>
               </div>
             </div>
           </section>
 
           {/* Contact Section */}
-          <section style={{ marginBottom: '4rem' }}>
-            <div className="mission-statement-section sketch-rotation-12">
-              <p className="mission-statement-text">
-                <strong>Get in Touch:</strong> Have questions or want to learn more? Contact us at{' '}
-                <a href="mailto:report@mymed.health" style={{ color: '#dc2626', textDecoration: 'underline' }}>report@mymed.health</a>{' '}
-                or call{' '}
-                <a href="tel:+18333728311" style={{ color: '#dc2626', textDecoration: 'underline' }}>1-833-FRAUD-11</a>.
+          <section className="about-section section-alt">
+            <div className="about-content">
+              <h2 className="about-section-title">Get in Touch</h2>
+              <p className="about-text">
+                Have questions or want to learn more? We&apos;re here to help.
               </p>
+              <div className="about-contact">
+                <a href="mailto:support@mymed.health" className="about-contact-link">
+                  support@mymed.health
+                </a>
+              </div>
             </div>
           </section>
         </div>
@@ -110,4 +97,3 @@ export default function AboutPage() {
     </>
   );
 }
-

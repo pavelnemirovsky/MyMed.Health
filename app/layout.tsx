@@ -1,20 +1,19 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import ServiceWorkerRegistration from './components/ServiceWorkerRegistration';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://mymed.health';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Help Your Parents Stay Safe - Stop Scams Now',
-    template: '%s | Stop Scams Now',
+    default: 'MedTracker by MyMed - Manage Complex Medical Care Simply & Safely',
+    template: '%s | MedTracker by MyMed',
   },
-  description: 'Help your parents stay safe from scammers. Simple tools and guides to protect your parents from phone scams, SMS scams, and fraud. We take on the responsibility of keeping them safe.',
-  keywords: ['help parents stay safe', 'protect parents from scams', 'parent scam protection', 'elderly scam prevention', 'protect mom from scams', 'protect dad from scams', 'phone scams parents', 'SMS scams elderly', 'scam protection for parents', 'fraud prevention parents'],
-  authors: [{ name: 'Stop Scams Now' }],
-  creator: 'Stop Scams Now',
-  publisher: 'Stop Scams Now',
+  description: 'Keep all medical information organized in one place. Track appointments, manage documents, and never miss a test or follow-up. Designed for caregivers managing complex patients.',
+  keywords: ['medical care management', 'patient care coordination', 'medical document organization', 'caregiver tools', 'medical calendar', 'healthcare management', 'patient records', 'medical reminders', 'care management software', 'family healthcare'],
+  authors: [{ name: 'MedTracker by MyMed' }],
+  creator: 'MedTracker by MyMed',
+  publisher: 'MedTracker by MyMed',
   formatDetection: {
     email: false,
     address: false,
@@ -24,22 +23,22 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: siteUrl,
-    siteName: 'Stop Scams Now',
-    title: 'Help Your Parents Stay Safe - Stop Scams Now',
-    description: 'Help your parents stay safe from scammers. Simple tools and guides to protect your parents from phone scams, SMS scams, and fraud.',
+    siteName: 'MedTracker by MyMed',
+    title: 'MedTracker by MyMed - Manage Complex Medical Care Simply & Safely',
+    description: 'Keep all medical information organized in one place. Track appointments, manage documents, and never miss a test or follow-up.',
     images: [
       {
         url: '/logo-vertical.png',
         width: 1200,
         height: 630,
-        alt: 'Help Your Parents Stay Safe - Stop Scams Now',
+        alt: 'MedTracker by MyMed - Medical Care Management',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Help Your Parents Stay Safe - Stop Scams Now',
-    description: 'Help your parents stay safe from scammers. Simple tools to protect your parents from phone and SMS scams.',
+    title: 'MedTracker by MyMed - Manage Complex Medical Care Simply & Safely',
+    description: 'Keep all medical information organized in one place. Track appointments, manage documents, and never miss a test or follow-up.',
     images: ['/logo-vertical.png'],
   },
   robots: {
@@ -55,23 +54,21 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/logo-vertical.png', sizes: '32x32', type: 'image/png' },
-      { url: '/logo-vertical.png', sizes: '16x16', type: 'image/png' },
+      { url: '/icon.svg', type: 'image/svg+xml' },
     ],
     apple: [
-      { url: '/logo-vertical.png', sizes: '180x180', type: 'image/png' },
+      { url: '/icon.svg', sizes: '180x180', type: 'image/svg+xml' },
     ],
-    shortcut: '/logo-vertical.png',
   },
   manifest: '/site.webmanifest',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: 'Stop Scams Now',
+    title: 'MedTracker by MyMed',
   },
   other: {
     'mobile-web-app-capable': 'yes',
-    'theme-color': '#dc2626',
+    'theme-color': '#059669',
   },
 };
 
@@ -83,7 +80,6 @@ export default function RootLayout({
   return (
     <html lang="en" style={{ height: '100%' }}>
       <body style={{ margin: 0, padding: 0, minHeight: '100%', height: 'auto' }}>
-        <ServiceWorkerRegistration />
         {children}
       </body>
     </html>

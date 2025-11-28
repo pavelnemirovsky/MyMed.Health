@@ -13,7 +13,7 @@
  * 
  * To disable Coming Soon mode and show full site:
  *   1. Set COMING_SOON_MODE to false
- *   2. The full landing page will automatically be shown (already restored in FullLandingPage.tsx)
+ *   2. The full landing page will automatically be shown (already restored in HomePage.tsx)
  */
 
 export const config = {
@@ -22,13 +22,13 @@ export const config = {
   COMING_SOON_MODE: false,
   
   // Site Information
-  siteName: 'Stop Scams Now',
-  siteTagline: 'Help Your Parents Stay Safe — We\'ll Take It from Here',
+  siteName: 'MedTracker by MyMed',
+  siteTagline: 'Managing complex medical care, simply.',
   
   // Contact Information
-  contactEmail: 'report@mymed.health',
-  contactPhone: '1-833-FRAUD-11',
-  contactPhoneTel: '+18333728311',
+  contactEmail: 'support@mymed.health',
+  contactPhone: '',
+  contactPhoneTel: '',
   
   // Social Media (update with your actual links)
   socialMedia: {

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Header from '../components/Header';
@@ -14,6 +14,7 @@ interface ProviderStatus {
 
 export default function LoginPage() {
   const router = useRouter();
+  const { data: session, status } = useSession();
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [acceptedPrivacy, setAcceptedPrivacy] = useState(false);
   const [error, setError] = useState('');
@@ -23,6 +24,13 @@ export default function LoginPage() {
     apple: { enabled: false },
   });
   const [isCheckingProviders, setIsCheckingProviders] = useState(true);
+
+  // Redirect to dashboard if already logged in
+  useEffect(() => {
+    if (status === 'authenticated' && session?.user) {
+      router.push('/dashboard');
+    }
+  }, [status, session, router]);
 
   // Check which providers are enabled
   useEffect(() => {
@@ -41,6 +49,11 @@ export default function LoginPage() {
     }
     checkProviders();
   }, []);
+
+  // Don't render login form if already authenticated
+  if (status === 'authenticated' && session?.user) {
+    return null; // Will redirect via useEffect
+  }
 
   const handleSocialLogin = async (provider: 'google' | 'apple') => {
     // Check if both checkboxes are accepted

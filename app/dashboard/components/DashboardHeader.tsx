@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useDarkMode } from '../hooks/useDarkMode';
 
 interface DashboardHeaderProps {
@@ -83,6 +84,12 @@ export default function DashboardHeader({ onMenuClick, user }: DashboardHeaderPr
             <path d="M12 1v6m0 6v6m9-9h-6m-6 0H3m15.364 6.364l-4.243-4.243m-4.242 0L5.636 17.364m12.728 0l-4.243-4.243m-4.242 0L5.636 6.636"></path>
           </svg>
         </button>
+        <Link href="/" className="dashboard-header-icon" aria-label="Home" title="Return to home page">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+        </Link>
         <div className="dashboard-user-menu">
           <div className="dashboard-user-avatar-small">
             {user.image ? (

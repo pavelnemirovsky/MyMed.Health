@@ -412,6 +412,35 @@ export default function DashboardContent() {
             </div>
           </div>
 
+          {/* Second Opinion */}
+          <div className="dashboard-widget">
+            <div className="dashboard-widget-header">
+              <h3 className="dashboard-widget-title">Second Opinion</h3>
+            </div>
+            <div className="dashboard-widget-content">
+              <div className="dashboard-second-opinion-summary">
+                <div className="dashboard-second-opinion-item">
+                  <div className="dashboard-second-opinion-label">Pending Requests</div>
+                  <div className="dashboard-second-opinion-value">{secondOpinionData.pending}</div>
+                </div>
+                <div className="dashboard-second-opinion-item">
+                  <div className="dashboard-second-opinion-label">Completed</div>
+                  <div className="dashboard-second-opinion-value">{secondOpinionData.completed}</div>
+                </div>
+              </div>
+              <div className="dashboard-second-opinion-list">
+                {secondOpinionData.requests.map((request, index) => (
+                  <div key={index} className="dashboard-second-opinion-card">
+                    <div className="dashboard-second-opinion-title">{request.title}</div>
+                    <div className="dashboard-second-opinion-meta">{request.patient} • {request.status}</div>
+                    <div className={`dashboard-second-opinion-status ${request.statusType}`}>{request.description}</div>
+                  </div>
+                ))}
+              </div>
+              <button className="dashboard-request-opinion-btn">Request Second Opinion</button>
+            </div>
+          </div>
+
           {/* Care Plans Progress */}
           <div className="dashboard-widget">
             <div className="dashboard-widget-header">
@@ -448,61 +477,6 @@ export default function DashboardContent() {
                   </div>
                 ))}
               </div>
-            </div>
-          </div>
-
-          {/* Second Opinion Requests */}
-          <div className="dashboard-widget">
-            <div className="dashboard-widget-header">
-              <h3 className="dashboard-widget-title">Second Opinion</h3>
-            </div>
-            <div className="dashboard-widget-content">
-              <div className="dashboard-second-opinion-summary">
-                <div className="dashboard-second-opinion-item">
-                  <div className="dashboard-second-opinion-label">Pending Requests</div>
-                  <div className="dashboard-second-opinion-value">{secondOpinionData.pending}</div>
-                </div>
-                <div className="dashboard-second-opinion-item">
-                  <div className="dashboard-second-opinion-label">Completed</div>
-                  <div className="dashboard-second-opinion-value">{secondOpinionData.completed}</div>
-                </div>
-              </div>
-              <div className="dashboard-second-opinion-list">
-                {secondOpinionData.requests.map((request, index) => (
-                  <div key={index} className="dashboard-second-opinion-card">
-                    <div className="dashboard-second-opinion-title">{request.title}</div>
-                    <div className="dashboard-second-opinion-meta">{request.patient} • {request.status}</div>
-                    <div className={`dashboard-second-opinion-status ${request.statusType}`}>{request.description}</div>
-                  </div>
-                ))}
-              </div>
-              <button className="dashboard-request-opinion-btn">Request Second Opinion</button>
-            </div>
-          </div>
-
-          {/* Medications Overview */}
-          <div className="dashboard-widget">
-            <div className="dashboard-widget-header">
-              <h3 className="dashboard-widget-title">Medications</h3>
-            </div>
-            <div className="dashboard-widget-content">
-              <div className="dashboard-medications-summary">
-                <div className="dashboard-medication-item">
-                  <div className="dashboard-medication-label">Active Medications</div>
-                  <div className="dashboard-medication-value">{medicationsData.summary.active}</div>
-                  <div className={`dashboard-medication-status ${medicationsData.summary.statusType}`}>{medicationsData.summary.status}</div>
-                </div>
-              </div>
-              <div className="dashboard-medications-list">
-                {medicationsData.medications.map((medication, index) => (
-                  <div key={index} className="dashboard-medication-card">
-                    <div className="dashboard-medication-name">{medication.name}</div>
-                    <div className="dashboard-medication-meta">{medication.patient} • {medication.dosage}</div>
-                    <div className="dashboard-medication-schedule">Next dose: {medication.nextDose}</div>
-                  </div>
-                ))}
-              </div>
-              <button className="dashboard-view-all-btn">View All Medications</button>
             </div>
           </div>
         </div>

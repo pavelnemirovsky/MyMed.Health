@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import Providers from './providers';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://mymed.health';
 
@@ -80,7 +81,9 @@ export default function RootLayout({
   return (
     <html lang="en" style={{ height: '100%' }}>
       <body style={{ margin: 0, padding: 0, minHeight: '100%', height: 'auto' }}>
-        {children}
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );

@@ -8,12 +8,13 @@ export default function Header() {
       <div className="header-container">
         <div className="header-left">
           <Link href="/" className="header-brand">
-            <div className="header-logo-bars">
-              <div className="header-logo-bar header-logo-bar-1"></div>
-              <div className="header-logo-bar header-logo-bar-2"></div>
-              <div className="header-logo-bar header-logo-bar-3"></div>
-            </div>
-            <span className="header-brand-text">MedTracker<span className="header-brand-accent"> by MyMed</span></span>
+            <img 
+              src="/logo.svg" 
+              alt="MedTracker by MyMed" 
+              className="header-logo"
+              width="200"
+              height="60"
+            />
           </Link>
         </div>
         <nav className="header-nav">

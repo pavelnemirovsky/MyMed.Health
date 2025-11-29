@@ -18,7 +18,13 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-brand">
-          <div className="footer-logo">MedTracker<span className="footer-logo-accent"> by MyMed</span></div>
+          <img 
+            src="/logo.svg" 
+            alt="MedTracker by MyMed" 
+            className="footer-logo-img"
+            width="180"
+            height="54"
+          />
           <p className="footer-tagline">Managing complex medical care, simply.</p>
         </div>
         

@@ -1,0 +1,14 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="60" cy="60" r="55" fill="#059669"/>
+  
+  <!-- Medical cross -->
+  <rect x="50" y="30" width="20" height="60" rx="3" fill="white"/>
+  <rect x="30" y="50" width="60" height="20" rx="3" fill="white"/>
+  
+  <!-- Tracking indicator dots -->
+  <circle cx="60" cy="15" r="3" fill="#10b981"/>
+  <circle cx="60" cy="105" r="3" fill="#10b981"/>
+</svg>
+
+

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import Header from './Header';
 import Footer from './Footer';
 
@@ -67,12 +68,12 @@ export default function HomePage() {
                 <strong>Working with Medical Care Providers</strong> in USA, Israel, and Europe
               </p>
               <div className="hero-cta">
-                <button className="btn btn-primary btn-large">
+                <Link href="/login" className="btn btn-primary btn-large">
                   <svg className="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M22.56 12.25c.13-.32.13-.68 0-1L18.16 2.5c-.13-.32-.45-.5-.78-.5h-4.76c-.33 0-.65.18-.78.5L7.44 11.25c-.13.32-.13.68 0 1l4.4 9.75c.13.32.45.5.78.5h4.76c.33 0 .65-.18.78-.5l4.4-9.75zM12 7.5l2.5 5.5h-5l2.5-5.5z" fill="currentColor"/>
                   </svg>
-                  Login with your social account
-                </button>
+                  Login with social Account
+                </Link>
                 <p className="hero-cta-subnote">Google or Apple</p>
                 <p className="hero-cta-note">Free to start • No credit card required</p>
                 <div className="hero-trust-badge">
@@ -539,12 +540,12 @@ export default function HomePage() {
             <p className="cta-description">
               Join caregivers who are simplifying complex medical management
             </p>
-            <button className="btn btn-primary btn-large">
+            <Link href="/login" className="btn btn-primary btn-large">
               <svg className="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M22.56 12.25c.13-.32.13-.68 0-1L18.16 2.5c-.13-.32-.45-.5-.78-.5h-4.76c-.33 0-.65.18-.78.5L7.44 11.25c-.13.32-.13.68 0 1l4.4 9.75c.13.32.45.5.78.5h4.76c.33 0 .65-.18.78-.5l4.4-9.75zM12 7.5l2.5 5.5h-5l2.5-5.5z" fill="currentColor"/>
               </svg>
               Start now with your social account
-            </button>
+            </Link>
             <p className="cta-note">
               HIPAA Certified • Your data is encrypted and secure. We never share your medical information.
             </p>

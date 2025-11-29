@@ -1,0 +1,25 @@
+<svg width="240" height="60" viewBox="0 0 240 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Medical cross icon with tracking lines -->
+  <g>
+    <!-- Cross -->
+    <rect x="8" y="18" width="4" height="24" rx="2" fill="#059669"/>
+    <rect x="4" y="28" width="12" height="4" rx="2" fill="#059669"/>
+    <!-- Tracking lines -->
+    <circle cx="10" cy="10" r="2" fill="#10b981" opacity="0.6"/>
+    <circle cx="10" cy="50" r="2" fill="#10b981" opacity="0.6"/>
+    <line x1="10" y1="10" x2="10" y2="18" stroke="#10b981" stroke-width="1.5" opacity="0.4" stroke-linecap="round"/>
+    <line x1="10" y1="42" x2="10" y2="50" stroke="#10b981" stroke-width="1.5" opacity="0.4" stroke-linecap="round"/>
+  </g>
+  
+  <!-- MedTracker text -->
+  <text x="28" y="38" font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="26" font-weight="700" fill="#1f2937" letter-spacing="-0.02em">
+    MedTracker
+  </text>
+  
+  <!-- by MyMed tagline -->
+  <text x="28" y="52" font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" font-weight="500" fill="#059669" letter-spacing="0.05em">
+    by MyMed
+  </text>
+</svg>
+
+

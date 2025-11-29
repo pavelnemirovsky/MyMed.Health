@@ -94,8 +94,12 @@ export function generateAppointmentsFromNovember(
       // Calculate week key (Monday as start of week)
       // Find the Monday of the week containing this date
       const weekStart = new Date(date);
+      // Calculate days to subtract to get to Monday
+      // Sunday (0) -> subtract 6 days, Monday (1) -> subtract 0, Tuesday (2) -> subtract 1, etc.
       const daysFromMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
       weekStart.setDate(date.getDate() - daysFromMonday);
+      // Ensure we're using the correct week - if Nov 1st is Saturday, the week starts on Oct 27
+      // But we want to start counting from the week that contains Nov 1st
       const weekKey = `${weekStart.getFullYear()}-${weekStart.getMonth()}-${weekStart.getDate()}`;
       
       // Initialize week counter if needed
@@ -112,8 +116,9 @@ export function generateAppointmentsFromNovember(
       const seedHash = hash(seed);
       const random = (seedHash % 100) / 100;
       
-      // Add appointment if we have less than 2, or randomly add third (30% chance)
-      const shouldAdd = appointmentsThisWeek < 2 || (appointmentsThisWeek === 2 && random < 0.3);
+      // Always add first 2 appointments (guaranteed)
+      // For 3rd appointment: 70% chance to ensure we get more appointments throughout the month
+      const shouldAdd = appointmentsThisWeek < 2 || (appointmentsThisWeek === 2 && random < 0.7);
       
       if (shouldAdd) {
         const eventType = eventTypes[0]; // appointment
@@ -145,11 +150,11 @@ export function generateAppointmentsFromNovember(
   
   return events.sort((a, b) => {
     // Sort by year, month, then date
-    const aMonthIndex = monthNames.findIndex(m => m.startsWith(a.month));
-    const bMonthIndex = monthNames.findIndex(m => m.startsWith(b.month));
-    // Determine year based on month
-    const aYear = aMonthIndex >= 10 ? startYear : (aMonthIndex <= 1 ? endYear : startYear);
-    const bYear = bMonthIndex >= 10 ? startYear : (bMonthIndex <= 1 ? endYear : startYear);
+    const aMonthIndex = monthNames.findIndex(m => m.substring(0, 3) === a.month);
+    const bMonthIndex = monthNames.findIndex(m => m.substring(0, 3) === b.month);
+    // Determine year based on month (Nov/Dec = 2025, Jan/Feb = 2026)
+    const aYear = aMonthIndex >= 10 ? 2025 : (aMonthIndex <= 1 ? 2026 : 2025);
+    const bYear = bMonthIndex >= 10 ? 2025 : (bMonthIndex <= 1 ? 2026 : 2025);
     const aDate = new Date(aYear, aMonthIndex, a.date);
     const bDate = new Date(bYear, bMonthIndex, b.date);
     return aDate.getTime() - bDate.getTime();

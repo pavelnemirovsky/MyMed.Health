@@ -20,19 +20,58 @@ export default function DashboardContent() {
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
 
-  // Mock timeline data generator - creates events for the current month (for upcoming appointments)
-  const currentMonthEvents = useMemo(() => {
-    return getCurrentMonthEvents();
-  }, []);
-
   // Mock timeline data generator - creates events for the selected month (for calendar)
   const timelineEvents = useMemo(() => {
     return generateMonthEvents(selectedMonth, selectedYear);
   }, [selectedMonth, selectedYear]);
 
-  // Get all upcoming appointments from current month events (only appointments, not tests) - next week only
+  // Get all upcoming appointments from selected month events (only appointments, not tests) - this week and next week
   const upcomingAppointments = useMemo(() => {
-    const appointments = getUpcomingAppointments(currentMonthEvents);
+    // Get events from selected month and next month to cover 2 weeks
+    const selectedMonthEvents = generateMonthEvents(selectedMonth, selectedYear);
+    const nextMonth = selectedMonth === 11 ? 0 : selectedMonth + 1;
+    const nextMonthYear = selectedMonth === 11 ? selectedYear + 1 : selectedYear;
+    const nextMonthEvents = generateMonthEvents(nextMonth, nextMonthYear);
+    const allEvents = [...selectedMonthEvents, ...nextMonthEvents];
+    
+    // Use selected month's first day as the starting point (or today if today is in selected month)
+    const today = new Date();
+    const selectedMonthStart = new Date(selectedYear, selectedMonth, 1);
+    const startDate = today >= selectedMonthStart ? today : selectedMonthStart;
+    const twoWeeksDate = new Date(startDate);
+    twoWeeksDate.setDate(startDate.getDate() + 14);
+    
+    // Filter appointments from start date onwards for the next 14 days
+    const appointments = allEvents
+      .filter(event => {
+        if (event.type !== 'appointment') return false;
+        
+        // Determine the actual date of the event
+        const eventMonthIndex = monthNames.findIndex(m => m.substring(0, 3) === event.month);
+        // Determine year: Nov/Dec = 2025 if selectedYear is 2025, Jan/Feb = 2026 if selectedYear is 2025
+        let eventYear = selectedYear;
+        if (selectedYear === 2025) {
+          eventYear = eventMonthIndex >= 10 ? 2025 : (eventMonthIndex <= 1 ? 2026 : selectedYear);
+        }
+        
+        const eventDate = new Date(eventYear, eventMonthIndex, event.date);
+        
+        return eventDate >= startDate && eventDate <= twoWeeksDate;
+      })
+      .sort((a, b) => {
+        const aMonthIndex = monthNames.findIndex(m => m.substring(0, 3) === a.month);
+        const bMonthIndex = monthNames.findIndex(m => m.substring(0, 3) === b.month);
+        const aYear = aMonthIndex >= 10 && selectedYear === 2025 ? 2025 : 
+                     (aMonthIndex <= 1 && selectedYear === 2025 ? 2026 : selectedYear);
+        const bYear = bMonthIndex >= 10 && selectedYear === 2025 ? 2025 : 
+                     (bMonthIndex <= 1 && selectedYear === 2025 ? 2026 : selectedYear);
+        const aDate = new Date(aYear, aMonthIndex, a.date);
+        const bDate = new Date(bYear, bMonthIndex, b.date);
+        if (aDate.getTime() !== bDate.getTime()) return aDate.getTime() - bDate.getTime();
+        const aHour = parseInt(a.time.split(':')[0]);
+        const bHour = parseInt(b.time.split(':')[0]);
+        return aHour - bHour;
+      });
     
     return appointments.map(appointment => ({
       id: appointment.id,
@@ -44,7 +83,7 @@ export default function DashboardContent() {
       specialty: appointment.specialty,
       status: 'Scheduled',
     }));
-  }, [currentMonthEvents]);
+  }, [selectedMonth, selectedYear]);
 
   return (
     <div className="dashboard-widgets">
@@ -201,26 +240,20 @@ export default function DashboardContent() {
               <div className="dashboard-calendar-horizontal">
                 <div className="dashboard-calendar-week-view">
                   {(() => {
+                    // Use selected month instead of current month
+                    const daysInMonth = new Date(selectedYear, selectedMonth + 1, 0).getDate();
                     const today = new Date();
-                    const currentDay = today.getDate();
-                    const currentMonth = today.getMonth();
-                    const currentYear = today.getFullYear();
+                    const isCurrentMonth = selectedMonth === today.getMonth() && selectedYear === today.getFullYear();
                     
-                    // Get the next 7 days (including today) - only show days with events
+                    // Get all days in the selected month that have events
                     const weekDays = [];
-                    for (let i = 0; i < 7; i++) {
-                      const date = new Date(currentYear, currentMonth, currentDay + i);
-                      const day = date.getDate();
+                    for (let day = 1; day <= daysInMonth; day++) {
+                      const date = new Date(selectedYear, selectedMonth, day);
                       const dayOfWeek = date.getDay();
-                      const isToday = i === 0;
+                      const isToday = isCurrentMonth && day === today.getDate();
                       
                       // Get events for this day
-                      const dayEvents = timelineEvents.filter(event => {
-                        if (selectedMonth === currentMonth && selectedYear === currentYear) {
-                          return event.date === day;
-                        }
-                        return false;
-                      });
+                      const dayEvents = timelineEvents.filter(event => event.date === day);
                       
                       // Only include days that have events
                       if (dayEvents.length > 0) {
@@ -228,7 +261,7 @@ export default function DashboardContent() {
                           date: day,
                           dayOfWeek,
                           dayName: date.toLocaleDateString('en-US', { weekday: 'short' }),
-                          month: monthNames[currentMonth].substring(0, 3),
+                          month: monthNames[selectedMonth].substring(0, 3),
                           isToday,
                           events: dayEvents,
                         });
@@ -239,7 +272,7 @@ export default function DashboardContent() {
                     if (weekDays.length === 0) {
                       return (
                         <div className="dashboard-calendar-timeline-empty">
-                          No appointments scheduled for the next week
+                          No appointments scheduled for {monthNames[selectedMonth]} {selectedYear}
                         </div>
                       );
                     }

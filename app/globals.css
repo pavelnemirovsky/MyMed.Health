@@ -8300,488 +8300,562 @@ a {
    ============================================ */
 
 .dark .dashboard-container {
-  background: #0f172a;
+  background: #000000;
 }
 
 .dark .dashboard-sidebar {
-  background: #1e293b;
-  border-right-color: #334155;
+  background: #1c1c1e;
+  border-right-color: rgba(255, 255, 255, 0.1);
 }
 
 .dark .dashboard-sidebar-header {
-  background: #1e293b;
+  background: #1c1c1e;
   border-bottom: none;
 }
 
 .dark .dashboard-sidebar-footer {
-  background: #1e293b;
-  border-top-color: #334155;
+  background: #1c1c1e;
+  border-top-color: rgba(255, 255, 255, 0.1);
 }
 
 .dark .dashboard-sidebar-collapse-btn {
-  background: #1e293b;
-  border-color: #334155;
-  color: #cbd5e1;
+  background: #2c2c2e;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #f2f2f7;
 }
 
 .dark .dashboard-sidebar-collapse-btn:hover {
-  background: #334155;
-  color: #34d399;
-  border-color: #34d399;
-  box-shadow: 0 2px 8px rgba(52, 211, 153, 0.2);
+  background: #3a3a3c;
+  color: #007aff;
+  border-color: #007aff;
+  box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
 }
 
 .dark .dashboard-main {
-  background: #0f172a;
+  background: #000000;
 }
 
 .dark .dashboard-content {
-  background: #0f172a;
+  background: #000000;
 }
 
 .dark .dashboard-header {
-  background: #0f172a;
-  border-bottom-color: #1e293b;
+  background: #000000;
+  border-bottom-color: rgba(255, 255, 255, 0.1);
 }
 
 .dark .dashboard-page-title {
-  color: #f1f5f9;
+  color: #ffffff;
 }
 
 .dark .dashboard-page-date {
-  color: #94a3b8;
+  color: #8e8e93;
 }
 
 .dark .dashboard-menu-btn {
-  background: #1e293b;
-  border-color: #334155;
-  color: #cbd5e1;
+  background: #2c2c2e;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #f2f2f7;
 }
 
 .dark .dashboard-menu-btn:hover {
-  background: #334155;
-  border-color: #475569;
+  background: #3a3a3c;
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 .dark .dashboard-search-input {
-  background: #1e293b;
-  border-color: #334155;
-  color: #f1f5f9;
+  background: #2c2c2e;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
 }
 
 .dark .dashboard-search-input::placeholder {
-  color: #64748b;
+  color: #8e8e93;
 }
 
 .dark .dashboard-search-input:focus {
-  border-color: #10b981;
-  background: #1e293b;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+  border-color: #007aff;
+  background: #2c2c2e;
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2);
 }
 
 .dark .dashboard-search-icon {
-  color: #64748b;
+  color: #8e8e93;
 }
 
 .dark .dashboard-header-icon {
-  background: #1e293b;
-  border-color: #334155;
-  color: #cbd5e1;
+  background: #2c2c2e;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #f2f2f7;
 }
 
 .dark .dashboard-header-icon svg {
-  color: #cbd5e1;
+  color: #f2f2f7;
 }
 
 .dark .dashboard-menu-btn {
-  background: #1e293b;
-  border-color: #334155;
-  color: #cbd5e1;
+  background: #2c2c2e;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #f2f2f7;
 }
 
 .dark .dashboard-menu-btn svg {
-  color: #cbd5e1;
+  color: #f2f2f7;
 }
 
 .dark .dashboard-search-icon svg {
-  color: #64748b;
+  color: #8e8e93;
 }
 
 .dark .dashboard-header-icon:hover {
-  background: #334155;
-  border-color: #475569;
+  background: #3a3a3c;
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 .dark .dashboard-user-avatar-small {
-  background: #059669;
+  background: #007aff;
 }
 
 .dark .dashboard-logo-name {
-  color: #f1f5f9;
+  color: #ffffff;
 }
 
 .dark .dashboard-nav-item {
-  color: #cbd5e1;
+  color: #f2f2f7;
 }
 
 .dark .dashboard-nav-item:hover {
-  background: rgba(30, 41, 59, 0.8);
-  color: #10b981;
+  background: #2c2c2e;
+  color: #007aff;
 }
 
 .dark .dashboard-nav-item.active {
-  background: #334155;
-  color: #10b981;
-  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.15);
+  background: #2c2c2e;
+  color: #007aff;
+  box-shadow: 0 2px 8px rgba(0, 122, 255, 0.2);
 }
 
 .dark .dashboard-user-name {
-  color: #f1f5f9;
+  color: #ffffff;
 }
 
 .dark .dashboard-user-email {
-  color: #94a3b8;
+  color: #8e8e93;
 }
 
 .dark .dashboard-logout-btn {
-  background: #1e293b;
-  border-color: #334155;
-  color: #f87171;
+  background: #2c2c2e;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #ff3b30;
 }
 
 .dark .dashboard-logout-btn:hover {
-  background: #334155;
-  border-color: #475569;
-  color: #ef4444;
+  background: #3a3a3c;
+  border-color: rgba(255, 59, 48, 0.3);
+  color: #ff3b30;
 }
 
 .dark .dashboard-stat-card {
-  background: #1e293b;
-  border-color: #334155;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  background: #1c1c1e;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .dark .dashboard-stat-value {
-  color: #f1f5f9;
+  color: #ffffff;
 }
 
 .dark .dashboard-stat-label {
-  color: #94a3b8;
+  color: #8e8e93;
 }
 
 .dark .dashboard-stat-trend {
-  color: #94a3b8;
+  color: #8e8e93;
 }
 
 .dark .dashboard-stat-trend.positive {
-  color: #34d399;
+  color: #34c759;
 }
 
 .dark .dashboard-stat-trend.negative {
-  color: #f87171;
+  color: #ff3b30;
 }
 
 .dark .dashboard-widget {
-  background: #1e293b;
-  border-color: #334155;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  background: #1c1c1e;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .dark .dashboard-widget-title {
-  color: #f1f5f9;
+  color: #ffffff;
 }
 
 .dark .dashboard-widget-select {
-  background: #0f172a;
-  border-color: #334155;
-  color: #f1f5f9;
+  background: #2c2c2e;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
 }
 
 .dark .dashboard-widget-select:hover {
-  border-color: #475569;
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 .dark .dashboard-widget-menu {
-  color: #64748b;
+  color: #8e8e93;
 }
 
 .dark .dashboard-widget-menu:hover {
-  color: #cbd5e1;
+  color: #f2f2f7;
 }
 
 .dark .dashboard-chart-labels span {
-  color: #94a3b8;
+  color: #8e8e93;
 }
 
 .dark .dashboard-activity-title {
-  color: #f1f5f9;
+  color: #ffffff;
 }
 
 .dark .dashboard-activity-meta {
-  color: #94a3b8;
+  color: #8e8e93;
 }
 
 .dark .dashboard-activity-item {
-  border-bottom-color: #334155;
+  border-bottom-color: rgba(255, 255, 255, 0.1);
 }
 
 .dark .dashboard-view-all-btn {
-  background: #1e293b;
-  border-color: #334155;
-  color: #34d399;
+  background: #2c2c2e;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #34c759;
 }
 
 .dark .dashboard-view-all-btn:hover {
-  background: #334155;
-  border-color: #34d399;
-  box-shadow: 0 2px 8px rgba(52, 211, 153, 0.2);
+  background: #3a3a3c;
+  border-color: #34c759;
+  box-shadow: 0 2px 8px rgba(52, 199, 89, 0.3);
 }
 
 .dark .dashboard-appointment-item {
-  background: #1e293b;
-  border-color: #334155;
+  background: #1c1c1e;
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .dark .dashboard-appointment-date {
-  background: #334155;
-  border-color: #475569;
+  background: #2c2c2e;
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .dark .dashboard-appointment-day {
-  color: #f1f5f9;
+  color: #ffffff;
 }
 
 .dark .dashboard-appointment-month {
-  color: #94a3b8;
+  color: #8e8e93;
 }
 
 .dark .dashboard-appointment-title {
-  color: #f1f5f9;
+  color: #ffffff;
 }
 
 .dark .dashboard-appointment-meta {
-  color: #94a3b8;
+  color: #8e8e93;
 }
 
 .dark .dashboard-folder-item {
-  background: #1e293b;
-  border-color: #334155;
+  background: #1c1c1e;
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .dark .dashboard-folder-name {
-  color: #f1f5f9;
+  color: #ffffff;
 }
 
 .dark .dashboard-folder-count {
-  color: #94a3b8;
+  color: #8e8e93;
 }
 
 .dark .dashboard-folder-trend {
-  color: #94a3b8;
+  color: #8e8e93;
 }
 
 .dark .dashboard-folder-trend.positive {
-  color: #34d399;
+  color: #34c759;
 }
 
 .dark .dashboard-patient-card {
-  background: #1e293b;
-  border-color: #334155;
+  background: #1c1c1e;
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .dark .dashboard-patient-name {
-  color: #f1f5f9;
+  color: #ffffff;
 }
 
 .dark .dashboard-patient-meta {
-  color: #94a3b8;
+  color: #8e8e93;
 }
 
 .dark .dashboard-add-patient-btn {
-  background: #10b981;
+  background: #34c759;
 }
 
 .dark .dashboard-add-patient-btn:hover {
-  background: #34d399;
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  background: #30d158;
+  box-shadow: 0 4px 12px rgba(52, 199, 89, 0.4);
 }
 
 .dark .dashboard-care-plan-label {
-  color: #94a3b8;
+  color: #8e8e93;
 }
 
 .dark .dashboard-care-plan-value {
-  color: #f1f5f9;
+  color: #ffffff;
 }
 
 .dark .dashboard-care-plan-change {
-  color: #94a3b8;
+  color: #8e8e93;
 }
 
 .dark .dashboard-care-plan-change.positive {
-  color: #34d399;
+  color: #34c759;
 }
 
 .dark .dashboard-progress-bar {
-  background: #0f172a;
+  background: #2c2c2e;
 }
 
 .dark .dashboard-progress-label {
-  color: #94a3b8;
+  color: #8e8e93;
 }
 
 .dark .dashboard-care-plan-card {
-  background: #1e293b;
-  border-color: #334155;
+  background: #1c1c1e;
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .dark .dashboard-care-plan-title {
-  color: #f1f5f9;
+  color: #ffffff;
 }
 
 .dark .dashboard-care-plan-patient {
-  color: #94a3b8;
+  color: #8e8e93;
 }
 
 .dark .dashboard-care-plan-progress-bar {
-  background: #0f172a;
+  background: #2c2c2e;
 }
 
 .dark .dashboard-care-plan-status {
-  color: #94a3b8;
+  color: #8e8e93;
 }
 
 .dark .dashboard-second-opinion-summary {
-  border-bottom-color: #334155;
+  border-bottom-color: rgba(255, 255, 255, 0.1);
 }
 
 .dark .dashboard-second-opinion-label {
-  color: #94a3b8;
+  color: #8e8e93;
 }
 
 .dark .dashboard-second-opinion-value {
-  color: #f1f5f9;
+  color: #ffffff;
 }
 
 .dark .dashboard-second-opinion-card {
-  background: #1e293b;
-  border-color: #334155;
+  background: #1c1c1e;
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .dark .dashboard-second-opinion-title {
-  color: #f1f5f9;
+  color: #ffffff;
 }
 
 .dark .dashboard-second-opinion-meta {
-  color: #94a3b8;
+  color: #8e8e93;
 }
 
 .dark .dashboard-request-opinion-btn {
-  background: #10b981;
+  background: #34c759;
 }
 
 .dark .dashboard-request-opinion-btn:hover {
-  background: #34d399;
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  background: #30d158;
+  box-shadow: 0 4px 12px rgba(52, 199, 89, 0.4);
 }
 
 .dark .dashboard-medications-summary {
-  border-bottom-color: #334155;
+  border-bottom-color: rgba(255, 255, 255, 0.1);
 }
 
 .dark .dashboard-medication-label {
-  color: #94a3b8;
+  color: #8e8e93;
 }
 
 .dark .dashboard-medication-value {
-  color: #f1f5f9;
+  color: #ffffff;
 }
 
 .dark .dashboard-medication-card {
-  background: #1e293b;
-  border-color: #334155;
+  background: #1c1c1e;
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .dark .dashboard-medication-name {
-  color: #f1f5f9;
+  color: #ffffff;
 }
 
 .dark .dashboard-medication-meta {
-  color: #94a3b8;
+  color: #8e8e93;
 }
 
 .dark .dashboard-medication-schedule {
-  color: #34d399;
+  color: #34c759;
 }
 
 .dark .dashboard-patient-select {
-  background: #1e293b;
-  border-color: #334155;
-  color: #f1f5f9;
+  background: #2c2c2e;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
 }
 
 .dark .dashboard-patient-select:hover {
-  border-color: #475569;
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 .dark .dashboard-quick-action-btn {
-  background: #1e293b;
-  border-color: #334155;
+  background: #2c2c2e;
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .dark .dashboard-quick-action-btn:hover {
-  background: #334155;
-  border-color: #10b981;
-  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2);
+  background: #3a3a3c;
+  border-color: #34c759;
+  box-shadow: 0 2px 8px rgba(52, 199, 89, 0.3);
 }
 
 .dark .dashboard-quick-action-label {
-  color: #cbd5e1;
+  color: #f2f2f7;
 }
 
 .dark .dashboard-patient-summary-label {
-  color: #94a3b8;
+  color: #8e8e93;
 }
 
 .dark .dashboard-patient-summary-value {
-  color: #f1f5f9;
+  color: #ffffff;
 }
 
 .dark .dashboard-patient-summary-change {
-  color: #94a3b8;
+  color: #8e8e93;
 }
 
 .dark .dashboard-patient-summary-change.positive {
-  color: #34d399;
+  color: #34c759;
 }
 
 .dark .dashboard-mini-chart-visual {
-  background: #0f172a;
+  background: #2c2c2e;
 }
 
 .dark .dashboard-mini-chart-label {
-  color: #94a3b8;
+  color: #8e8e93;
 }
 
 .dark .dashboard-calendar-legend {
-  border-top-color: #334155;
+  border-top-color: rgba(255, 255, 255, 0.1);
 }
 
 .dark .dashboard-legend-item {
-  color: #94a3b8;
+  color: #8e8e93;
+}
+
+/* Calendar Horizontal - Dark Mode */
+.dark .dashboard-calendar-day-horizontal {
+  background: #1c1c1e;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .dashboard-calendar-day-horizontal:hover {
+  background: #2c2c2e;
+  border-color: #007aff;
+  box-shadow: 0 2px 4px rgba(0, 122, 255, 0.3);
+}
+
+.dark .dashboard-calendar-day-horizontal.today {
+  background: #1a1a2e;
+  border-color: #007aff;
+  border-width: 2px;
+}
+
+.dark .dashboard-calendar-day-header-horizontal {
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .dashboard-calendar-day-name {
+  color: #8e8e93;
+}
+
+.dark .dashboard-calendar-day-number-horizontal {
+  color: #ffffff;
+}
+
+.dark .dashboard-calendar-day-number-horizontal.today {
+  color: #007aff;
+  background: #1c1c1e;
+  box-shadow: 0 2px 4px rgba(0, 122, 255, 0.4);
+}
+
+.dark .dashboard-calendar-day-month {
+  color: #8e8e93;
+}
+
+.dark .dashboard-calendar-event-badge.appointment {
+  background: #1a1a2e;
+  border-left-color: #007aff;
+}
+
+.dark .dashboard-calendar-event-badge.test {
+  background: #2a1f1a;
+  border-left-color: #ff9500;
+}
+
+.dark .dashboard-calendar-event-badge:hover {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.dark .dashboard-calendar-event-time {
+  color: #f2f2f7;
+}
+
+.dark .dashboard-calendar-event-title {
+  color: #ffffff;
+}
+
+.dark .dashboard-calendar-day-empty {
+  color: #8e8e93;
+}
+
+.dark .dashboard-calendar-day-more {
+  color: #34c759;
+}
+
+.dark .dashboard-calendar-timeline-empty {
+  color: #8e8e93;
 }
 
 .dark .dashboard-appointment-status.normal {
-  background: rgba(16, 185, 129, 0.15);
-  color: #34d399;
+  background: rgba(52, 199, 89, 0.2);
+  color: #34c759;
 }
 
 .dark .dashboard-activity-icon {
-  background: #334155;
+  background: #2c2c2e;
 }
 
 .dark .dashboard-activity-icon {
-  background: #334155;
+  background: #2c2c2e;
 }
 
 .dark .dashboard-stat-icon {
@@ -8789,10 +8863,27 @@ a {
 }
 
 .dark .dashboard-folder-icon {
-  background: #334155;
+  background: #2c2c2e;
 }
 
 .dark .dashboard-second-opinion-status.pending {
-  background: rgba(251, 191, 36, 0.15);
-  color: #fbbf24;
+  background: rgba(255, 149, 0, 0.2);
+  color: #ff9500;
+}
+
+.dark .dashboard-progress-fill {
+  background: linear-gradient(to right, #007aff, #5ac8fa);
+}
+
+.dark .dashboard-care-plan-progress-fill {
+  background: linear-gradient(to right, #007aff, #5ac8fa);
+}
+
+.dark .dashboard-notification-badge {
+  background: #ff3b30;
+  color: #ffffff;
+}
+
+.dark .dashboard-appointments-empty {
+  color: #8e8e93;
 }

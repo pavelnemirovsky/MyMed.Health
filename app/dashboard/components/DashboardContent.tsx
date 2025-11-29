@@ -321,67 +321,70 @@ export default function DashboardContent() {
             </div>
           </div>
 
-          {/* Upcoming Appointments List */}
-          <div className="dashboard-widget">
-            <div className="dashboard-widget-header">
-              <h3 className="dashboard-widget-title">Upcoming Appointments</h3>
-            </div>
-            <div className="dashboard-widget-content">
-              <div className="dashboard-appointments-list">
-                {upcomingAppointments.length > 0 ? (
-                  upcomingAppointments.map((appointment) => (
-                    <div key={appointment.id} className="dashboard-appointment-item">
-                      <div className="dashboard-appointment-date">
-                        <div className="dashboard-appointment-day">{appointment.day}</div>
-                        <div className="dashboard-appointment-month">{appointment.month}</div>
-                      </div>
-                      <div className="dashboard-appointment-details">
-                        {selectedPatient === 'all' && (
-                          <div className="dashboard-appointment-patient-name">{appointment.patient}</div>
-                        )}
-                        <div className="dashboard-appointment-title">{appointment.title}</div>
-                        <div className="dashboard-appointment-meta">
-                          {selectedPatient === 'all' ? (
-                            <>
-                              {appointment.time} • {appointment.specialty}
-                            </>
-                          ) : (
-                            <>
-                              {appointment.patient} • {appointment.time} • {appointment.specialty}
-                            </>
-                          )}
+          {/* Upcoming Appointments and Document Management - 2 Column Layout */}
+          <div className="dashboard-two-column-grid">
+            {/* Upcoming Appointments List */}
+            <div className="dashboard-widget">
+              <div className="dashboard-widget-header">
+                <h3 className="dashboard-widget-title">Upcoming Appointments</h3>
+              </div>
+              <div className="dashboard-widget-content">
+                <div className="dashboard-appointments-list">
+                  {upcomingAppointments.length > 0 ? (
+                    upcomingAppointments.map((appointment) => (
+                      <div key={appointment.id} className="dashboard-appointment-item">
+                        <div className="dashboard-appointment-date">
+                          <div className="dashboard-appointment-day">{appointment.day}</div>
+                          <div className="dashboard-appointment-month">{appointment.month}</div>
                         </div>
+                        <div className="dashboard-appointment-details">
+                          {selectedPatient === 'all' && (
+                            <div className="dashboard-appointment-patient-name">{appointment.patient}</div>
+                          )}
+                          <div className="dashboard-appointment-title">{appointment.title}</div>
+                          <div className="dashboard-appointment-meta">
+                            {selectedPatient === 'all' ? (
+                              <>
+                                {appointment.time} • {appointment.specialty}
+                              </>
+                            ) : (
+                              <>
+                                {appointment.patient} • {appointment.time} • {appointment.specialty}
+                              </>
+                            )}
+                          </div>
+                        </div>
+                        <div className={`dashboard-appointment-status normal`}>{appointment.status}</div>
                       </div>
-                      <div className={`dashboard-appointment-status normal`}>{appointment.status}</div>
-                    </div>
-                  ))
-                ) : (
-                  <div className="dashboard-appointments-empty">No upcoming appointments scheduled for this week and next week.</div>
-                )}
+                    ))
+                  ) : (
+                    <div className="dashboard-appointments-empty">No upcoming appointments scheduled for this week and next week.</div>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Document Management */}
-          <div className="dashboard-widget">
-            <div className="dashboard-widget-header">
-              <h3 className="dashboard-widget-title">Document Management</h3>
-              <button className="dashboard-widget-menu">⋯</button>
-            </div>
-            <div className="dashboard-widget-content">
-              <div className="dashboard-document-folders">
-                {documentFolders.map((folder, index) => (
-                  <div key={index} className="dashboard-folder-item">
-                    <div className="dashboard-folder-icon">{folder.icon}</div>
-                    <div className="dashboard-folder-info">
-                      <div className="dashboard-folder-name">{folder.name}</div>
-                      <div className="dashboard-folder-count">{folder.count} documents</div>
-                    </div>
-                    <div className={`dashboard-folder-trend ${folder.trendType}`}>{folder.trend}</div>
-                  </div>
-                ))}
+            {/* Document Management */}
+            <div className="dashboard-widget">
+              <div className="dashboard-widget-header">
+                <h3 className="dashboard-widget-title">Document Management</h3>
+                <button className="dashboard-widget-menu">⋯</button>
               </div>
-              <button className="dashboard-view-all-btn">View All Documents</button>
+              <div className="dashboard-widget-content">
+                <div className="dashboard-document-folders">
+                  {documentFolders.map((folder, index) => (
+                    <div key={index} className="dashboard-folder-item">
+                      <div className="dashboard-folder-icon">{folder.icon}</div>
+                      <div className="dashboard-folder-info">
+                        <div className="dashboard-folder-name">{folder.name}</div>
+                        <div className="dashboard-folder-count">{folder.count} documents</div>
+                      </div>
+                      <div className={`dashboard-folder-trend ${folder.trendType}`}>{folder.trend}</div>
+                    </div>
+                  ))}
+                </div>
+                <button className="dashboard-view-all-btn">View All Documents</button>
+              </div>
             </div>
           </div>
         </div>

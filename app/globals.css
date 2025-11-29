@@ -7137,6 +7137,10 @@ a {
     grid-template-columns: 1fr;
   }
 
+  .dashboard-two-column-grid {
+    grid-template-columns: 1fr;
+  }
+
   .dashboard-side-panel {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -7703,6 +7707,12 @@ a {
 .dashboard-main-column {
   display: flex;
   flex-direction: column;
+  gap: 1.5rem;
+}
+
+.dashboard-two-column-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
 }
 

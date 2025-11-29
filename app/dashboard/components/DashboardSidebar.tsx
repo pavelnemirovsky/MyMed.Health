@@ -18,7 +18,7 @@ interface DashboardSidebarProps {
 
 const menuItems = [
   { href: '/dashboard', label: 'Dashboard', icon: '📊' },
-  { href: '/dashboard/patients', label: 'Patients', icon: '👤' },
+  { href: '/dashboard/patients', label: 'People I Care For', icon: '👤' },
   { href: '/dashboard/doctors', label: 'Doctors', icon: '👨‍⚕️' },
   { href: '/dashboard/medical-providers', label: 'Medical Providers', icon: '🏥' },
   { href: '/dashboard/documents', label: 'Documents', icon: '🗂️' },

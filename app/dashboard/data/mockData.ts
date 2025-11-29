@@ -41,8 +41,141 @@ export const eventTypes = [
   },
 ];
 
-// Patient list
-export const patients = ['John Doe', 'Jane Smith', 'Mary Johnson'];
+// Patient interface
+export interface Patient {
+  id: string;
+  name: string;
+  initials: string;
+  dateOfBirth?: string;
+  age?: number;
+  gender?: 'Male' | 'Female' | 'Other';
+  email?: string;
+  phone?: string;
+  emergencyContact?: {
+    name: string;
+    relationship: string;
+    phone: string;
+  };
+  medicalConditions?: string[];
+  allergies?: string[];
+  primaryCarePhysician?: string;
+  insuranceProvider?: string;
+  insuranceNumber?: string;
+  familyId?: string; // Family identifier
+  familyRole?: string; // Role in family (e.g., 'Father', 'Mother', 'Grandmother')
+  relationshipToAccountOwner?: string; // Relationship to the account owner (e.g., 'Father', 'Mother', 'Uncle', 'Self')
+}
+
+// Patient data - All patients from the Doe family
+export const patientsData: Patient[] = [
+  {
+    id: 'patient-1',
+    name: 'John Doe',
+    initials: 'JD',
+    dateOfBirth: '1965-03-15',
+    age: 59,
+    gender: 'Male',
+    email: 'john.doe@example.com',
+    phone: '+1 (555) 123-4567',
+    emergencyContact: {
+      name: 'Jane Doe',
+      relationship: 'Spouse',
+      phone: '+1 (555) 123-4568',
+    },
+    medicalConditions: ['Left Kidney Cancer'],
+    allergies: ['Penicillin'],
+    primaryCarePhysician: 'Dr. Sarah Johnson',
+    insuranceProvider: 'BlueCross BlueShield',
+    insuranceNumber: 'BC123456789',
+    familyId: 'doe-family',
+    familyRole: 'Father',
+    relationshipToAccountOwner: 'Father',
+  },
+  {
+    id: 'patient-2',
+    name: 'Jane Doe',
+    initials: 'JD',
+    dateOfBirth: '1972-07-22',
+    age: 52,
+    gender: 'Female',
+    email: 'jane.doe@example.com',
+    phone: '+1 (555) 123-4568',
+    emergencyContact: {
+      name: 'John Doe',
+      relationship: 'Spouse',
+      phone: '+1 (555) 123-4567',
+    },
+    medicalConditions: ['Inflammatory Breast Cancer'],
+    allergies: ['Aspirin', 'Latex'],
+    primaryCarePhysician: 'Dr. Sarah Johnson',
+    insuranceProvider: 'BlueCross BlueShield',
+    insuranceNumber: 'BC123456790',
+    familyId: 'doe-family',
+    familyRole: 'Mother',
+    relationshipToAccountOwner: 'Mother',
+  },
+  {
+    id: 'patient-3',
+    name: 'Robert Doe',
+    initials: 'RD',
+    dateOfBirth: '1960-05-20',
+    age: 64,
+    gender: 'Male',
+    email: 'robert.doe@example.com',
+    phone: '+1 (555) 123-4570',
+    emergencyContact: {
+      name: 'John Doe',
+      relationship: 'Brother',
+      phone: '+1 (555) 123-4567',
+    },
+    medicalConditions: ['High Blood Pressure', 'Heart Disease'],
+    allergies: ['None'],
+    primaryCarePhysician: 'Dr. Sarah Johnson',
+    insuranceProvider: 'BlueCross BlueShield',
+    insuranceNumber: 'BC123456792',
+    familyId: 'doe-family',
+    familyRole: 'Uncle',
+    relationshipToAccountOwner: 'Uncle',
+  },
+];
+
+// Patient list (for backward compatibility with existing code)
+export const patients = patientsData.map(p => p.name);
+
+// Helper function to get patient by ID
+export function getPatientById(id: string): Patient | undefined {
+  return patientsData.find(p => p.id === id);
+}
+
+// Helper function to get patient by name
+export function getPatientByName(name: string): Patient | undefined {
+  return patientsData.find(p => p.name === name);
+}
+
+// Helper function to get all patients from a family
+export function getPatientsByFamilyId(familyId: string): Patient[] {
+  return patientsData.filter(p => p.familyId === familyId);
+}
+
+// Helper function to get all patients from the same family as a given patient
+export function getFamilyMembers(patientId: string): Patient[] {
+  const patient = getPatientById(patientId);
+  if (!patient || !patient.familyId) return [];
+  return getPatientsByFamilyId(patient.familyId);
+}
+
+// Helper function to get patients by their relationship to the account owner
+export function getPatientsByRelationship(relationship: string): Patient[] {
+  return patientsData.filter(p => p.relationshipToAccountOwner === relationship);
+}
+
+// Helper function to get all relationships available in the patient list
+export function getAvailableRelationships(): string[] {
+  const relationships = patientsData
+    .map(p => p.relationshipToAccountOwner)
+    .filter((rel): rel is string => rel !== undefined);
+  return Array.from(new Set(relationships));
+}
 
 // Event interface
 export interface CalendarEvent {
@@ -51,7 +184,8 @@ export interface CalendarEvent {
   month: string;
   type: 'appointment' | 'test';
   title: string;
-  patient: string;
+  patient: string; // Patient name (for backward compatibility)
+  patientId?: string; // Patient ID (optional, for better data structure)
   time: string;
   specialty: string;
 }
@@ -129,6 +263,7 @@ export function generateAppointmentsFromNovember(
         const titleIndex = Math.floor(random1 * eventType.titles.length);
         const specialtyIndex = Math.floor(random2 * eventType.specialties.length);
         const patientIndex = Math.floor(random3 * patients.length);
+        const selectedPatient = patientsData[patientIndex];
         const hour = 9 + Math.floor(random2 * 8); // 9 AM to 5 PM
         const minute = random3 < 0.5 ? 0 : 30;
         
@@ -138,7 +273,8 @@ export function generateAppointmentsFromNovember(
           month: monthNames[month].substring(0, 3),
           type: 'appointment',
           title: eventType.titles[titleIndex],
-          patient: patients[patientIndex],
+          patient: selectedPatient.name,
+          patientId: selectedPatient.id,
           time: `${hour}:${minute.toString().padStart(2, '0')} ${hour >= 12 ? 'PM' : 'AM'}`,
           specialty: eventType.specialties[specialtyIndex],
         });
@@ -213,6 +349,7 @@ export function generateMonthEvents(
       const patientWeekKey = `${patient}-week-${weekNumber}`;
       const patientWeekHash = hash(patientWeekKey);
       const patientWeekRandom = (patientWeekHash % 100) / 100;
+      const selectedPatient = patientsData[patientIndex];
       
       // Each patient can have 0-2 appointments per week
       const appointmentsThisWeek = patientAppointments[patient].filter(d => {
@@ -236,7 +373,8 @@ export function generateMonthEvents(
           month: monthNameArray[month].substring(0, 3),
           type: 'appointment',
           title: eventType.titles[titleIndex],
-          patient: patient,
+          patient: selectedPatient.name,
+          patientId: selectedPatient.id,
           time: `${hour}:${minute.toString().padStart(2, '0')} ${hour >= 12 ? 'PM' : 'AM'}`,
           specialty: eventType.specialties[specialtyIndex],
         });
@@ -251,6 +389,7 @@ export function generateMonthEvents(
       const titleIndex = Math.floor(random1 * eventType.titles.length);
       const specialtyIndex = Math.floor(random2 * eventType.specialties.length);
       const patientIndex = Math.floor(random3 * patients.length);
+      const selectedPatient = patientsData[patientIndex];
       const hour = 8 + Math.floor(random1 * 4); // 8 AM to 12 PM
       
       events.push({
@@ -259,7 +398,8 @@ export function generateMonthEvents(
         month: monthNameArray[month].substring(0, 3),
         type: 'test',
         title: eventType.titles[titleIndex],
-        patient: patients[patientIndex],
+        patient: selectedPatient.name,
+        patientId: selectedPatient.id,
         time: `${hour}:00 ${hour >= 12 ? 'PM' : 'AM'}`,
         specialty: eventType.specialties[specialtyIndex],
       });
@@ -354,7 +494,7 @@ export function getUpcomingAppointments(events: CalendarEvent[]): CalendarEvent[
 export const statsData = {
   activePatients: {
     value: 3,
-    label: 'Active Patients',
+    label: 'Active People',
     trend: '+1 this month',
     trendType: 'positive' as const,
     chartData: [3, 4, 3, 4, 5, 4, 3],
@@ -435,24 +575,15 @@ export const documentFolders = [
   },
 ];
 
-// Patient profiles data
-export const patientProfiles = [
-  {
-    initials: 'JD',
-    name: 'John Doe',
-    meta: '3 appointments • 5 care plans',
-  },
-  {
-    initials: 'JS',
-    name: 'Jane Smith',
-    meta: '2 appointments • 3 care plans',
-  },
-  {
-    initials: 'MJ',
-    name: 'Mary Johnson',
-    meta: '1 appointment • 2 care plans',
-  },
-];
+// People profiles data (derived from patientsData)
+export const patientProfiles = patientsData.map((patient, index) => ({
+  id: patient.id,
+  initials: patient.initials,
+  name: patient.name,
+  appointments: index === 0 ? 3 : index === 1 ? 2 : 1, // Mock appointment counts
+  carePlans: index === 0 ? 5 : index === 1 ? 3 : 2, // Mock care plan counts
+  meta: `${index === 0 ? 3 : index === 1 ? 2 : 1} appointments • ${index === 0 ? 5 : index === 1 ? 3 : 2} care plans`,
+}));
 
 // Care plans data
 export const carePlansData = {
@@ -471,14 +602,14 @@ export const carePlansData = {
     },
     {
       title: 'Diabetes Management',
-      patient: 'Jane Smith',
+      patient: 'Jane Doe',
       progress: 60,
       completed: 6,
       total: 10,
     },
     {
       title: 'Physical Therapy',
-      patient: 'Mary Johnson',
+      patient: 'Robert Doe',
       progress: 90,
       completed: 9,
       total: 10,
@@ -500,7 +631,7 @@ export const secondOpinionData = {
     },
     {
       title: 'Oncology Consultation',
-      patient: 'Jane Smith',
+      patient: 'Jane Doe',
       status: 'In Progress',
       statusType: 'pending' as const,
       description: 'Scheduled for review',
@@ -518,7 +649,7 @@ export const medicationsData = {
   medications: [
     {
       name: 'Metformin',
-      patient: 'Jane Smith',
+      patient: 'Jane Doe',
       dosage: '500mg twice daily',
       nextDose: 'Today 8:00 AM',
     },
@@ -530,7 +661,7 @@ export const medicationsData = {
     },
     {
       name: 'Lisinopril',
-      patient: 'Mary Johnson',
+      patient: 'Robert Doe',
       dosage: '10mg daily',
       nextDose: 'Today 9:00 AM',
     },

@@ -99,7 +99,7 @@ export default function DashboardContent() {
             value={selectedPatient}
             onChange={(e) => setSelectedPatient(e.target.value)}
           >
-            <option value="all">All Patients</option>
+            <option value="all">All People</option>
             {patients.map((patient, index) => (
               <option key={index} value={patient.toLowerCase().replace(' ', '-')}>
                 {patient}
@@ -115,7 +115,7 @@ export default function DashboardContent() {
           <div className="dashboard-stat-icon">👤</div>
           <div className="dashboard-stat-content">
             <div className="dashboard-stat-value">3</div>
-            <div className="dashboard-stat-label">Active Patients</div>
+                <div className="dashboard-stat-label">Active People</div>
             <div className="dashboard-stat-trend positive">+1 this month</div>
           </div>
           <div className="dashboard-stat-chart">
@@ -298,7 +298,12 @@ export default function DashboardContent() {
                                 title={`${event.time} - ${event.title} (${event.patient})`}
                               >
                                 <span className="dashboard-calendar-event-time">{event.time}</span>
-                                <span className="dashboard-calendar-event-title">{event.title}</span>
+                                <div className="dashboard-calendar-event-content">
+                                  {selectedPatient === 'all' && (
+                                    <span className="dashboard-calendar-event-patient">{event.patient}</span>
+                                  )}
+                                  <span className="dashboard-calendar-event-title">{event.title}</span>
+                                </div>
                               </div>
                             ))
                           ) : (
@@ -331,9 +336,20 @@ export default function DashboardContent() {
                         <div className="dashboard-appointment-month">{appointment.month}</div>
                       </div>
                       <div className="dashboard-appointment-details">
+                        {selectedPatient === 'all' && (
+                          <div className="dashboard-appointment-patient-name">{appointment.patient}</div>
+                        )}
                         <div className="dashboard-appointment-title">{appointment.title}</div>
                         <div className="dashboard-appointment-meta">
-                          {appointment.patient} • {appointment.time} • {appointment.specialty}
+                          {selectedPatient === 'all' ? (
+                            <>
+                              {appointment.time} • {appointment.specialty}
+                            </>
+                          ) : (
+                            <>
+                              {appointment.patient} • {appointment.time} • {appointment.specialty}
+                            </>
+                          )}
                         </div>
                       </div>
                       <div className={`dashboard-appointment-status normal`}>{appointment.status}</div>
@@ -375,7 +391,7 @@ export default function DashboardContent() {
           {/* Patient Profiles */}
           <div className="dashboard-widget">
             <div className="dashboard-widget-header">
-              <h3 className="dashboard-widget-title">Patient Profiles</h3>
+              <h3 className="dashboard-widget-title">People I Care For</h3>
             </div>
             <div className="dashboard-widget-content">
               <div className="dashboard-patients-list">
@@ -389,7 +405,7 @@ export default function DashboardContent() {
                   </div>
                 ))}
               </div>
-              <button className="dashboard-add-patient-btn">+ Add Patient</button>
+              <button className="dashboard-add-patient-btn">+ Add Person</button>
             </div>
           </div>
 

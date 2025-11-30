@@ -3,6 +3,8 @@ import { auth } from '@/app/auth-config';
 import DashboardLayout from '../../dashboard/components/DashboardLayout';
 import DashboardContent from '../../dashboard/components/DashboardContent';
 
+export const runtime = 'edge';
+
 export default async function DashboardPage({
   params,
 }: {

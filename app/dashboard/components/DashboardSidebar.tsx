@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 import { signOut } from 'next-auth/react';
@@ -116,7 +117,7 @@ export default function DashboardSidebar({ isOpen, onClose, collapsed, onToggleC
             <div className="dashboard-user-profile">
               <div className="dashboard-user-avatar">
                 {user.image ? (
-                  <img src={user.image} alt={user.name || 'User'} />
+                  <Image src={user.image} alt={user.name || 'User'} width={48} height={48} />
                 ) : (
                   <span>{user.name?.charAt(0).toUpperCase() || 'U'}</span>
                 )}

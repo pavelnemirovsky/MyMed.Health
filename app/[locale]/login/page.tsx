@@ -8,6 +8,8 @@ import Link from 'next/link';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
+export const runtime = 'edge';
+
 interface ProviderStatus {
   google: { enabled: boolean };
   apple: { enabled: boolean };

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useTranslations, useLocale } from 'next-intl';
 
 export default function Footer() {
@@ -20,12 +21,12 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-brand">
-          <img 
+          <Image 
             src="/logo.svg" 
             alt="MedTracker by MyMed" 
             className="footer-logo-img"
-            width="180"
-            height="54"
+            width={180}
+            height={54}
           />
           <p className="footer-tagline">{t('managingComplexMedicalCare')}</p>
         </div>

@@ -4,6 +4,8 @@ import { useTranslations, useLocale } from 'next-intl';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
+export const runtime = 'edge';
+
 export default function PrivacyPage() {
   const t = useTranslations('privacy');
   const tCommon = useTranslations('common');

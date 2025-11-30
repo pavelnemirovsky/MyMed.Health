@@ -9,6 +9,8 @@ import Footer from '../components/Footer';
 import { config } from '../config';
 import HomePage from '../components/HomePage';
 
+export const runtime = 'edge';
+
 export default function Home() {
   const t = useTranslations('home');
   const locale = useLocale();

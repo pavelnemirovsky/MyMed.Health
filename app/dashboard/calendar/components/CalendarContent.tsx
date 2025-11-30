@@ -25,18 +25,18 @@ export default function CalendarContent() {
     return monthEvents.filter(event => event.patientId === selectedPatient);
   }, [monthEvents, selectedPatient]);
 
-  // Get events for a specific day
-  const getDayEvents = (day: number) => {
-    return filteredEvents.filter(event => {
-      const eventDate = new Date(event.date);
-      return eventDate.getFullYear() === selectedYear &&
-             eventDate.getMonth() === selectedMonth &&
-             eventDate.getDate() === day;
-    });
-  };
-
   // Generate calendar grid
   const calendarDays = useMemo(() => {
+    // Get events for a specific day (moved inside useMemo to fix dependency warning)
+    const getDayEvents = (day: number) => {
+      return filteredEvents.filter(event => {
+        const eventDate = new Date(event.date);
+        return eventDate.getFullYear() === selectedYear &&
+               eventDate.getMonth() === selectedMonth &&
+               eventDate.getDate() === day;
+      });
+    };
+
     const daysInMonth = new Date(selectedYear, selectedMonth + 1, 0).getDate();
     const firstDayOfMonth = new Date(selectedYear, selectedMonth, 1).getDay();
     const today = new Date();

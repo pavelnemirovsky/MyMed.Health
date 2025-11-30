@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
 interface SettingsContentProps {
@@ -198,10 +199,12 @@ export default function SettingsContent({ user, isSSO }: SettingsContentProps) {
                       flexShrink: 0,
                     }}>
                       {user.image ? (
-                        <img 
+                        <Image 
                           src={user.image} 
                           alt={user.name || 'User'} 
-                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                          width={80}
+                          height={80}
+                          style={{ objectFit: 'cover' }}
                         />
                       ) : (
                         <div style={{ fontSize: '1.5rem' }}>

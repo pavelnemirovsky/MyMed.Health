@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 import { useDarkMode } from '../hooks/useDarkMode';
 import LanguageSwitcher from '../../components/LanguageSwitcher';
@@ -93,7 +94,7 @@ export default function DashboardHeader({ onMenuClick, user }: DashboardHeaderPr
         <div className="dashboard-user-menu">
           <div className="dashboard-user-avatar-small">
             {user.image ? (
-              <img src={user.image} alt={user.name || 'User'} />
+              <Image src={user.image} alt={user.name || 'User'} width={32} height={32} />
             ) : (
               <span>{user.name?.charAt(0).toUpperCase() || 'U'}</span>
             )}

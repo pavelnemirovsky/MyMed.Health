@@ -3,6 +3,8 @@ import { auth } from '@/app/auth-config';
 import DashboardLayout from '../../../dashboard/components/DashboardLayout';
 import MedicationsContent from '../../../dashboard/medications/components/MedicationsContent';
 
+export const runtime = 'edge';
+
 export default async function MedicationsPage({
   params,
 }: {

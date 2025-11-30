@@ -4,6 +4,8 @@ import { useTranslations, useLocale } from 'next-intl';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
+export const runtime = 'edge';
+
 export default function TermsPage() {
   const t = useTranslations('terms');
   const tCommon = useTranslations('common');

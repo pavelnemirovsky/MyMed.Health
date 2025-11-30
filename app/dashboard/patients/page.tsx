@@ -3,6 +3,8 @@ import { auth } from '@/app/auth-config';
 import DashboardLayout from '../components/DashboardLayout';
 import PatientsContent from './components/PatientsContent';
 
+export const runtime = 'edge';
+
 export default async function PatientsPage() {
   const session = await auth();
 

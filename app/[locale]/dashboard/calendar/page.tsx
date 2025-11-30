@@ -3,6 +3,8 @@ import { auth } from '@/app/auth-config';
 import DashboardLayout from '../../../dashboard/components/DashboardLayout';
 import CalendarContent from '../../../dashboard/calendar/components/CalendarContent';
 
+export const runtime = 'edge';
+
 export default async function CalendarPage({
   params,
 }: {

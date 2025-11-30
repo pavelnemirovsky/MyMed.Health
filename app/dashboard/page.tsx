@@ -3,6 +3,8 @@ import { auth } from '@/app/auth-config';
 import DashboardLayout from './components/DashboardLayout';
 import DashboardContent from './components/DashboardContent';
 
+export const runtime = 'edge';
+
 export default async function DashboardPage() {
   const session = await auth();
 

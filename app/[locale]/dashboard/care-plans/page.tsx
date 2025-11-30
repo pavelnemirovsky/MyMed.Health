@@ -3,6 +3,8 @@ import { auth } from '@/app/auth-config';
 import DashboardLayout from '../../../dashboard/components/DashboardLayout';
 import CarePlansContent from '../../../dashboard/care-plans/components/CarePlansContent';
 
+export const runtime = 'edge';
+
 export default async function CarePlansPage({
   params,
 }: {

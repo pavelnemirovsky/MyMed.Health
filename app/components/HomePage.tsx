@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 import Header from './Header';
 import Footer from './Footer';
@@ -87,10 +88,12 @@ export default function HomePage() {
               </div>
             </div>
             <div className="hero-visual">
-              <img 
+              <Image 
                 src="/logo-mission.png" 
                 alt="MedTracker by MyMed"
                 className="hero-mission-image"
+                width={600}
+                height={400}
               />
             </div>
           </div>

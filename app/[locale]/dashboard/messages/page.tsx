@@ -4,6 +4,8 @@ import { auth } from '@/app/auth-config';
 import DashboardLayout from '../../../dashboard/components/DashboardLayout';
 import MessagesContent from '../../../dashboard/messages/components/MessagesContent';
 
+export const runtime = 'edge';
+
 export default async function MessagesPage({
   params,
 }: {

@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { useTranslations, useLocale } from 'next-intl';
 import LanguageSwitcher from './LanguageSwitcher';
@@ -18,12 +19,12 @@ export default function Header() {
       <div className="header-container">
         <div className="header-left">
           <Link href={`/${locale}`} className="header-brand">
-            <img 
+            <Image 
               src="/logo.svg" 
               alt="MedTracker by MyMed" 
               className="header-logo"
-              width="200"
-              height="60"
+              width={200}
+              height={60}
             />
           </Link>
         </div>
@@ -53,10 +54,12 @@ export default function Header() {
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexShrink: 0, width: '36px', height: '36px' }}>
               <Link href={`/${locale}/dashboard`} className="header-user-avatar">
                 {session.user.image ? (
-                  <img 
+                  <Image 
                     src={session.user.image} 
                     alt={session.user.name || 'User'} 
-                    style={{ width: '36px', height: '36px', borderRadius: '50%' }}
+                    width={36}
+                    height={36}
+                    style={{ borderRadius: '50%' }}
                   />
                 ) : (
                   <div style={{ 

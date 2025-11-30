@@ -185,7 +185,7 @@ export default function HomePage() {
       </section>
 
       {/* Benefits Section */}
-      <section className="section section-alt">
+      <section id="why-choose-us" className="section section-alt">
         <div className="container">
           <div className="section-header">
             <h2 className="section-title">{t('whyChooseUs')}</h2>

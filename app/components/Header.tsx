@@ -1,10 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { useTranslations, useLocale } from 'next-intl';
+import { usePathname } from 'next/navigation';
 import LanguageSwitcher from './LanguageSwitcher';
 
 export default function Header() {
@@ -14,7 +15,27 @@ export default function Header() {
   const status = sessionResult?.status ?? 'unauthenticated';
   const t = useTranslations('common');
   const locale = useLocale();
+  const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Handle hash on page load with proper offset
+  useEffect(() => {
+    if (window.location.hash) {
+      setTimeout(() => {
+        const hash = window.location.hash.substring(1);
+        const element = document.getElementById(hash);
+        if (element) {
+          const headerHeight = window.innerWidth <= 768 ? 56 : 64;
+          const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+          const offsetPosition = elementPosition - headerHeight - 20;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }, 100);
+    }
+  }, [pathname]);
 
   return (
     <>
@@ -32,8 +53,31 @@ export default function Header() {
             </Link>
           </div>
           <nav className="header-nav">
-            <Link href={session?.user ? `/${locale}/dashboard` : `/${locale}#dashboard`} className="header-nav-link">{t('services')}</Link>
+            <Link 
+              href={pathname === `/${locale}` || pathname === `/${locale}/` ? `/${locale}#dashboard` : (session?.user ? `/${locale}/dashboard` : `/${locale}#dashboard`)}
+              className="header-nav-link"
+              onClick={(e) => {
+                // If on homepage, always scroll to section
+                if (pathname === `/${locale}` || pathname === `/${locale}/`) {
+                  e.preventDefault();
+                  const element = document.getElementById('dashboard');
+                  if (element) {
+                    const headerHeight = window.innerWidth <= 768 ? 56 : 64;
+                    const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+                    const offsetPosition = elementPosition - headerHeight - 20;
+                    window.scrollTo({
+                      top: offsetPosition,
+                      behavior: 'smooth'
+                    });
+                    window.history.pushState(null, '', `/${locale}#dashboard`);
+                  }
+                }
+              }}
+            >
+              {t('services')}
+            </Link>
             <Link href={`/${locale}#documents`} className="header-nav-link">{t('howItWorks')}</Link>
+            <Link href={`/${locale}#why-choose-us`} className="header-nav-link">{t('whyChooseUs')}</Link>
             <Link href={`/${locale}#pricing`} className="header-nav-link">{t('pricing')}</Link>
             <Link href={`/${locale}#testimonials`} className="header-nav-link">{t('testimonials')}</Link>
             <Link href={`/${locale}#faq`} className="header-nav-link">{t('faq')}</Link>
@@ -122,37 +166,156 @@ export default function Header() {
       <nav className={`header-mobile-menu ${mobileMenuOpen ? 'open' : ''}`}>
         <div className="header-mobile-menu-content">
           <Link 
-            href={session?.user ? `/${locale}/dashboard` : `/${locale}#dashboard`} 
+            href={`/${locale}#dashboard`} 
             className="header-mobile-nav-link"
-            onClick={() => setMobileMenuOpen(false)}
+            onClick={(e) => {
+              // If on homepage, scroll to section; otherwise navigate to dashboard
+              if (pathname === `/${locale}` || pathname === `/${locale}/`) {
+                e.preventDefault();
+                setMobileMenuOpen(false);
+                setTimeout(() => {
+                  const element = document.getElementById('dashboard');
+                  if (element) {
+                    const headerHeight = 56;
+                    const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+                    const offsetPosition = elementPosition - headerHeight - 20;
+                    window.scrollTo({
+                      top: offsetPosition,
+                      behavior: 'smooth'
+                    });
+                    window.history.pushState(null, '', `/${locale}#dashboard`);
+                  }
+                }, 300);
+              } else if (session?.user) {
+                // If not on homepage and logged in, navigate to dashboard
+                e.preventDefault();
+                setMobileMenuOpen(false);
+                window.location.href = `/${locale}/dashboard`;
+              } else {
+                setMobileMenuOpen(false);
+              }
+            }}
           >
             {t('services')}
           </Link>
           <Link 
             href={`/${locale}#documents`} 
             className="header-mobile-nav-link"
-            onClick={() => setMobileMenuOpen(false)}
+            onClick={(e) => {
+              const hash = e.currentTarget.hash;
+              setMobileMenuOpen(false);
+              // Small delay to allow menu to close before scrolling
+              setTimeout(() => {
+                if (hash) {
+                  const element = document.getElementById(hash.substring(1));
+                  if (element) {
+                    const headerHeight = 56;
+                    const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+                    const offsetPosition = elementPosition - headerHeight - 20;
+                    window.scrollTo({
+                      top: offsetPosition,
+                      behavior: 'smooth'
+                    });
+                  }
+                }
+              }, 300);
+            }}
           >
             {t('howItWorks')}
           </Link>
           <Link 
+            href={`/${locale}#why-choose-us`} 
+            className="header-mobile-nav-link"
+            onClick={(e) => {
+              const hash = e.currentTarget.hash;
+              setMobileMenuOpen(false);
+              setTimeout(() => {
+                if (hash) {
+                  const element = document.getElementById(hash.substring(1));
+                  if (element) {
+                    const headerHeight = 56;
+                    const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+                    const offsetPosition = elementPosition - headerHeight - 20;
+                    window.scrollTo({
+                      top: offsetPosition,
+                      behavior: 'smooth'
+                    });
+                  }
+                }
+              }, 300);
+            }}
+          >
+            {t('whyChooseUs')}
+          </Link>
+          <Link 
             href={`/${locale}#pricing`} 
             className="header-mobile-nav-link"
-            onClick={() => setMobileMenuOpen(false)}
+            onClick={(e) => {
+              const hash = e.currentTarget.hash;
+              setMobileMenuOpen(false);
+              setTimeout(() => {
+                if (hash) {
+                  const element = document.getElementById(hash.substring(1));
+                  if (element) {
+                    const headerHeight = 56;
+                    const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+                    const offsetPosition = elementPosition - headerHeight - 20;
+                    window.scrollTo({
+                      top: offsetPosition,
+                      behavior: 'smooth'
+                    });
+                  }
+                }
+              }, 300);
+            }}
           >
             {t('pricing')}
           </Link>
           <Link 
             href={`/${locale}#testimonials`} 
             className="header-mobile-nav-link"
-            onClick={() => setMobileMenuOpen(false)}
+            onClick={(e) => {
+              const hash = e.currentTarget.hash;
+              setMobileMenuOpen(false);
+              setTimeout(() => {
+                if (hash) {
+                  const element = document.getElementById(hash.substring(1));
+                  if (element) {
+                    const headerHeight = 56;
+                    const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+                    const offsetPosition = elementPosition - headerHeight - 20;
+                    window.scrollTo({
+                      top: offsetPosition,
+                      behavior: 'smooth'
+                    });
+                  }
+                }
+              }, 300);
+            }}
           >
             {t('testimonials')}
           </Link>
           <Link 
             href={`/${locale}#faq`} 
             className="header-mobile-nav-link"
-            onClick={() => setMobileMenuOpen(false)}
+            onClick={(e) => {
+              const hash = e.currentTarget.hash;
+              setMobileMenuOpen(false);
+              setTimeout(() => {
+                if (hash) {
+                  const element = document.getElementById(hash.substring(1));
+                  if (element) {
+                    const headerHeight = 56;
+                    const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+                    const offsetPosition = elementPosition - headerHeight - 20;
+                    window.scrollTo({
+                      top: offsetPosition,
+                      behavior: 'smooth'
+                    });
+                  }
+                }
+              }, 300);
+            }}
           >
             {t('faq')}
           </Link>

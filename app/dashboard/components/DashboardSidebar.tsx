@@ -28,12 +28,12 @@ export default function DashboardSidebar({ isOpen, onClose, collapsed, onToggleC
   const menuItems = [
     { href: 'dashboard', label: t('dashboard'), icon: '📊' },
     { href: 'dashboard/patients', label: t('peopleICareFor'), icon: '👤' },
+    { href: 'dashboard/calendar', label: t('calendar'), icon: '📅' },
+    { href: 'dashboard/records', label: t('documents'), icon: '🗂️' },
+    { href: 'dashboard/care-plans', label: t('carePlans'), icon: '📋' },
+    { href: 'dashboard/medications', label: t('medications'), icon: '💊' },
     { href: 'dashboard/doctors', label: t('doctors'), icon: '👨‍⚕️' },
     { href: 'dashboard/medical-providers', label: t('medicalProviders'), icon: '🏥' },
-    { href: 'dashboard/records', label: t('documents'), icon: '🗂️' },
-    { href: 'dashboard/calendar', label: t('calendar'), icon: '📅' },
-    { href: 'dashboard/medications', label: t('medications'), icon: '💊' },
-    { href: 'dashboard/care-plans', label: t('carePlans'), icon: '📋' },
     { href: 'dashboard/messages', label: t('messages'), icon: '💬' },
     { href: 'dashboard/settings', label: t('settings'), icon: '⚙️' },
   ];

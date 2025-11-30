@@ -1,16 +1,20 @@
 'use client';
 
 import Link from 'next/link';
-import { useSession, signOut } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
+import { useTranslations, useLocale } from 'next-intl';
+import LanguageSwitcher from './LanguageSwitcher';
 
 export default function Header() {
   const { data: session, status } = useSession();
+  const t = useTranslations('common');
+  const locale = useLocale();
 
   return (
     <header className="header">
       <div className="header-container">
         <div className="header-left">
-          <Link href="/" className="header-brand">
+          <Link href={`/${locale}`} className="header-brand">
             <img 
               src="/logo.svg" 
               alt="MedTracker by MyMed" 
@@ -21,21 +25,30 @@ export default function Header() {
           </Link>
         </div>
         <nav className="header-nav">
-          <Link href={session?.user ? "/dashboard" : "/#dashboard"} className="header-nav-link">Dashboard</Link>
-          <Link href="/#calendar" className="header-nav-link">Calendar</Link>
-          <Link href="/#patients" className="header-nav-link">Patients</Link>
-          <Link href="/#documents" className="header-nav-link">Documents</Link>
-          <Link href="/about" className="header-nav-link">About</Link>
-          <Link href="/#faq" className="header-nav-link">FAQ</Link>
+          <Link href={session?.user ? `/${locale}/dashboard` : `/${locale}#dashboard`} className="header-nav-link">{t('dashboard')}</Link>
+          <Link href={`/${locale}#calendar`} className="header-nav-link">{t('calendar')}</Link>
+          <Link href={`/${locale}#patients`} className="header-nav-link">{t('patients')}</Link>
+          <Link href={`/${locale}#documents`} className="header-nav-link">{t('documents')}</Link>
+          <Link href={`/${locale}/about`} className="header-nav-link">{t('about')}</Link>
+          <Link href={`/${locale}#faq`} className="header-nav-link">{t('faq')}</Link>
         </nav>
-        <div className="header-right">
+        <div className="header-right" style={{ display: 'flex', alignItems: 'center', gap: '1rem', minWidth: '120px' }}>
+          <LanguageSwitcher />
           {status === 'loading' ? (
-            <div className="header-button header-button-primary" style={{ opacity: 0.5 }}>
-              Loading...
+            <div className="header-button header-button-primary" style={{ 
+              opacity: 0.5, 
+              whiteSpace: 'nowrap',
+              minWidth: '100px',
+              textAlign: 'center',
+              display: 'inline-flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}>
+              {t('loading')}
             </div>
           ) : session?.user ? (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <Link href="/dashboard" className="header-user-avatar">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexShrink: 0, width: '36px', height: '36px' }}>
+              <Link href={`/${locale}/dashboard`} className="header-user-avatar">
                 {session.user.image ? (
                   <img 
                     src={session.user.image} 
@@ -61,7 +74,21 @@ export default function Header() {
               </Link>
             </div>
           ) : (
-            <Link href="/login" className="header-button header-button-primary">Sign In</Link>
+            <Link 
+              href={`/${locale}/login`} 
+              className="header-button header-button-primary" 
+              style={{ 
+                whiteSpace: 'nowrap',
+                minWidth: '100px',
+                width: '100px',
+                textAlign: 'center',
+                display: 'inline-flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}
+            >
+              {t('signIn')}
+            </Link>
           )}
         </div>
       </div>

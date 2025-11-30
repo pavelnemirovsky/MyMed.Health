@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import Link from 'next/link';
+import { useLocale, useTranslations } from 'next-intl';
 import {
   monthNames,
   generateMonthEvents,
@@ -16,6 +18,8 @@ import {
 } from '../data/mockData';
 
 export default function DashboardContent() {
+  const locale = useLocale();
+  const t = useTranslations('dashboard');
   const [selectedPatient, setSelectedPatient] = useState('all');
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
@@ -34,55 +38,45 @@ export default function DashboardContent() {
     const nextMonthEvents = generateMonthEvents(nextMonth, nextMonthYear);
     const allEvents = [...selectedMonthEvents, ...nextMonthEvents];
     
-    // Use selected month's first day as the starting point (or today if today is in selected month)
+    // Use today as the starting point
     const today = new Date();
-    const selectedMonthStart = new Date(selectedYear, selectedMonth, 1);
-    const startDate = today >= selectedMonthStart ? today : selectedMonthStart;
-    const twoWeeksDate = new Date(startDate);
-    twoWeeksDate.setDate(startDate.getDate() + 14);
+    today.setHours(0, 0, 0, 0);
+    const twoWeeksDate = new Date(today);
+    twoWeeksDate.setDate(today.getDate() + 14);
     
-    // Filter appointments from start date onwards for the next 14 days
+    // Filter appointments from today onwards for the next 14 days
     const appointments = allEvents
       .filter(event => {
         if (event.type !== 'appointment') return false;
         
-        // Determine the actual date of the event
-        const eventMonthIndex = monthNames.findIndex(m => m.substring(0, 3) === event.month);
-        // Determine year: Nov/Dec = 2025 if selectedYear is 2025, Jan/Feb = 2026 if selectedYear is 2025
-        let eventYear = selectedYear;
-        if (selectedYear === 2025) {
-          eventYear = eventMonthIndex >= 10 ? 2025 : (eventMonthIndex <= 1 ? 2026 : selectedYear);
-        }
+        // Parse the ISO date string
+        const eventDate = new Date(event.date);
+        eventDate.setHours(0, 0, 0, 0);
         
-        const eventDate = new Date(eventYear, eventMonthIndex, event.date);
-        
-        return eventDate >= startDate && eventDate <= twoWeeksDate;
+        return eventDate >= today && eventDate <= twoWeeksDate;
       })
       .sort((a, b) => {
-        const aMonthIndex = monthNames.findIndex(m => m.substring(0, 3) === a.month);
-        const bMonthIndex = monthNames.findIndex(m => m.substring(0, 3) === b.month);
-        const aYear = aMonthIndex >= 10 && selectedYear === 2025 ? 2025 : 
-                     (aMonthIndex <= 1 && selectedYear === 2025 ? 2026 : selectedYear);
-        const bYear = bMonthIndex >= 10 && selectedYear === 2025 ? 2025 : 
-                     (bMonthIndex <= 1 && selectedYear === 2025 ? 2026 : selectedYear);
-        const aDate = new Date(aYear, aMonthIndex, a.date);
-        const bDate = new Date(bYear, bMonthIndex, b.date);
+        const aDate = new Date(a.date);
+        const bDate = new Date(b.date);
         if (aDate.getTime() !== bDate.getTime()) return aDate.getTime() - bDate.getTime();
-        const aHour = parseInt(a.time.split(':')[0]);
-        const bHour = parseInt(b.time.split(':')[0]);
+        const aHour = a.time ? parseInt(a.time.split(':')[0]) : 0;
+        const bHour = b.time ? parseInt(b.time.split(':')[0]) : 0;
         return aHour - bHour;
       });
     
-    return appointments.map(appointment => ({
-      id: appointment.id,
-      day: appointment.date,
-      month: appointment.month,
-      title: appointment.title,
-      patient: appointment.patient,
-      time: appointment.time,
-      specialty: appointment.specialty,
-      status: 'Scheduled',
-    }));
+    return appointments.map(appointment => {
+      const appointmentDate = new Date(appointment.date);
+      return {
+        id: appointment.id,
+        day: appointmentDate.getDate(),
+        month: monthNames[appointmentDate.getMonth()].substring(0, 3),
+        title: appointment.title,
+        patient: appointment.patientName,
+        time: appointment.time || '',
+        specialty: appointment.facility || '',
+        status: 'Scheduled',
+      };
+    });
   }, [selectedMonth, selectedYear]);
 
   return (
@@ -90,8 +84,8 @@ export default function DashboardContent() {
       {/* Header Section */}
       <div className="dashboard-page-header">
         <div>
-          <h1 className="dashboard-page-title">Medical Care Overview</h1>
-          <p className="dashboard-page-date">{new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
+          <h1 className="dashboard-page-title">{t('medicalCareOverview')}</h1>
+          <p className="dashboard-page-date">{new Date().toLocaleDateString(locale, { month: 'long', day: 'numeric', year: 'numeric' })}</p>
         </div>
         <div className="dashboard-header-actions">
           <select 
@@ -99,10 +93,10 @@ export default function DashboardContent() {
             value={selectedPatient}
             onChange={(e) => setSelectedPatient(e.target.value)}
           >
-            <option value="all">All People</option>
-            {patients.map((patient, index) => (
-              <option key={index} value={patient.toLowerCase().replace(' ', '-')}>
-                {patient}
+            <option value="all">{t('allPeople')}</option>
+            {patients.map((patient) => (
+              <option key={patient.id} value={patient.id}>
+                {patient.name}
               </option>
             ))}
           </select>
@@ -115,8 +109,8 @@ export default function DashboardContent() {
           <div className="dashboard-stat-icon">👤</div>
           <div className="dashboard-stat-content">
             <div className="dashboard-stat-value">3</div>
-                <div className="dashboard-stat-label">Active People</div>
-            <div className="dashboard-stat-trend positive">+1 this month</div>
+                <div className="dashboard-stat-label">{t('activePeople')}</div>
+            <div className="dashboard-stat-trend positive">{t('thisMonthTrend')}</div>
           </div>
           <div className="dashboard-stat-chart">
             <div className="dashboard-mini-line-chart">
@@ -131,8 +125,8 @@ export default function DashboardContent() {
           <div className="dashboard-stat-icon">📅</div>
           <div className="dashboard-stat-content">
             <div className="dashboard-stat-value">12</div>
-            <div className="dashboard-stat-label">Upcoming Appointments</div>
-            <div className="dashboard-stat-trend">Next: Tomorrow</div>
+            <div className="dashboard-stat-label">{t('upcomingAppointments')}</div>
+            <div className="dashboard-stat-trend">{t('nextTomorrow')}</div>
           </div>
           <div className="dashboard-stat-chart">
             <div className="dashboard-mini-line-chart">
@@ -147,8 +141,8 @@ export default function DashboardContent() {
           <div className="dashboard-stat-icon">🗂️</div>
           <div className="dashboard-stat-content">
             <div className="dashboard-stat-value">156</div>
-            <div className="dashboard-stat-label">Medical Documents</div>
-            <div className="dashboard-stat-trend positive">+8 this week</div>
+            <div className="dashboard-stat-label">{t('medicalRecords')}</div>
+            <div className="dashboard-stat-trend positive">{t('thisWeekTrend')}</div>
           </div>
           <div className="dashboard-stat-chart">
             <div className="dashboard-mini-line-chart">
@@ -163,8 +157,8 @@ export default function DashboardContent() {
           <div className="dashboard-stat-icon">⚠️</div>
           <div className="dashboard-stat-content">
             <div className="dashboard-stat-value">2</div>
-            <div className="dashboard-stat-label">Overdue Tests</div>
-            <div className="dashboard-stat-trend negative">Action needed</div>
+            <div className="dashboard-stat-label">{t('overdueTests')}</div>
+            <div className="dashboard-stat-trend negative">{t('actionNeeded')}</div>
           </div>
           <div className="dashboard-stat-chart">
             <div className="dashboard-mini-line-chart">
@@ -179,8 +173,8 @@ export default function DashboardContent() {
           <div className="dashboard-stat-icon">💊</div>
           <div className="dashboard-stat-content">
             <div className="dashboard-stat-value">8</div>
-            <div className="dashboard-stat-label">Active Medications</div>
-            <div className="dashboard-stat-trend">All on schedule</div>
+            <div className="dashboard-stat-label">{t('activeMedications')}</div>
+            <div className="dashboard-stat-trend">{t('allOnSchedule')}</div>
           </div>
           <div className="dashboard-stat-chart">
             <div className="dashboard-mini-line-chart">
@@ -195,8 +189,8 @@ export default function DashboardContent() {
           <div className="dashboard-stat-icon">📋</div>
           <div className="dashboard-stat-content">
             <div className="dashboard-stat-value">5</div>
-            <div className="dashboard-stat-label">Care Plans</div>
-            <div className="dashboard-stat-trend positive">2 updated</div>
+            <div className="dashboard-stat-label">{t('carePlans')}</div>
+            <div className="dashboard-stat-trend positive">2 {t('updated')}</div>
           </div>
           <div className="dashboard-stat-chart">
             <div className="dashboard-mini-line-chart">
@@ -215,7 +209,7 @@ export default function DashboardContent() {
           {/* Appointments Calendar */}
           <div className="dashboard-widget">
             <div className="dashboard-widget-header">
-              <h3 className="dashboard-widget-title">Appointment Calendar</h3>
+              <h3 className="dashboard-widget-title">{t('appointmentCalendar')}</h3>
               <select 
                 className="dashboard-widget-select"
                 value={`${selectedMonth}-${selectedYear}`}
@@ -252,15 +246,20 @@ export default function DashboardContent() {
                       const dayOfWeek = date.getDay();
                       const isToday = isCurrentMonth && day === today.getDate();
                       
-                      // Get events for this day
-                      const dayEvents = timelineEvents.filter(event => event.date === day);
+                      // Get events for this day - parse ISO date string
+                      const dayEvents = timelineEvents.filter(event => {
+                        const eventDate = new Date(event.date);
+                        return eventDate.getFullYear() === selectedYear &&
+                               eventDate.getMonth() === selectedMonth &&
+                               eventDate.getDate() === day;
+                      });
                       
                       // Only include days that have events
                       if (dayEvents.length > 0) {
                         weekDays.push({
                           date: day,
                           dayOfWeek,
-                          dayName: date.toLocaleDateString('en-US', { weekday: 'short' }),
+                          dayName: date.toLocaleDateString(locale, { weekday: 'short' }),
                           month: monthNames[selectedMonth].substring(0, 3),
                           isToday,
                           events: dayEvents,
@@ -272,7 +271,7 @@ export default function DashboardContent() {
                     if (weekDays.length === 0) {
                       return (
                         <div className="dashboard-calendar-timeline-empty">
-                          No appointments scheduled for {monthNames[selectedMonth]} {selectedYear}
+                          {t('noAppointmentsScheduled', { month: monthNames[selectedMonth], year: selectedYear })}
                         </div>
                       );
                     }
@@ -295,22 +294,40 @@ export default function DashboardContent() {
                               <div 
                                 key={event.id} 
                                 className={`dashboard-calendar-event-badge ${event.type}`}
-                                title={`${event.time} - ${event.title} (${event.patient})`}
+                                title={`${event.time || ''} - ${event.title} (${event.patientName})`}
                               >
-                                <span className="dashboard-calendar-event-time">{event.time}</span>
+                                <span className="dashboard-calendar-event-time">{event.time || ''}</span>
                                 <div className="dashboard-calendar-event-content">
                                   {selectedPatient === 'all' && (
-                                    <span className="dashboard-calendar-event-patient">{event.patient}</span>
+                                    <Link
+                                      href={`/${locale}/dashboard/patients`}
+                                      className="dashboard-calendar-event-patient"
+                                      style={{
+                                        color: 'inherit',
+                                        textDecoration: 'none',
+                                        transition: 'all 0.2s ease'
+                                      }}
+                                      onMouseEnter={(e) => {
+                                        e.currentTarget.style.textDecoration = 'underline';
+                                        e.currentTarget.style.color = '#059669';
+                                      }}
+                                      onMouseLeave={(e) => {
+                                        e.currentTarget.style.textDecoration = 'none';
+                                        e.currentTarget.style.color = 'inherit';
+                                      }}
+                                    >
+                                      {event.patientName}
+                                    </Link>
                                   )}
                                   <span className="dashboard-calendar-event-title">{event.title}</span>
                                 </div>
                               </div>
                             ))
                           ) : (
-                            <div className="dashboard-calendar-day-empty">No events</div>
+                            <div className="dashboard-calendar-day-empty">{t('noEvents')}</div>
                           )}
                           {dayData.events.length > 3 && (
-                            <div className="dashboard-calendar-day-more">+{dayData.events.length - 3} more</div>
+                            <div className="dashboard-calendar-day-more">+{dayData.events.length - 3} {t('more')}</div>
                           )}
                         </div>
                       </div>
@@ -326,7 +343,7 @@ export default function DashboardContent() {
             {/* Upcoming Appointments List */}
             <div className="dashboard-widget">
               <div className="dashboard-widget-header">
-                <h3 className="dashboard-widget-title">Upcoming Appointments</h3>
+                <h3 className="dashboard-widget-title">{t('upcomingAppointments')}</h3>
               </div>
               <div className="dashboard-widget-content">
                 <div className="dashboard-appointments-list">
@@ -339,7 +356,27 @@ export default function DashboardContent() {
                         </div>
                         <div className="dashboard-appointment-details">
                           {selectedPatient === 'all' && (
-                            <div className="dashboard-appointment-patient-name">{appointment.patient}</div>
+                            <div className="dashboard-appointment-patient-name">
+                              <Link
+                                href={`/${locale}/dashboard/patients`}
+                                style={{
+                                  color: '#059669',
+                                  textDecoration: 'none',
+                                  fontWeight: 500,
+                                  transition: 'all 0.2s ease'
+                                }}
+                                onMouseEnter={(e) => {
+                                  e.currentTarget.style.textDecoration = 'underline';
+                                  e.currentTarget.style.color = '#047857';
+                                }}
+                                onMouseLeave={(e) => {
+                                  e.currentTarget.style.textDecoration = 'none';
+                                  e.currentTarget.style.color = '#059669';
+                                }}
+                              >
+                                {appointment.patient}
+                              </Link>
+                            </div>
                           )}
                           <div className="dashboard-appointment-title">{appointment.title}</div>
                           <div className="dashboard-appointment-meta">
@@ -354,11 +391,11 @@ export default function DashboardContent() {
                             )}
                           </div>
                         </div>
-                        <div className={`dashboard-appointment-status normal`}>{appointment.status}</div>
+                        <div className={`dashboard-appointment-status normal`}>{t('scheduled')}</div>
                       </div>
                     ))
                   ) : (
-                    <div className="dashboard-appointments-empty">No upcoming appointments scheduled for this week and next week.</div>
+                    <div className="dashboard-appointments-empty">{t('noAppointmentsScheduledShort')}</div>
                   )}
                 </div>
               </div>
@@ -367,7 +404,7 @@ export default function DashboardContent() {
             {/* Document Management */}
             <div className="dashboard-widget">
               <div className="dashboard-widget-header">
-                <h3 className="dashboard-widget-title">Document Management</h3>
+                <h3 className="dashboard-widget-title">{t('documentManagement')}</h3>
                 <button className="dashboard-widget-menu">⋯</button>
               </div>
               <div className="dashboard-widget-content">
@@ -377,13 +414,13 @@ export default function DashboardContent() {
                       <div className="dashboard-folder-icon">{folder.icon}</div>
                       <div className="dashboard-folder-info">
                         <div className="dashboard-folder-name">{folder.name}</div>
-                        <div className="dashboard-folder-count">{folder.count} documents</div>
+                        <div className="dashboard-folder-count">{folder.count} {t('documents')}</div>
                       </div>
                       <div className={`dashboard-folder-trend ${folder.trendType}`}>{folder.trend}</div>
                     </div>
                   ))}
                 </div>
-                <button className="dashboard-view-all-btn">View All Documents</button>
+                <button className="dashboard-view-all-btn">{t('viewAllRecords')}</button>
               </div>
             </div>
           </div>
@@ -394,7 +431,7 @@ export default function DashboardContent() {
           {/* Patient Profiles */}
           <div className="dashboard-widget">
             <div className="dashboard-widget-header">
-              <h3 className="dashboard-widget-title">People I Care For</h3>
+              <h3 className="dashboard-widget-title">{t('peopleICareFor')}</h3>
             </div>
             <div className="dashboard-widget-content">
               <div className="dashboard-patients-list">
@@ -408,23 +445,23 @@ export default function DashboardContent() {
                   </div>
                 ))}
               </div>
-              <button className="dashboard-add-patient-btn">+ Add Person</button>
+              <button className="dashboard-add-patient-btn">{t('addPerson')}</button>
             </div>
           </div>
 
           {/* Second Opinion */}
           <div className="dashboard-widget">
             <div className="dashboard-widget-header">
-              <h3 className="dashboard-widget-title">Second Opinion</h3>
+              <h3 className="dashboard-widget-title">{t('secondOpinion')}</h3>
             </div>
             <div className="dashboard-widget-content">
               <div className="dashboard-second-opinion-summary">
                 <div className="dashboard-second-opinion-item">
-                  <div className="dashboard-second-opinion-label">Pending Requests</div>
+                  <div className="dashboard-second-opinion-label">{t('pendingRequests')}</div>
                   <div className="dashboard-second-opinion-value">{secondOpinionData.pending}</div>
                 </div>
                 <div className="dashboard-second-opinion-item">
-                  <div className="dashboard-second-opinion-label">Completed</div>
+                  <div className="dashboard-second-opinion-label">{t('completed')}</div>
                   <div className="dashboard-second-opinion-value">{secondOpinionData.completed}</div>
                 </div>
               </div>
@@ -437,46 +474,85 @@ export default function DashboardContent() {
                   </div>
                 ))}
               </div>
-              <button className="dashboard-request-opinion-btn">Request Second Opinion</button>
+              <button className="dashboard-request-opinion-btn">{t('requestSecondOpinion')}</button>
             </div>
           </div>
 
           {/* Care Plans Progress */}
           <div className="dashboard-widget">
             <div className="dashboard-widget-header">
-              <h3 className="dashboard-widget-title">Care Plans Progress</h3>
+              <h3 className="dashboard-widget-title">{t('carePlansProgress')}</h3>
               <select className="dashboard-widget-select">
-                <option>This Month</option>
-                <option>Last Month</option>
-                <option>This Year</option>
+                <option>{t('thisMonth')}</option>
+                <option>{t('lastMonth')}</option>
+                <option>{t('thisYear')}</option>
               </select>
             </div>
             <div className="dashboard-widget-content">
-              <div className="dashboard-care-plan-summary">
-                <div className="dashboard-care-plan-item">
-                  <div className="dashboard-care-plan-label">Active Care Plans</div>
-                  <div className="dashboard-care-plan-value">{carePlansData.summary.active}</div>
-                  <div className="dashboard-care-plan-change positive">{carePlansData.summary.change}</div>
-                </div>
-                <div className="dashboard-care-plan-progress">
-                  <div className="dashboard-progress-bar">
-                    <div className="dashboard-progress-fill" style={{ width: `${carePlansData.summary.completion}%` }} />
-                  </div>
-                  <div className="dashboard-progress-label">Overall completion: {carePlansData.summary.completion}%</div>
-                </div>
-              </div>
-              <div className="dashboard-care-plans-list">
-                {carePlansData.plans.map((plan, index) => (
-                  <div key={index} className="dashboard-care-plan-card">
-                    <div className="dashboard-care-plan-title">{plan.title}</div>
-                    <div className="dashboard-care-plan-patient">{plan.patient}</div>
-                    <div className="dashboard-care-plan-progress-bar">
-                      <div className="dashboard-care-plan-progress-fill" style={{ width: `${plan.progress}%` }} />
+              {(() => {
+                const activePlans = carePlansData.filter(p => p.status === 'active');
+                const totalMilestones = carePlansData.reduce((sum, plan) => sum + plan.milestones.length, 0);
+                const completedMilestones = carePlansData.reduce((sum, plan) => 
+                  sum + plan.milestones.filter(m => m.status === 'completed').length, 0
+                , 0);
+                const overallCompletion = totalMilestones > 0 ? Math.round((completedMilestones / totalMilestones) * 100) : 0;
+                
+                return (
+                  <>
+                    <div className="dashboard-care-plan-summary">
+                      <div className="dashboard-care-plan-item">
+                        <div className="dashboard-care-plan-label">{t('activeCarePlans')}</div>
+                        <div className="dashboard-care-plan-value">{activePlans.length}</div>
+                        <div className="dashboard-care-plan-change positive">+2</div>
+                      </div>
+                      <div className="dashboard-care-plan-progress">
+                        <div className="dashboard-progress-bar">
+                          <div className="dashboard-progress-fill" style={{ width: `${overallCompletion}%` }} />
+                        </div>
+                        <div className="dashboard-progress-label">{t('overallCompletion', { percentage: overallCompletion })}</div>
+                      </div>
                     </div>
-                    <div className="dashboard-care-plan-status">{plan.completed} of {plan.total} tasks completed</div>
-                  </div>
-                ))}
-              </div>
+                    <div className="dashboard-care-plans-list">
+                      {carePlansData.slice(0, 3).map((plan) => {
+                        const planCompleted = plan.milestones.filter(m => m.status === 'completed').length;
+                        const planTotal = plan.milestones.length;
+                        const planProgress = planTotal > 0 ? Math.round((planCompleted / planTotal) * 100) : 0;
+                        
+                        return (
+                          <div key={plan.id} className="dashboard-care-plan-card">
+                            <div className="dashboard-care-plan-title">{plan.title}</div>
+                            <div className="dashboard-care-plan-patient">
+                              <Link
+                                href={`/${locale}/dashboard/patients`}
+                                style={{
+                                  color: '#059669',
+                                  textDecoration: 'none',
+                                  fontWeight: 500,
+                                  transition: 'all 0.2s ease'
+                                }}
+                                onMouseEnter={(e) => {
+                                  e.currentTarget.style.textDecoration = 'underline';
+                                  e.currentTarget.style.color = '#047857';
+                                }}
+                                onMouseLeave={(e) => {
+                                  e.currentTarget.style.textDecoration = 'none';
+                                  e.currentTarget.style.color = '#059669';
+                                }}
+                              >
+                                {plan.patientName}
+                              </Link>
+                            </div>
+                            <div className="dashboard-care-plan-progress-bar">
+                              <div className="dashboard-care-plan-progress-fill" style={{ width: `${planProgress}%` }} />
+                            </div>
+                            <div className="dashboard-care-plan-status">{t('tasksCompleted', { completed: planCompleted, total: planTotal })}</div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </>
+                );
+              })()}
             </div>
           </div>
         </div>

@@ -8,7 +8,7 @@ export default async function DashboardPage() {
 
   // Redirect to login if not authenticated
   if (!session) {
-    redirect('/login');
+    redirect('/en/login');
   }
 
   return (

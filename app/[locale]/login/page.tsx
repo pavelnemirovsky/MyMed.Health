@@ -3,9 +3,10 @@
 import { useState, useEffect } from 'react';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { useTranslations, useLocale } from 'next-intl';
 import Link from 'next/link';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 interface ProviderStatus {
   google: { enabled: boolean };
@@ -14,7 +15,9 @@ interface ProviderStatus {
 
 export default function LoginPage() {
   const router = useRouter();
+  const locale = useLocale();
   const { data: session, status } = useSession();
+  const t = useTranslations('login');
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [acceptedPrivacy, setAcceptedPrivacy] = useState(false);
   const [error, setError] = useState('');
@@ -25,14 +28,12 @@ export default function LoginPage() {
   });
   const [isCheckingProviders, setIsCheckingProviders] = useState(true);
 
-  // Redirect to dashboard if already logged in
   useEffect(() => {
     if (status === 'authenticated' && session?.user) {
-      router.push('/dashboard');
+      router.push(`/${locale}/dashboard`);
     }
-  }, [status, session, router]);
+  }, [status, session, router, locale]);
 
-  // Check which providers are enabled
   useEffect(() => {
     async function checkProviders() {
       try {
@@ -50,15 +51,13 @@ export default function LoginPage() {
     checkProviders();
   }, []);
 
-  // Don't render login form if already authenticated
   if (status === 'authenticated' && session?.user) {
-    return null; // Will redirect via useEffect
+    return null;
   }
 
   const handleSocialLogin = async (provider: 'google' | 'apple') => {
-    // Check if both checkboxes are accepted
     if (!acceptedTerms || !acceptedPrivacy) {
-      setError('Please accept both Terms of Service and Privacy Policy to continue.');
+      setError(t('acceptBothError'));
       return;
     }
 
@@ -67,25 +66,22 @@ export default function LoginPage() {
 
     try {
       if (provider === 'google') {
-        // Store acceptance in sessionStorage before redirecting
         if (typeof window !== 'undefined') {
           sessionStorage.setItem('acceptedTerms', 'true');
           sessionStorage.setItem('acceptedPrivacy', 'true');
         }
         
-        // Use redirect: true for NextAuth to handle the OAuth flow
         await signIn('google', {
-          callbackUrl: '/dashboard',
+          callbackUrl: `/${locale}/dashboard`,
           redirect: true,
         });
       } else {
-        // Apple login - to be implemented
-        setError('Apple Sign In is coming soon.');
+        setError(t('appleComingSoon'));
         setIsLoading(false);
       }
     } catch (err: any) {
       console.error('Login error:', err);
-      setError(err?.message || 'An error occurred. Please try again.');
+      setError(t('errorOccurred'));
       setIsLoading(false);
     }
   };
@@ -97,9 +93,9 @@ export default function LoginPage() {
         <div className="login-container">
           <div className="login-card">
             <div className="login-header">
-              <h1 className="login-title">Sign In</h1>
+              <h1 className="login-title">{t('title')}</h1>
               <p className="login-subtitle">
-                Sign in with your social account to access your medical dashboard
+                {t('subtitle')}
               </p>
             </div>
 
@@ -110,11 +106,18 @@ export default function LoginPage() {
                 type="button"
                 disabled={isLoading || isCheckingProviders || !providerStatus.google.enabled}
                 title={!providerStatus.google.enabled ? 'Google OAuth is not configured' : ''}
+                style={{
+                  width: '100%',
+                  maxWidth: '320px',
+                  minWidth: '320px',
+                  margin: '0 auto',
+                  whiteSpace: 'nowrap'
+                }}
               >
                 <svg className="btn-social-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M22.56 12.25c.13-.32.13-.68 0-1L18.16 2.5c-.13-.32-.45-.5-.78-.5h-4.76c-.33 0-.65.18-.78.5L7.44 11.25c-.13.32-.13.68 0 1l4.4 9.75c.13.32.45.5.78.5h4.76c.33 0 .65-.18.78-.5l4.4-9.75zM12 7.5l2.5 5.5h-5l2.5-5.5z" fill="currentColor"/>
                 </svg>
-                {isLoading ? 'Connecting...' : isCheckingProviders ? 'Checking...' : 'Continue with Google'}
+                {isLoading ? t('connecting') : isCheckingProviders ? t('checking') : t('continueWithGoogle')}
               </button>
 
               <button
@@ -123,11 +126,18 @@ export default function LoginPage() {
                 type="button"
                 disabled={isLoading || isCheckingProviders || !providerStatus.apple.enabled}
                 title={!providerStatus.apple.enabled ? 'Apple OAuth is not configured' : ''}
+                style={{
+                  width: '100%',
+                  maxWidth: '320px',
+                  minWidth: '320px',
+                  margin: '0 auto',
+                  whiteSpace: 'nowrap'
+                }}
               >
                 <svg className="btn-social-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" fill="currentColor"/>
                 </svg>
-                {isLoading ? 'Connecting...' : isCheckingProviders ? 'Checking...' : 'Continue with Apple'}
+                {isLoading ? t('connecting') : isCheckingProviders ? t('checking') : t('continueWithApple')}
               </button>
             </div>
 
@@ -142,9 +152,9 @@ export default function LoginPage() {
                     required
                   />
                   <span className="login-checkbox-text">
-                    I accept the{' '}
-                    <Link href="/terms" className="login-link" target="_blank">
-                      Terms of Service
+                    {t('acceptTerms')}{' '}
+                    <Link href={`/${locale}/terms`} className="login-link" target="_blank">
+                      {t('termsOfService')}
                     </Link>
                   </span>
                 </label>
@@ -160,9 +170,9 @@ export default function LoginPage() {
                     required
                   />
                   <span className="login-checkbox-text">
-                    I accept the{' '}
-                    <Link href="/privacy" className="login-link" target="_blank">
-                      Privacy Policy
+                    {t('acceptTerms')}{' '}
+                    <Link href={`/${locale}/privacy`} className="login-link" target="_blank">
+                      {t('privacyPolicy')}
                     </Link>
                   </span>
                 </label>
@@ -178,11 +188,8 @@ export default function LoginPage() {
             <div className="login-trust">
               <div className="login-trust-badge">
                 <span className="trust-badge-icon">🛡️</span>
-                <span className="trust-badge-text">HIPAA Certified</span>
+                <span className="trust-badge-text">{t('trustNote')}</span>
               </div>
-              <p className="login-trust-note">
-                Your medical information is encrypted and secure
-              </p>
             </div>
           </div>
         </div>

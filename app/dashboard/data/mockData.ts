@@ -66,580 +66,433 @@ export interface Patient {
   relationshipToAccountOwner?: string; // Relationship to the account owner (e.g., 'Father', 'Mother', 'Uncle', 'Self')
 }
 
-// Patient data - All patients from the Doe family
+// Patient data - All patients from the Feldman family
 export const patientsData: Patient[] = [
   {
     id: 'patient-1',
-    name: 'John Doe',
-    initials: 'JD',
+    name: 'John Feldman',
+    initials: 'JF',
     dateOfBirth: '1965-03-15',
     age: 59,
     gender: 'Male',
-    email: 'john.doe@example.com',
-    phone: '+1 (555) 123-4567',
+    email: 'john.feldman@me.com',
+    phone: '+972-50-123-4567',
     emergencyContact: {
-      name: 'Jane Doe',
+      name: 'Juli Feldman',
       relationship: 'Spouse',
-      phone: '+1 (555) 123-4568',
+      phone: '+972-52-123-4568',
     },
     medicalConditions: ['Left Kidney Cancer'],
     allergies: ['Penicillin'],
     primaryCarePhysician: 'Dr. Sarah Johnson',
     insuranceProvider: 'BlueCross BlueShield',
     insuranceNumber: 'BC123456789',
-    familyId: 'doe-family',
+    familyId: 'feldman-family',
     familyRole: 'Father',
     relationshipToAccountOwner: 'Father',
   },
   {
     id: 'patient-2',
-    name: 'Jane Doe',
-    initials: 'JD',
+    name: 'Juli Feldman',
+    initials: 'JF',
     dateOfBirth: '1972-07-22',
     age: 52,
     gender: 'Female',
-    email: 'jane.doe@example.com',
-    phone: '+1 (555) 123-4568',
+    email: 'juli.feldman@me.com',
+    phone: '+972-52-123-4568',
     emergencyContact: {
-      name: 'John Doe',
+      name: 'John Feldman',
       relationship: 'Spouse',
-      phone: '+1 (555) 123-4567',
+      phone: '+972-50-123-4567',
     },
-    medicalConditions: ['Inflammatory Breast Cancer'],
-    allergies: ['Aspirin', 'Latex'],
+    medicalConditions: ['Type 2 Diabetes'],
+    allergies: [],
     primaryCarePhysician: 'Dr. Sarah Johnson',
     insuranceProvider: 'BlueCross BlueShield',
     insuranceNumber: 'BC123456790',
-    familyId: 'doe-family',
+    familyId: 'feldman-family',
     familyRole: 'Mother',
     relationshipToAccountOwner: 'Mother',
   },
   {
     id: 'patient-3',
-    name: 'Robert Doe',
-    initials: 'RD',
-    dateOfBirth: '1960-05-20',
-    age: 64,
+    name: 'Robert Feldman',
+    initials: 'RF',
+    dateOfBirth: '1940-11-08',
+    age: 84,
     gender: 'Male',
-    email: 'robert.doe@example.com',
-    phone: '+1 (555) 123-4570',
+    email: 'robert.feldman@me.com',
+    phone: '+972-54-123-4569',
     emergencyContact: {
-      name: 'John Doe',
-      relationship: 'Brother',
-      phone: '+1 (555) 123-4567',
+      name: 'John Feldman',
+      relationship: 'Son',
+      phone: '+972-50-123-4567',
     },
-    medicalConditions: ['High Blood Pressure', 'Heart Disease'],
-    allergies: ['None'],
-    primaryCarePhysician: 'Dr. Sarah Johnson',
-    insuranceProvider: 'BlueCross BlueShield',
-    insuranceNumber: 'BC123456792',
-    familyId: 'doe-family',
-    familyRole: 'Uncle',
-    relationshipToAccountOwner: 'Uncle',
+    medicalConditions: ['Hypertension', 'High Cholesterol'],
+    allergies: ['Sulfa drugs'],
+    primaryCarePhysician: 'Dr. Robert Martinez',
+    insuranceProvider: 'Medicare',
+    insuranceNumber: 'MC987654321',
+    familyId: 'feldman-family',
+    familyRole: 'Grandfather',
+    relationshipToAccountOwner: 'Grandfather',
   },
 ];
 
-// Patient list (for backward compatibility with existing code)
-export const patients = patientsData.map(p => p.name);
+// Export patients array with alias
+export const patients = patientsData;
 
-// Helper function to get patient by ID
+// Get patient by ID
 export function getPatientById(id: string): Patient | undefined {
-  return patientsData.find(p => p.id === id);
+  return patientsData.find(patient => patient.id === id);
 }
 
-// Helper function to get patient by name
-export function getPatientByName(name: string): Patient | undefined {
-  return patientsData.find(p => p.name === name);
-}
-
-// Helper function to get all patients from a family
-export function getPatientsByFamilyId(familyId: string): Patient[] {
-  return patientsData.filter(p => p.familyId === familyId);
-}
-
-// Helper function to get all patients from the same family as a given patient
-export function getFamilyMembers(patientId: string): Patient[] {
-  const patient = getPatientById(patientId);
-  if (!patient || !patient.familyId) return [];
-  return getPatientsByFamilyId(patient.familyId);
-}
-
-// Helper function to get patients by their relationship to the account owner
-export function getPatientsByRelationship(relationship: string): Patient[] {
-  return patientsData.filter(p => p.relationshipToAccountOwner === relationship);
-}
-
-// Helper function to get all relationships available in the patient list
+// Get available relationships for patient forms
 export function getAvailableRelationships(): string[] {
-  const relationships = patientsData
-    .map(p => p.relationshipToAccountOwner)
-    .filter((rel): rel is string => rel !== undefined);
-  return Array.from(new Set(relationships));
+  return [
+    'Self',
+    'Spouse',
+    'Child',
+    'Parent',
+    'Sibling',
+    'Grandparent',
+    'Grandchild',
+    'Uncle',
+    'Aunt',
+    'Nephew',
+    'Niece',
+    'Cousin',
+    'Other',
+  ];
 }
 
-// Event interface
+// Calendar event interface
 export interface CalendarEvent {
   id: string;
-  date: number;
-  month: string;
-  type: 'appointment' | 'test';
   title: string;
-  patient: string; // Patient name (for backward compatibility)
-  patientId?: string; // Patient ID (optional, for better data structure)
-  time: string;
-  specialty: string;
+  date: string; // ISO date string
+  time?: string; // Time in HH:MM format
+  type: 'appointment' | 'test' | 'medication' | 'reminder' | 'other';
+  patientId: string;
+  patientName: string;
+  doctorId?: string;
+  doctorName?: string;
+  facility?: string;
+  description?: string;
+  status?: 'scheduled' | 'completed' | 'cancelled' | 'rescheduled';
+  notes?: string;
 }
 
-// Generate events starting from November 1st with 2-3 appointments per week
-// Generates from November 2025 to February 2026 (4 months)
-export function generateAppointmentsFromNovember(
-  startYear: number = 2025,
-  endMonth: number = 1, // February (0-indexed: 0=Jan, 1=Feb)
-  endYear: number = 2026
-): CalendarEvent[] {
+// Generate events for a specific month
+export function generateMonthEvents(month: number, year: number): CalendarEvent[] {
   const events: CalendarEvent[] = [];
-  const startDate = new Date(startYear, 10, 1); // November 1st, 2025
-  const endDate = new Date(endYear, endMonth + 1, 0); // Last day of February 2026
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
   
-  // Track appointments per week (using ISO week format)
-  const weeklyAppointments: { [key: string]: number } = {};
-  
-  // Generate for each month from November 2025 to February 2026
-  for (let monthOffset = 0; monthOffset < 4; monthOffset++) {
-    const month = (10 + monthOffset) % 12; // November (10) + offset, wrapping for Jan/Feb
-    const year = monthOffset < 2 ? 2025 : 2026; // Nov, Dec = 2025; Jan, Feb = 2026
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
+  for (let day = 1; day <= daysInMonth; day++) {
+    const date = new Date(year, month, day);
+    const dayOfWeek = date.getDay();
+    const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
     
-    // Generate appointments for each day of the month
-    for (let day = 1; day <= daysInMonth; day++) {
-      const date = new Date(year, month, day);
+    // Generate 1-3 events per week
+    if (dayOfWeek === 1 || dayOfWeek === 3 || dayOfWeek === 5) {
+      const eventCount = hash(`${dateStr}-events`) % 3 + 1;
       
-      // Skip if before November 1st, 2025
-      if (date < startDate) continue;
-      
-      // Skip if after end date
-      if (date > endDate) break;
-      
-      const dayOfWeek = date.getDay();
-      
-      // Skip weekends
-      if (dayOfWeek === 0 || dayOfWeek === 6) continue;
-      
-      // Calculate week key (Monday as start of week)
-      // Find the Monday of the week containing this date
-      const weekStart = new Date(date);
-      // Calculate days to subtract to get to Monday
-      // Sunday (0) -> subtract 6 days, Monday (1) -> subtract 0, Tuesday (2) -> subtract 1, etc.
-      const daysFromMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
-      weekStart.setDate(date.getDate() - daysFromMonday);
-      // Ensure we're using the correct week - if Nov 1st is Saturday, the week starts on Oct 27
-      // But we want to start counting from the week that contains Nov 1st
-      const weekKey = `${weekStart.getFullYear()}-${weekStart.getMonth()}-${weekStart.getDate()}`;
-      
-      // Initialize week counter if needed
-      if (!weeklyAppointments[weekKey]) {
-        weeklyAppointments[weekKey] = 0;
-      }
-      
-      // Generate 2-3 appointments per week
-      const appointmentsThisWeek = weeklyAppointments[weekKey];
-      if (appointmentsThisWeek >= 3) continue; // Already have 3 appointments this week
-      
-      // Determine if we should add an appointment (2-3 per week)
-      const seed = `${year}-${month}-${day}-${weekKey}`;
-      const seedHash = hash(seed);
-      const random = (seedHash % 100) / 100;
-      
-      // Always add first 2 appointments (guaranteed)
-      // For 3rd appointment: 70% chance to ensure we get more appointments throughout the month
-      const shouldAdd = appointmentsThisWeek < 2 || (appointmentsThisWeek === 2 && random < 0.7);
-      
-      if (shouldAdd) {
-        const eventType = eventTypes[0]; // appointment
-        const random1 = ((seedHash * 7) % 100) / 100;
-        const random2 = ((seedHash * 13) % 100) / 100;
-        const random3 = ((seedHash * 17) % 100) / 100;
+      for (let i = 0; i < eventCount; i++) {
+        const eventHash = hash(`${dateStr}-${i}`);
+        const eventType = eventTypes[eventHash % eventTypes.length];
+        const patient = patientsData[eventHash % patientsData.length];
+        const titleIndex = eventHash % eventType.titles.length;
+        const title = eventType.titles[titleIndex];
+        const specialtyIndex = eventHash % eventType.specialties.length;
+        const specialty = eventType.specialties[specialtyIndex];
         
-        const titleIndex = Math.floor(random1 * eventType.titles.length);
-        const specialtyIndex = Math.floor(random2 * eventType.specialties.length);
-        const patientIndex = Math.floor(random3 * patients.length);
-        const selectedPatient = patientsData[patientIndex];
-        const hour = 9 + Math.floor(random2 * 8); // 9 AM to 5 PM
-        const minute = random3 < 0.5 ? 0 : 30;
+        const hour = 9 + (eventHash % 8); // Between 9 AM and 5 PM
+        const minute = (eventHash % 4) * 15; // 0, 15, 30, or 45
+        const time = `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
         
         events.push({
-          id: `${year}-${month}-${day}-${appointmentsThisWeek}`,
-          date: day,
-          month: monthNames[month].substring(0, 3),
-          type: 'appointment',
-          title: eventType.titles[titleIndex],
-          patient: selectedPatient.name,
-          patientId: selectedPatient.id,
-          time: `${hour}:${minute.toString().padStart(2, '0')} ${hour >= 12 ? 'PM' : 'AM'}`,
-          specialty: eventType.specialties[specialtyIndex],
+          id: `event-${dateStr}-${i}`,
+          title,
+          date: dateStr,
+          time,
+          type: eventType.type as 'appointment' | 'test',
+          patientId: patient.id,
+          patientName: patient.name,
+          facility: specialty,
+          status: 'scheduled',
         });
-        
-        weeklyAppointments[weekKey]++;
       }
     }
   }
   
   return events.sort((a, b) => {
-    // Sort by year, month, then date
-    const aMonthIndex = monthNames.findIndex(m => m.substring(0, 3) === a.month);
-    const bMonthIndex = monthNames.findIndex(m => m.substring(0, 3) === b.month);
-    // Determine year based on month (Nov/Dec = 2025, Jan/Feb = 2026)
-    const aYear = aMonthIndex >= 10 ? 2025 : (aMonthIndex <= 1 ? 2026 : 2025);
-    const bYear = bMonthIndex >= 10 ? 2025 : (bMonthIndex <= 1 ? 2026 : 2025);
-    const aDate = new Date(aYear, aMonthIndex, a.date);
-    const bDate = new Date(bYear, bMonthIndex, b.date);
-    return aDate.getTime() - bDate.getTime();
+    const dateCompare = a.date.localeCompare(b.date);
+    if (dateCompare !== 0) return dateCompare;
+    return (a.time || '').localeCompare(b.time || '');
   });
 }
 
-
-// Generate events for a specific month
-export function generateMonthEvents(
-  month: number,
-  year: number,
-  monthNameArray: string[] = monthNames
-): CalendarEvent[] {
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const events: CalendarEvent[] = [];
-  
-  // Check if we should use November-based generation (Nov 2025 to Feb 2026)
-  const november2025 = new Date(2025, 10, 1); // November 1st, 2025
-  const february2026 = new Date(2026, 1, 28); // February 28, 2026
-  const currentDate = new Date(year, month, 1);
-  
-  // If the requested month is between November 2025 and February 2026, use the November-based generation
-  if (currentDate >= november2025 && currentDate <= february2026) {
-    const allEvents = generateAppointmentsFromNovember(2025, 1, 2026); // Nov 2025 to Feb 2026
-    // Filter events for the specific month and year
-    return allEvents.filter(event => {
-      const eventMonthIndex = monthNameArray.findIndex(m => m.substring(0, 3) === event.month);
-      // Determine year based on month index (Nov/Dec = 2025, Jan/Feb = 2026)
-      const eventYear = (eventMonthIndex >= 10) ? 2025 : (eventMonthIndex <= 1 ? 2026 : 2025);
-      return eventMonthIndex === month && eventYear === year;
-    });
-  }
-  
-  // Generate events per patient per week (max 2 appointments per week per patient)
-  const patientAppointments: { [key: string]: number[] } = {};
-  patients.forEach(patient => {
-    patientAppointments[patient] = [];
-  });
-  
-  // Generate events for the month
-  for (let day = 1; day <= daysInMonth; day++) {
-    const dayOfWeek = new Date(year, month, day).getDay();
-    const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
-    
-    if (isWeekend) continue; // Skip weekends
-    
-    const weekNumber = Math.floor((day - 1) / 7);
-    const seed = `${year}-${month}-${day}`;
-    const seedHash = hash(seed);
-    const random1 = (seedHash % 100) / 100;
-    const random2 = ((seedHash * 7) % 100) / 100;
-    const random3 = ((seedHash * 13) % 100) / 100;
-    
-    // For each patient, check if they can have an appointment this week (max 2 per week)
-    patients.forEach((patient, patientIndex) => {
-      const patientWeekKey = `${patient}-week-${weekNumber}`;
-      const patientWeekHash = hash(patientWeekKey);
-      const patientWeekRandom = (patientWeekHash % 100) / 100;
-      const selectedPatient = patientsData[patientIndex];
-      
-      // Each patient can have 0-2 appointments per week
-      const appointmentsThisWeek = patientAppointments[patient].filter(d => {
-        const dWeekNumber = Math.floor((d - 1) / 7);
-        return dWeekNumber === weekNumber;
-      }).length;
-      
-      // Determine if this patient should have an appointment on this day
-      const shouldHaveAppointment = appointmentsThisWeek < 2 && patientWeekRandom < 0.4;
-      
-      if (shouldHaveAppointment) {
-        const eventType = eventTypes[0]; // appointment
-        const titleIndex = Math.floor(random2 * eventType.titles.length);
-        const specialtyIndex = Math.floor(random3 * eventType.specialties.length);
-        const hour = 9 + Math.floor(random2 * 8); // 9 AM to 5 PM
-        const minute = random3 < 0.5 ? 0 : 30;
-        
-        events.push({
-          id: `${day}-${patientIndex}-appointment`,
-          date: day,
-          month: monthNameArray[month].substring(0, 3),
-          type: 'appointment',
-          title: eventType.titles[titleIndex],
-          patient: selectedPatient.name,
-          patientId: selectedPatient.id,
-          time: `${hour}:${minute.toString().padStart(2, '0')} ${hour >= 12 ? 'PM' : 'AM'}`,
-          specialty: eventType.specialties[specialtyIndex],
-        });
-        
-        patientAppointments[patient].push(day);
-      }
-    });
-    
-    // Generate 0-1 tests per weekday (not patient-specific)
-    if (random3 < 0.3) {
-      const eventType = eventTypes[1]; // test
-      const titleIndex = Math.floor(random1 * eventType.titles.length);
-      const specialtyIndex = Math.floor(random2 * eventType.specialties.length);
-      const patientIndex = Math.floor(random3 * patients.length);
-      const selectedPatient = patientsData[patientIndex];
-      const hour = 8 + Math.floor(random1 * 4); // 8 AM to 12 PM
-      
-      events.push({
-        id: `${day}-test`,
-        date: day,
-        month: monthNameArray[month].substring(0, 3),
-        type: 'test',
-        title: eventType.titles[titleIndex],
-        patient: selectedPatient.name,
-        patientId: selectedPatient.id,
-        time: `${hour}:00 ${hour >= 12 ? 'PM' : 'AM'}`,
-        specialty: eventType.specialties[specialtyIndex],
-      });
-    }
-  }
-  
-  // Sort by date
-  return events.sort((a, b) => a.date - b.date);
-}
-
-// Get current month events
-// For November 2025 to February 2026, use the November-based generation
+// Get events for current month
 export function getCurrentMonthEvents(): CalendarEvent[] {
-  const today = new Date();
-  const month = today.getMonth();
-  const year = today.getFullYear();
-  
-  // Check if we're in the November 2025 to February 2026 range
-  const november2025 = new Date(2025, 10, 1);
-  const february2026 = new Date(2026, 1, 28);
-  const currentDate = new Date(year, month, 1);
-  
-  if (currentDate >= november2025 && currentDate <= february2026) {
-    const allEvents = generateAppointmentsFromNovember(2025, 1, 2026);
-    return allEvents.filter(event => {
-      const eventMonthIndex = monthNames.findIndex(m => m.substring(0, 3) === event.month);
-      const eventYear = eventMonthIndex >= 10 ? 2025 : (eventMonthIndex <= 1 ? 2026 : 2025);
-      return eventMonthIndex === month && eventYear === year;
-    });
-  }
-  
-  return generateMonthEvents(month, year);
+  const now = new Date();
+  return generateMonthEvents(now.getMonth(), now.getFullYear());
 }
 
-// Get next appointment from events (for upcoming appointments widget)
-export function getNextAppointment(events: CalendarEvent[]): CalendarEvent | null {
+// Get upcoming appointments (next 7 days)
+export function getUpcomingAppointments(): CalendarEvent[] {
+  const events = getCurrentMonthEvents();
   const today = new Date();
-  const currentDay = today.getDate();
-  const nextWeekEnd = currentDay + 7; // Next 7 days
+  const nextWeek = new Date(today);
+  nextWeek.setDate(today.getDate() + 7);
   
-  const nextAppointment = events
-    .filter(event => {
-      // Only show appointments (not tests)
-      if (event.type !== 'appointment') return false;
-      // Show events from today to next week (7 days)
-      return event.date >= currentDay && event.date <= nextWeekEnd;
-    })
-    .sort((a, b) => {
-      // Sort by date first, then by time
-      if (a.date !== b.date) return a.date - b.date;
-      // Extract hour from time string for comparison
-      const aHour = parseInt(a.time.split(':')[0]);
-      const bHour = parseInt(b.time.split(':')[0]);
-      return aHour - bHour;
-    })[0]; // Get only the first (next) appointment
-  
-  return nextAppointment || null;
-}
-
-// Get all upcoming appointments from events (for upcoming appointments list)
-// Shows appointments for this week and next week (14 days total)
-export function getUpcomingAppointments(events: CalendarEvent[]): CalendarEvent[] {
-  const today = new Date();
-  const currentDay = today.getDate();
-  const currentMonth = today.getMonth();
-  const currentYear = today.getFullYear();
-  const twoWeeksEnd = currentDay + 14; // This week + next week (14 days)
-  
-  return events
-    .filter(event => {
-      // Only show appointments (not tests)
-      if (event.type !== 'appointment') return false;
-      
-      // Check if event is in the current month and within the next 14 days
-      const eventDate = new Date(currentYear, currentMonth, event.date);
-      const todayDate = new Date(currentYear, currentMonth, currentDay);
-      const twoWeeksDate = new Date(currentYear, currentMonth, twoWeeksEnd);
-      
-      return eventDate >= todayDate && eventDate <= twoWeeksDate;
-    })
-    .sort((a, b) => {
-      // Sort by date first, then by time
-      if (a.date !== b.date) return a.date - b.date;
-      // Extract hour from time string for comparison
-      const aHour = parseInt(a.time.split(':')[0]);
-      const bHour = parseInt(b.time.split(':')[0]);
-      return aHour - bHour;
-    });
+  return events.filter(event => {
+    const eventDate = new Date(event.date);
+    return eventDate >= today && eventDate <= nextWeek && event.type === 'appointment';
+  });
 }
 
 // Stats data
 export const statsData = {
-  activePatients: {
-    value: 3,
-    label: 'Active People',
-    trend: '+1 this month',
-    trendType: 'positive' as const,
-    chartData: [3, 4, 3, 4, 5, 4, 3],
-  },
-  medicalDocuments: {
-    value: 156,
-    label: 'Medical Documents',
-    trend: '+8 this week',
-    trendType: 'positive' as const,
-    chartData: [4, 5, 4, 6, 5, 7, 6],
-  },
-  overdueTests: {
-    value: 2,
-    label: 'Overdue Tests',
-    trend: 'Action needed',
-    trendType: 'negative' as const,
-    chartData: [1, 2, 1, 2, 1, 2, 2],
-  },
-  activeMedications: {
-    value: 8,
-    label: 'Active Medications',
-    trend: 'All on schedule',
-    trendType: 'neutral' as const,
-    chartData: [5, 6, 7, 6, 7, 8, 8],
-  },
-  carePlans: {
-    value: 5,
-    label: 'Care Plans',
-    trend: '2 updated',
-    trendType: 'positive' as const,
-    chartData: [3, 4, 4, 5, 4, 5, 5],
-  },
+  activePatients: patientsData.length,
+  upcomingAppointments: 5,
+  recentRecords: 12,
+  activeMedications: 8,
 };
 
-// Document folders data
+// Document folders
 export const documentFolders = [
-  {
-    icon: '🔬',
-    name: 'MRI Scans',
-    count: 24,
-    trend: '+3',
-    trendType: 'positive' as const,
-  },
-  {
-    icon: '🏥',
-    name: 'CT Scans',
-    count: 18,
-    trend: 'No change',
-    trendType: 'neutral' as const,
-  },
-  {
-    icon: '💉',
-    name: 'Blood Tests',
-    count: 42,
-    trend: '+5',
-    trendType: 'positive' as const,
-  },
-  {
-    icon: '📄',
-    name: 'Doctor Letters',
-    count: 31,
-    trend: '+2',
-    trendType: 'positive' as const,
-  },
-  {
-    icon: '📋',
-    name: 'Prescriptions',
-    count: 28,
-    trend: 'No change',
-    trendType: 'neutral' as const,
-  },
-  {
-    icon: '🏥',
-    name: 'Hospital Discharge',
-    count: 13,
-    trend: 'No change',
-    trendType: 'neutral' as const,
-  },
+  { id: 'folder-1', name: 'Lab Results', count: 24, color: '#3b82f6' },
+  { id: 'folder-2', name: 'Imaging', count: 18, color: '#8b5cf6' },
+  { id: 'folder-3', name: 'Prescriptions', count: 12, color: '#10b981' },
+  { id: 'folder-4', name: 'Insurance', count: 8, color: '#f59e0b' },
+  { id: 'folder-5', name: 'Doctors Notes', count: 15, color: '#ef4444' },
 ];
 
-// People profiles data (derived from patientsData)
-export const patientProfiles = patientsData.map((patient, index) => ({
+// Patient profiles
+export const patientProfiles = patientsData.map(patient => ({
   id: patient.id,
-  initials: patient.initials,
   name: patient.name,
-  appointments: index === 0 ? 3 : index === 1 ? 2 : 1, // Mock appointment counts
-  carePlans: index === 0 ? 5 : index === 1 ? 3 : 2, // Mock care plan counts
-  meta: `${index === 0 ? 3 : index === 1 ? 2 : 1} appointments • ${index === 0 ? 5 : index === 1 ? 3 : 2} care plans`,
+  initials: patient.initials,
+  age: patient.age,
+  conditions: patient.medicalConditions || [],
+  nextAppointment: '2025-02-15',
 }));
-
-// Care plans data
-export const carePlansData = {
-  summary: {
-    active: 5,
-    change: '+2 this month',
-    completion: 75,
-  },
-  plans: [
-    {
-      title: 'Post-Surgery Recovery',
-      patient: 'John Doe',
-      progress: 80,
-      completed: 8,
-      total: 10,
-    },
-    {
-      title: 'Diabetes Management',
-      patient: 'Jane Doe',
-      progress: 60,
-      completed: 6,
-      total: 10,
-    },
-    {
-      title: 'Physical Therapy',
-      patient: 'Robert Doe',
-      progress: 90,
-      completed: 9,
-      total: 10,
-    },
-  ],
-};
 
 // Second opinion data
 export const secondOpinionData = {
-  pending: 2,
-  completed: 8,
+  pending: 1,
+  completed: 1,
   requests: [
     {
-      title: 'Cardiology Review',
-      patient: 'John Doe',
-      status: 'In Progress',
-      statusType: 'pending' as const,
-      description: 'Awaiting specialist',
+      id: 'so-1',
+      title: 'Second Opinion - Kidney Cancer Treatment',
+      patient: 'John Feldman',
+      condition: 'Left Kidney Cancer',
+      currentDoctor: 'Dr. Sarah Johnson',
+      status: 'Pending',
+      statusType: 'pending',
+      requestedDate: '2025-01-10',
+      description: 'Seeking second opinion on treatment options',
     },
     {
-      title: 'Oncology Consultation',
-      patient: 'Jane Doe',
-      status: 'In Progress',
-      statusType: 'pending' as const,
+      id: 'so-2',
+      title: 'Second Opinion - Diabetes Management',
+      patient: 'Juli Feldman',
+      condition: 'Type 2 Diabetes',
+      currentDoctor: 'Dr. Sarah Johnson',
+      status: 'Completed',
+      statusType: 'completed',
+      requestedDate: '2024-12-15',
+      completedDate: '2025-01-05',
       description: 'Scheduled for review',
     },
   ],
 };
 
-// Medications data
+// Care Plan interface
+export interface CarePlan {
+  id: string;
+  patientId: string;
+  patientName: string;
+  title: string;
+  description?: string;
+  condition: string;
+  treatment: string;
+  status: 'active' | 'completed' | 'paused' | 'cancelled';
+  startDate: string; // ISO date string
+  endDate: string; // ISO date string
+  doctorId?: string;
+  doctorName?: string;
+  facility?: string;
+  milestones: CarePlanMilestone[];
+  medications?: string[];
+  notes?: string;
+}
+
+// Care Plan Milestone interface
+export interface CarePlanMilestone {
+  id: string;
+  title: string;
+  description?: string;
+  status: 'completed' | 'in-progress' | 'pending' | 'overdue';
+  dueDate: string; // ISO date string
+  completedDate?: string; // ISO date string
+  type?: 'treatment' | 'test' | 'appointment' | 'checkup' | 'other';
+}
+
+// Care plans data
+export const carePlansData: CarePlan[] = [
+  {
+    id: 'plan-1',
+    patientId: 'patient-1',
+    patientName: 'John Feldman',
+    title: 'Keytruda Immunotherapy Treatment',
+    description: 'Biological treatment with Keytruda (pembrolizumab) for kidney cancer',
+    condition: 'Left Kidney Cancer',
+    treatment: 'Keytruda (pembrolizumab) - Immunotherapy',
+    status: 'active',
+    startDate: '2025-11-01',
+    endDate: '2026-12-31',
+    doctorId: 'doctor-3',
+    doctorName: 'Dr. Emily Carter',
+    facility: 'New York Cancer Center',
+    medications: ['Keytruda (pembrolizumab)'],
+    milestones: [
+      {
+        id: 'm1',
+        title: 'Initial Treatment Cycle',
+        description: 'First infusion of Keytruda',
+        status: 'pending',
+        dueDate: '2025-11-05',
+        type: 'treatment',
+      },
+      {
+        id: 'm2',
+        title: 'Second Treatment Cycle',
+        description: 'Second infusion (3 weeks after first)',
+        status: 'pending',
+        dueDate: '2025-11-26',
+        type: 'treatment',
+      },
+      {
+        id: 'm3',
+        title: 'Baseline CT Scan',
+        description: 'CT scan to establish baseline before treatment',
+        status: 'pending',
+        dueDate: '2025-11-01',
+        type: 'test',
+      },
+      {
+        id: 'm4',
+        title: 'First Follow-up CT Scan',
+        description: 'CT scan after 3 cycles to assess response',
+        status: 'pending',
+        dueDate: '2025-12-17',
+        type: 'test',
+      },
+      {
+        id: 'm5',
+        title: 'Oncology Consultation',
+        description: 'Review treatment progress and side effects',
+        status: 'pending',
+        dueDate: '2025-12-20',
+        type: 'appointment',
+      },
+      {
+        id: 'm6',
+        title: 'Third Treatment Cycle',
+        description: 'Third infusion',
+        status: 'pending',
+        dueDate: '2025-12-17',
+        type: 'treatment',
+      },
+      {
+        id: 'm7',
+        title: 'Fourth Treatment Cycle',
+        description: 'Fourth infusion',
+        status: 'pending',
+        dueDate: '2026-01-07',
+        type: 'treatment',
+      },
+      {
+        id: 'm8',
+        title: 'Second Follow-up CT Scan',
+        description: 'CT scan after 6 cycles',
+        status: 'pending',
+        dueDate: '2026-01-28',
+        type: 'test',
+      },
+      {
+        id: 'm9',
+        title: 'Mid-Treatment Assessment',
+        description: 'Comprehensive assessment at treatment midpoint',
+        status: 'pending',
+        dueDate: '2026-05-15',
+        type: 'checkup',
+      },
+      {
+        id: 'm10',
+        title: 'Final Treatment Cycle',
+        description: 'Last scheduled infusion',
+        status: 'pending',
+        dueDate: '2026-12-10',
+        type: 'treatment',
+      },
+      {
+        id: 'm11',
+        title: 'Post-Treatment CT Scan',
+        description: 'Final CT scan to assess treatment outcome',
+        status: 'pending',
+        dueDate: '2026-12-24',
+        type: 'test',
+      },
+      {
+        id: 'm12',
+        title: 'Final Oncology Consultation',
+        description: 'Review final results and plan follow-up care',
+        status: 'pending',
+        dueDate: '2026-12-31',
+        type: 'appointment',
+      },
+    ],
+    notes: 'Keytruda is administered via IV infusion every 3 weeks. Treatment duration is approximately 13 months. Regular monitoring for immune-related side effects is required.',
+  },
+  {
+    id: 'plan-2',
+    patientId: 'patient-2',
+    patientName: 'Juli Feldman',
+    title: 'Diabetes Management Plan',
+    description: 'Comprehensive diabetes care and monitoring plan',
+    condition: 'Type 2 Diabetes',
+    treatment: 'Metformin, Lifestyle Management',
+    status: 'active',
+    startDate: '2024-11-01',
+    endDate: '2025-05-01',
+    doctorId: 'doctor-1',
+    doctorName: 'Dr. Sarah Johnson',
+    facility: 'Manhattan Medical Center',
+    medications: ['Metformin'],
+    milestones: [
+      { id: 'm1', title: 'HbA1c Target', description: 'Achieve HbA1c below 7%', status: 'in-progress', dueDate: '2025-02-01', type: 'checkup' },
+      { id: 'm2', title: 'Weight Management', description: 'Lose 10 pounds', status: 'in-progress', dueDate: '2025-03-01', type: 'checkup' },
+    ],
+  },
+];
+
+// Helper functions for care plans
+export function getCarePlansByPatientId(patientId: string): CarePlan[] {
+  return carePlansData.filter(plan => plan.patientId === patientId);
+}
+
+export function getActiveCarePlansByPatientId(patientId: string): CarePlan[] {
+  return carePlansData.filter(plan => plan.patientId === patientId && plan.status === 'active');
+}
+
+export function getCarePlanById(id: string): CarePlan | undefined {
+  return carePlansData.find(plan => plan.id === id);
+}
+
+// Medications data - Basic structure (kept for backward compatibility)
 export const medicationsData = {
   summary: {
     active: 8,
@@ -649,22 +502,927 @@ export const medicationsData = {
   medications: [
     {
       name: 'Metformin',
-      patient: 'Jane Doe',
+      patient: 'Juli Feldman',
       dosage: '500mg twice daily',
       nextDose: 'Today 8:00 AM',
     },
     {
       name: 'Aspirin',
-      patient: 'John Doe',
+      patient: 'John Feldman',
       dosage: '81mg daily',
       nextDose: 'Today 7:00 AM',
     },
     {
       name: 'Lisinopril',
-      patient: 'Robert Doe',
+      patient: 'Robert Feldman',
       dosage: '10mg daily',
       nextDose: 'Today 9:00 AM',
     },
   ],
 };
 
+// Medication interface with full prescription details
+export interface Medication {
+  id: string;
+  name: string;
+  genericName?: string;
+  patientId: string;
+  patientName: string;
+  dosage: string; // e.g., "500mg"
+  frequency: string; // e.g., "twice daily", "once daily", "every 8 hours"
+  instructions?: string; // Additional instructions like "with food", "before meals"
+  prescribedBy: string; // Doctor name
+  doctorId?: string;
+  prescriptionDate: string; // ISO date string
+  startDate: string; // ISO date string
+  endDate?: string; // ISO date string (if applicable)
+  status: 'active' | 'completed' | 'discontinued';
+  refillsRemaining?: number;
+  totalRefills?: number;
+  pharmacy?: string;
+  pharmacyPhone?: string;
+  indication?: string; // What it's prescribed for
+  sideEffects?: string[];
+  notes?: string;
+}
+
+// Medications data with full prescription details
+export const medications: Medication[] = [
+  {
+    id: 'med-1',
+    name: 'Metformin',
+    genericName: 'Metformin HCl',
+    patientId: 'patient-2',
+    patientName: 'Juli Feldman',
+    dosage: '500mg',
+    frequency: 'Twice daily',
+    instructions: 'Take with meals',
+    prescribedBy: 'Dr. Sarah Johnson',
+    doctorId: 'doctor-1',
+    prescriptionDate: '2025-01-15',
+    startDate: '2025-01-16',
+    status: 'active',
+    refillsRemaining: 2,
+    totalRefills: 3,
+    pharmacy: 'CVS Pharmacy',
+    pharmacyPhone: '+1 (555) 234-5678',
+    indication: 'Type 2 Diabetes',
+    sideEffects: ['Nausea', 'Diarrhea'],
+    notes: 'Monitor blood glucose levels',
+  },
+  {
+    id: 'med-2',
+    name: 'Aspirin',
+    genericName: 'Acetylsalicylic Acid',
+    patientId: 'patient-1',
+    patientName: 'John Feldman',
+    dosage: '81mg',
+    frequency: 'Once daily',
+    instructions: 'Take with water',
+    prescribedBy: 'Dr. Sarah Johnson',
+    doctorId: 'doctor-1',
+    prescriptionDate: '2025-01-10',
+    startDate: '2025-01-11',
+    status: 'active',
+    refillsRemaining: 5,
+    totalRefills: 6,
+    pharmacy: 'Walgreens',
+    pharmacyPhone: '+1 (555) 345-6789',
+    indication: 'Cardiovascular protection',
+    notes: 'Low-dose aspirin for heart health',
+  },
+  {
+    id: 'med-3',
+    name: 'Lisinopril',
+    genericName: 'Lisinopril',
+    patientId: 'patient-3',
+    patientName: 'Robert Feldman',
+    dosage: '10mg',
+    frequency: 'Once daily',
+    instructions: 'Take in the morning',
+    prescribedBy: 'Dr. Robert Martinez',
+    doctorId: 'doctor-4',
+    prescriptionDate: '2025-01-08',
+    startDate: '2025-01-09',
+    status: 'active',
+    refillsRemaining: 1,
+    totalRefills: 3,
+    pharmacy: 'Rite Aid',
+    pharmacyPhone: '+1 (555) 456-7890',
+    indication: 'Hypertension',
+    sideEffects: ['Dry cough', 'Dizziness'],
+    notes: 'Monitor blood pressure regularly',
+  },
+  {
+    id: 'med-4',
+    name: 'Atorvastatin',
+    genericName: 'Atorvastatin Calcium',
+    patientId: 'patient-3',
+    patientName: 'Robert Feldman',
+    dosage: '20mg',
+    frequency: 'Once daily',
+    instructions: 'Take at bedtime',
+    prescribedBy: 'Dr. Robert Martinez',
+    doctorId: 'doctor-4',
+    prescriptionDate: '2025-01-08',
+    startDate: '2025-01-09',
+    status: 'active',
+    refillsRemaining: 2,
+    totalRefills: 3,
+    pharmacy: 'Rite Aid',
+    pharmacyPhone: '+1 (555) 456-7890',
+    indication: 'High Cholesterol',
+    sideEffects: ['Muscle pain', 'Liver enzyme elevation'],
+    notes: 'Take with food to reduce stomach upset',
+  },
+  {
+    id: 'med-5',
+    name: 'Omeprazole',
+    genericName: 'Omeprazole',
+    patientId: 'patient-1',
+    patientName: 'John Feldman',
+    dosage: '20mg',
+    frequency: 'Once daily',
+    instructions: 'Take before breakfast',
+    prescribedBy: 'Dr. Sarah Johnson',
+    doctorId: 'doctor-1',
+    prescriptionDate: '2024-12-25',
+    startDate: '2024-12-26',
+    endDate: '2025-02-26',
+    status: 'active',
+    refillsRemaining: 1,
+    totalRefills: 2,
+    pharmacy: 'Walgreens',
+    pharmacyPhone: '+1 (555) 345-6789',
+    indication: 'Acid reflux',
+    notes: 'Short-term treatment for post-surgery',
+  },
+  {
+    id: 'med-6',
+    name: 'Gabapentin',
+    genericName: 'Gabapentin',
+    patientId: 'patient-1',
+    patientName: 'John Feldman',
+    dosage: '300mg',
+    frequency: 'Three times daily',
+    instructions: 'Take with food',
+    prescribedBy: 'Dr. Patricia Brown',
+    doctorId: 'doctor-7',
+    prescriptionDate: '2024-12-20',
+    startDate: '2024-12-21',
+    endDate: '2025-01-21',
+    status: 'completed',
+    refillsRemaining: 0,
+    totalRefills: 1,
+    pharmacy: 'CVS Pharmacy',
+    pharmacyPhone: '+1 (555) 234-5678',
+    indication: 'Post-surgical pain',
+    sideEffects: ['Drowsiness', 'Dizziness'],
+    notes: 'Completed course after surgery recovery',
+  },
+  {
+    id: 'med-7',
+    name: 'Levothyroxine',
+    genericName: 'Levothyroxine Sodium',
+    patientId: 'patient-2',
+    patientName: 'Juli Feldman',
+    dosage: '75mcg',
+    frequency: 'Once daily',
+    instructions: 'Take on empty stomach, 30 minutes before breakfast',
+    prescribedBy: 'Dr. Sarah Johnson',
+    doctorId: 'doctor-1',
+    prescriptionDate: '2024-11-01',
+    startDate: '2024-11-02',
+    status: 'active',
+    refillsRemaining: 4,
+    totalRefills: 6,
+    pharmacy: 'CVS Pharmacy',
+    pharmacyPhone: '+1 (555) 234-5678',
+    indication: 'Hypothyroidism',
+    notes: 'Lifelong medication, monitor TSH levels',
+  },
+  {
+    id: 'med-8',
+    name: 'Metoprolol',
+    genericName: 'Metoprolol Tartrate',
+    patientId: 'patient-3',
+    patientName: 'Robert Feldman',
+    dosage: '25mg',
+    frequency: 'Twice daily',
+    instructions: 'Take with meals',
+    prescribedBy: 'Dr. Robert Martinez',
+    doctorId: 'doctor-4',
+    prescriptionDate: '2024-10-15',
+    startDate: '2024-10-16',
+    status: 'active',
+    refillsRemaining: 3,
+    totalRefills: 6,
+    pharmacy: 'Rite Aid',
+    pharmacyPhone: '+1 (555) 456-7890',
+    indication: 'Hypertension, Heart rate control',
+    sideEffects: ['Fatigue', 'Cold hands and feet'],
+    notes: 'Do not stop abruptly',
+  },
+];
+
+// Helper functions for medications
+export function getMedicationsByPatientId(patientId: string): Medication[] {
+  return medications.filter(med => med.patientId === patientId);
+}
+
+export function getActiveMedicationsByPatientId(patientId: string): Medication[] {
+  return medications.filter(med => med.patientId === patientId && med.status === 'active');
+}
+
+export function getMedicationById(id: string): Medication | undefined {
+  return medications.find(med => med.id === id);
+}
+
+export function getMedicationsByDoctorId(doctorId: string): Medication[] {
+  return medications.filter(med => med.doctorId === doctorId);
+}
+
+// Doctor interface
+export interface Doctor {
+  id: string;
+  name: string;
+  specialty: string;
+  email?: string;
+  phone?: string;
+  patients: string[]; // Patient IDs
+  medicalProviders?: string[]; // Medical Provider IDs - a doctor can be associated with multiple providers
+  lastVisit?: string; // ISO date string
+  nextAppointment?: string; // ISO date string
+  notes?: string;
+}
+
+// Doctors data
+export const doctorsData: Doctor[] = [
+  {
+    id: 'doctor-1',
+    name: 'Dr. Sarah Johnson',
+    specialty: 'General Practice',
+    email: 'sarah.johnson@maccabi.co.il',
+    phone: '+972-3-777-1111',
+    patients: ['patient-1', 'patient-2'],
+    medicalProviders: ['provider-1'], // Maccabi HealthCare
+    lastVisit: '2025-01-15',
+  },
+  {
+    id: 'doctor-2',
+    name: 'Dr. Michael Chen',
+    specialty: 'Cardiology',
+    email: 'mchen@maccabi.co.il',
+    phone: '+972-3-777-2222',
+    patients: ['patient-1'],
+    medicalProviders: ['provider-1', 'provider-3'], // Maccabi HealthCare, Assuta Medical Center
+    lastVisit: '2024-12-10',
+  },
+  {
+    id: 'doctor-3',
+    name: 'Dr. Emily Carter',
+    specialty: 'Oncology',
+    email: 'ecarter@sheba.co.il',
+    phone: '+972-3-530-3333',
+    patients: ['patient-1', 'patient-2'],
+    medicalProviders: ['provider-2'], // Sheba Medical Center
+    lastVisit: '2024-11-20',
+  },
+  {
+    id: 'doctor-4',
+    name: 'Dr. Robert Martinez',
+    specialty: 'Cardiology',
+    email: 'rmartinez@maccabi.co.il',
+    phone: '+972-3-777-4444',
+    patients: ['patient-3'],
+    medicalProviders: ['provider-1'], // Maccabi HealthCare
+    lastVisit: '2025-01-08',
+  },
+  {
+    id: 'doctor-5',
+    name: 'Dr. Lisa Wang',
+    specialty: 'Endocrinology',
+    email: 'lwang@maccabi.co.il',
+    phone: '+972-3-777-5555',
+    patients: ['patient-2'],
+    medicalProviders: ['provider-1'], // Maccabi HealthCare
+    lastVisit: '2024-12-05',
+  },
+  {
+    id: 'doctor-6',
+    name: 'Dr. James Wilson',
+    specialty: 'Neurology',
+    email: 'jwilson@assuta.co.il',
+    phone: '+972-3-764-6666',
+    patients: ['patient-1'],
+    medicalProviders: ['provider-3'], // Assuta Medical Center
+    lastVisit: '2024-10-15',
+  },
+  {
+    id: 'doctor-7',
+    name: 'Dr. Patricia Brown',
+    specialty: 'Urology',
+    email: 'pbrown@sheba.co.il',
+    phone: '+972-3-530-7777',
+    patients: ['patient-1'],
+    medicalProviders: ['provider-2'], // Sheba Medical Center
+    lastVisit: '2024-12-20',
+  },
+  {
+    id: 'doctor-8',
+    name: 'Dr. David Kim',
+    specialty: 'Orthopedics',
+    email: 'dkim@assuta.co.il',
+    phone: '+972-3-764-8888',
+    patients: ['patient-3'],
+    medicalProviders: ['provider-3'], // Assuta Medical Center
+    lastVisit: '2024-09-10',
+  },
+];
+
+export function getDoctorsByPatientId(patientId: string): Doctor[] {
+  return doctorsData.filter(doctor => doctor.patients.includes(patientId));
+}
+
+export function getDoctorsByMedicalProviderId(providerId: string): Doctor[] {
+  return doctorsData.filter(doctor => doctor.medicalProviders?.includes(providerId));
+}
+
+export function getMedicalProvidersByDoctorId(doctorId: string): MedicalProvider[] {
+  return medicalProvidersData.filter(provider => provider.doctors?.includes(doctorId));
+}
+
+export function getDoctorById(id: string): Doctor | undefined {
+  return doctorsData.find(doctor => doctor.id === id);
+}
+
+// Medical Record interface
+export interface MedicalRecord {
+  id: string;
+  title: string;
+  type: 'MRI' | 'CT Scan' | 'PET Scan' | 'X-Ray' | 'Ultrasound' | 'Blood Test' | 'Lab Test' | 'Biopsy' | 'Doctor Letter' | 'Prescription' | 'Hospital Discharge' | 'Surgery Report' | 'Pathology Report' | 'Other';
+  patientId: string;
+  patientName: string;
+  date: string; // ISO date string (medical date - when the test/procedure was done)
+  doctorId?: string;
+  doctorName?: string;
+  facility?: string;
+  description?: string;
+  fileUrl?: string; // URL to the actual file/document
+  tags?: string[]; // e.g., ['urgent', 'follow-up', 'for doctor']
+  notes?: string;
+  // Submission tracking
+  channel?: 'Email' | 'Telegram' | 'WhatsApp' | 'Direct Upload'; // How the document was submitted
+  receivedAt?: string; // ISO date string - when we received the document
+  processedAt?: string; // ISO date string - when AI finished processing it
+}
+
+// Medical Records data
+export const medicalRecordsData: MedicalRecord[] = [
+  // MRI Scans
+  {
+    id: 'record-1',
+    title: 'MRI Brain - T1 Weighted',
+    type: 'MRI',
+    patientId: 'patient-1',
+    patientName: 'John Feldman',
+    date: '2025-01-10',
+    doctorId: 'doctor-6',
+    doctorName: 'Dr. James Wilson',
+    facility: 'Neurological Institute',
+    description: 'MRI brain scan with contrast. No abnormalities detected.',
+    tags: ['follow-up'],
+    channel: 'Email',
+    receivedAt: '2025-01-11T10:30:00Z',
+    processedAt: '2025-01-11T10:35:00Z',
+  },
+  {
+    id: 'record-2',
+    title: 'MRI Brain - T2/FLAIR',
+    type: 'MRI',
+    patientId: 'patient-1',
+    patientName: 'John Feldman',
+    date: '2025-01-10',
+    doctorId: 'doctor-6',
+    doctorName: 'Dr. James Wilson',
+    facility: 'Neurological Institute',
+    description: 'Follow-up MRI scan.',
+    tags: [],
+    channel: 'Email',
+    receivedAt: '2025-01-11T10:30:00Z',
+    processedAt: '2025-01-11T10:35:00Z',
+  },
+  {
+    id: 'record-3',
+    title: 'MRI Brain with Lesion',
+    type: 'MRI',
+    patientId: 'patient-2',
+    patientName: 'Juli Feldman',
+    date: '2024-12-15',
+    doctorId: 'doctor-6',
+    doctorName: 'Dr. James Wilson',
+    facility: 'Neurological Institute',
+    description: 'MRI showing small lesion in left frontal lobe. Follow-up recommended.',
+    tags: ['urgent', 'follow-up'],
+    channel: 'Direct Upload',
+    receivedAt: '2024-12-16T09:15:00Z',
+    processedAt: '2024-12-16T09:20:00Z',
+  },
+  {
+    id: 'record-4',
+    title: 'MRI Knee - Right',
+    type: 'MRI',
+    patientId: 'patient-3',
+    patientName: 'Robert Feldman',
+    date: '2024-11-20',
+    doctorId: 'doctor-8',
+    doctorName: 'Dr. David Kim',
+    facility: 'Bone & Joint Clinic',
+    description: 'MRI of right knee showing meniscal tear.',
+    tags: [],
+    channel: 'Email',
+    receivedAt: '2024-11-21T14:20:00Z',
+    processedAt: '2024-11-21T14:25:00Z',
+  },
+  
+  // CT Scans
+  {
+    id: 'record-5',
+    title: 'CT Scan - Brain',
+    type: 'CT Scan',
+    patientId: 'patient-1',
+    patientName: 'John Feldman',
+    date: '2024-12-05',
+    doctorId: 'doctor-6',
+    doctorName: 'Dr. James Wilson',
+    facility: 'Neurological Institute',
+    description: 'CT scan of brain without contrast.',
+    tags: [],
+    channel: 'Email',
+    receivedAt: '2024-12-06T11:00:00Z',
+    processedAt: '2024-12-06T11:05:00Z',
+  },
+  {
+    id: 'record-6',
+    title: 'CT Scan - Chest',
+    type: 'CT Scan',
+    patientId: 'patient-2',
+    patientName: 'Juli Feldman',
+    date: '2024-11-10',
+    doctorId: 'doctor-3',
+    doctorName: 'Dr. Emily Carter',
+    facility: 'New York Cancer Center',
+    description: 'CT chest scan for cancer staging.',
+    tags: ['urgent'],
+    channel: 'Email',
+    receivedAt: '2024-11-11T08:30:00Z',
+    processedAt: '2024-11-11T08:35:00Z',
+  },
+  {
+    id: 'record-7',
+    title: 'CT Scan - Abdomen',
+    type: 'CT Scan',
+    patientId: 'patient-1',
+    patientName: 'John Feldman',
+    date: '2024-12-18',
+    doctorId: 'doctor-7',
+    doctorName: 'Dr. Patricia Brown',
+    facility: 'New York Surgical Center',
+    description: 'CT abdomen scan pre-surgery.',
+    tags: [],
+    channel: 'Direct Upload',
+    receivedAt: '2024-12-19T10:00:00Z',
+    processedAt: '2024-12-19T10:05:00Z',
+  },
+  
+  // PET-CT Scans
+  {
+    id: 'record-8',
+    title: 'PET-CT Brain',
+    type: 'PET Scan',
+    patientId: 'patient-1',
+    patientName: 'John Feldman',
+    date: '2024-12-20',
+    doctorId: 'doctor-6',
+    doctorName: 'Dr. James Wilson',
+    facility: 'Neurological Institute',
+    description: 'PET-CT scan of brain for cancer detection.',
+    tags: ['urgent'],
+    channel: 'Email',
+    receivedAt: '2024-12-21T09:00:00Z',
+    processedAt: '2024-12-21T09:10:00Z',
+  },
+  {
+    id: 'record-9',
+    title: 'PET-CT Abdomen',
+    type: 'PET Scan',
+    patientId: 'patient-2',
+    patientName: 'Juli Feldman',
+    date: '2024-11-15',
+    doctorId: 'doctor-3',
+    doctorName: 'Dr. Emily Carter',
+    facility: 'New York Cancer Center',
+    description: 'PET-CT abdomen for metastasis screening.',
+    tags: ['urgent'],
+    channel: 'Email',
+    receivedAt: '2024-11-16T10:30:00Z',
+    processedAt: '2024-11-16T10:35:00Z',
+  },
+  
+  // X-Rays
+  {
+    id: 'record-10',
+    title: 'X-Ray - Chest',
+    type: 'X-Ray',
+    patientId: 'patient-3',
+    patientName: 'Robert Feldman',
+    date: '2024-10-05',
+    doctorId: 'doctor-4',
+    doctorName: 'Dr. Robert Martinez',
+    facility: 'Heart Health Institute',
+    description: 'Chest X-ray showing clear lungs.',
+    tags: [],
+    channel: 'Email',
+    receivedAt: '2024-10-06T13:00:00Z',
+    processedAt: '2024-10-06T13:05:00Z',
+  },
+  {
+    id: 'record-11',
+    title: 'X-Ray - Hand',
+    type: 'X-Ray',
+    patientId: 'patient-3',
+    patientName: 'Robert Feldman',
+    date: '2024-09-15',
+    doctorId: 'doctor-8',
+    doctorName: 'Dr. David Kim',
+    facility: 'Bone & Joint Clinic',
+    description: 'X-ray of left hand showing no fractures.',
+    tags: [],
+    channel: 'Direct Upload',
+    receivedAt: '2024-09-16T11:00:00Z',
+    processedAt: '2024-09-16T11:05:00Z',
+  },
+  
+  // Blood Tests
+  {
+    id: 'record-12',
+    title: 'Complete Blood Count (CBC)',
+    type: 'Blood Test',
+    patientId: 'patient-1',
+    patientName: 'John Feldman',
+    date: '2025-01-15',
+    doctorId: 'doctor-1',
+    doctorName: 'Dr. Sarah Johnson',
+    facility: 'Manhattan Medical Center',
+    description: 'CBC results within normal range.',
+    tags: [],
+    channel: 'Email',
+    receivedAt: '2025-01-16T08:00:00Z',
+    processedAt: '2025-01-16T08:05:00Z',
+  },
+  {
+    id: 'record-13',
+    title: 'Blood Test - Lipid Panel',
+    type: 'Blood Test',
+    patientId: 'patient-3',
+    patientName: 'Robert Feldman',
+    date: '2025-01-08',
+    doctorId: 'doctor-4',
+    doctorName: 'Dr. Robert Martinez',
+    facility: 'Heart Health Institute',
+    description: 'Cholesterol levels improved with medication.',
+    tags: [],
+    channel: 'Email',
+    receivedAt: '2025-01-09T09:00:00Z',
+    processedAt: '2025-01-09T09:05:00Z',
+  },
+  {
+    id: 'record-14',
+    title: 'Blood Test - HbA1c',
+    type: 'Blood Test',
+    patientId: 'patient-2',
+    patientName: 'Juli Feldman',
+    date: '2025-01-10',
+    doctorId: 'doctor-5',
+    doctorName: 'Dr. Lisa Wang',
+    facility: 'Metabolic Health Clinic',
+    description: 'HbA1c level: 6.8% - Good control.',
+    tags: [],
+    channel: 'Email',
+    receivedAt: '2025-01-11T10:00:00Z',
+    processedAt: '2025-01-11T10:05:00Z',
+  },
+  
+  // Lab Tests
+  {
+    id: 'record-15',
+    title: 'Urine Analysis',
+    type: 'Lab Test',
+    patientId: 'patient-1',
+    patientName: 'John Feldman',
+    date: '2025-01-12',
+    doctorId: 'doctor-7',
+    doctorName: 'Dr. Patricia Brown',
+    facility: 'New York Surgical Center',
+    description: 'Urine analysis showing normal results.',
+    tags: [],
+    channel: 'Email',
+    receivedAt: '2025-01-13T11:00:00Z',
+    processedAt: '2025-01-13T11:05:00Z',
+  },
+  {
+    id: 'record-16',
+    title: 'Thyroid Function Test',
+    type: 'Lab Test',
+    patientId: 'patient-2',
+    patientName: 'Juli Feldman',
+    date: '2024-12-20',
+    doctorId: 'doctor-5',
+    doctorName: 'Dr. Lisa Wang',
+    facility: 'Metabolic Health Clinic',
+    description: 'TSH, T3, T4 levels within normal range.',
+    tags: [],
+    channel: 'Email',
+    receivedAt: '2024-12-21T09:00:00Z',
+    processedAt: '2024-12-21T09:05:00Z',
+  },
+  
+  // Biopsies
+  {
+    id: 'record-17',
+    title: 'Kidney Biopsy',
+    type: 'Biopsy',
+    patientId: 'patient-1',
+    patientName: 'John Feldman',
+    date: '2024-11-25',
+    doctorId: 'doctor-7',
+    doctorName: 'Dr. Patricia Brown',
+    facility: 'New York Surgical Center',
+    description: 'Biopsy of left kidney showing malignant cells.',
+    tags: ['urgent'],
+    channel: 'Email',
+    receivedAt: '2024-11-26T14:00:00Z',
+    processedAt: '2024-11-26T14:10:00Z',
+  },
+  
+  // Doctor Letters
+  {
+    id: 'record-18',
+    title: 'Consultation Letter - Cardiology',
+    type: 'Doctor Letter',
+    patientId: 'patient-1',
+    patientName: 'John Feldman',
+    date: '2024-12-10',
+    doctorId: 'doctor-2',
+    doctorName: 'Dr. Michael Chen',
+    facility: 'Heart Health Clinic',
+    description: 'Consultation summary and recommendations.',
+    tags: [],
+    channel: 'Email',
+    receivedAt: '2024-12-11T10:00:00Z',
+    processedAt: '2024-12-11T10:05:00Z',
+  },
+  {
+    id: 'record-19',
+    title: 'Follow-up Letter - Oncology',
+    type: 'Doctor Letter',
+    patientId: 'patient-2',
+    patientName: 'Juli Feldman',
+    date: '2024-11-20',
+    doctorId: 'doctor-3',
+    doctorName: 'Dr. Emily Carter',
+    facility: 'New York Cancer Center',
+    description: 'Follow-up consultation notes.',
+    tags: [],
+    channel: 'Email',
+    receivedAt: '2024-11-21T09:00:00Z',
+    processedAt: '2024-11-21T09:05:00Z',
+  },
+  
+  // Prescriptions
+  {
+    id: 'record-23',
+    title: 'Prescription - Metformin',
+    type: 'Prescription',
+    patientId: 'patient-2',
+    patientName: 'Juli Feldman',
+    date: '2025-01-15',
+    doctorId: 'doctor-1',
+    doctorName: 'Dr. Sarah Johnson',
+    facility: 'Manhattan Medical Center',
+    description: 'Metformin 500mg, twice daily. 90-day supply.',
+    tags: [],
+    channel: 'Email',
+    receivedAt: '2025-01-15T14:00:00Z',
+    processedAt: '2025-01-15T14:05:00Z',
+  },
+  {
+    id: 'record-24',
+    title: 'Prescription - Aspirin',
+    type: 'Prescription',
+    patientId: 'patient-1',
+    patientName: 'John Feldman',
+    date: '2025-01-10',
+    doctorId: 'doctor-1',
+    doctorName: 'Dr. Sarah Johnson',
+    facility: 'Manhattan Medical Center',
+    description: 'Aspirin 81mg, daily. 30-day supply.',
+    tags: [],
+    channel: 'Email',
+    receivedAt: '2025-01-10T11:00:00Z',
+    processedAt: '2025-01-10T11:05:00Z',
+  },
+  {
+    id: 'record-25',
+    title: 'Prescription - Lisinopril',
+    type: 'Prescription',
+    patientId: 'patient-3',
+    patientName: 'Robert Feldman',
+    date: '2025-01-08',
+    doctorId: 'doctor-4',
+    doctorName: 'Dr. Robert Martinez',
+    facility: 'Heart Health Institute',
+    description: 'Lisinopril 10mg, daily. 90-day supply.',
+    tags: [],
+    channel: 'Email',
+    receivedAt: '2025-01-08T10:00:00Z',
+    processedAt: '2025-01-08T10:05:00Z',
+  },
+  
+  // Hospital Discharge
+  {
+    id: 'record-26',
+    title: 'Hospital Discharge Summary',
+    type: 'Hospital Discharge',
+    patientId: 'patient-1',
+    patientName: 'John Feldman',
+    date: '2024-12-20',
+    doctorId: 'doctor-7',
+    doctorName: 'Dr. Patricia Brown',
+    facility: 'New York Surgical Center',
+    description: 'Discharge summary after kidney surgery. Recovery instructions included.',
+    tags: ['urgent', 'follow-up'],
+    channel: 'Direct Upload',
+    receivedAt: '2024-12-21T08:00:00Z',
+    processedAt: '2024-12-21T08:10:00Z',
+  },
+  {
+    id: 'record-27',
+    title: 'Hospital Discharge Summary',
+    type: 'Hospital Discharge',
+    patientId: 'patient-2',
+    patientName: 'Juli Feldman',
+    date: '2024-11-10',
+    doctorId: 'doctor-3',
+    doctorName: 'Dr. Emily Carter',
+    facility: 'New York Cancer Center',
+    description: 'Discharge summary after treatment procedure.',
+    tags: ['follow-up'],
+    channel: 'Email',
+    receivedAt: '2024-11-11T09:00:00Z',
+    processedAt: '2024-11-11T09:05:00Z',
+  },
+  
+  // Surgery Reports
+  {
+    id: 'record-28',
+    title: 'Surgery Report - Kidney Resection',
+    type: 'Surgery Report',
+    patientId: 'patient-1',
+    patientName: 'John Feldman',
+    date: '2024-12-18',
+    doctorId: 'doctor-7',
+    doctorName: 'Dr. Patricia Brown',
+    facility: 'New York Surgical Center',
+    description: 'Partial nephrectomy of left kidney. Procedure successful.',
+    tags: ['urgent'],
+    channel: 'Email',
+    receivedAt: '2024-12-19T10:00:00Z',
+    processedAt: '2024-12-19T10:15:00Z',
+  },
+  
+  // Pathology Reports
+  {
+    id: 'record-29',
+    title: 'Pathology Report - Kidney Tissue',
+    type: 'Pathology Report',
+    patientId: 'patient-1',
+    patientName: 'John Feldman',
+    date: '2024-12-18',
+    doctorId: 'doctor-7',
+    doctorName: 'Dr. Patricia Brown',
+    facility: 'New York Surgical Center',
+    description: 'Pathology analysis of resected kidney tissue.',
+    tags: ['urgent'],
+    channel: 'Email',
+    receivedAt: '2024-12-20T11:00:00Z',
+    processedAt: '2024-12-20T11:10:00Z',
+  },
+  {
+    id: 'record-30',
+    title: 'Pathology Report - Biopsy',
+    type: 'Pathology Report',
+    patientId: 'patient-2',
+    patientName: 'Juli Feldman',
+    date: '2024-10-15',
+    doctorId: 'doctor-3',
+    doctorName: 'Dr. Emily Carter',
+    facility: 'New York Cancer Center',
+    description: 'Pathology report from tissue biopsy.',
+    tags: [],
+    channel: 'Email',
+    receivedAt: '2024-10-16T09:00:00Z',
+    processedAt: '2024-10-16T09:05:00Z',
+  },
+];
+
+export function getMedicalRecordsByPatientId(patientId: string): MedicalRecord[] {
+  return medicalRecordsData.filter(record => record.patientId === patientId);
+}
+
+export function getMedicalRecordsByType(type: MedicalRecord['type']): MedicalRecord[] {
+  return medicalRecordsData.filter(record => record.type === type);
+}
+
+export function getMedicalRecordById(id: string): MedicalRecord | undefined {
+  return medicalRecordsData.find(record => record.id === id);
+}
+
+export function getMedicalRecordsByDoctorId(doctorId: string): MedicalRecord[] {
+  return medicalRecordsData.filter(record => record.doctorId === doctorId);
+}
+
+// Medical Provider interface
+export interface MedicalProvider {
+  id: string;
+  name: string;
+  type: 'HMO' | 'Hospital' | 'Clinic' | 'Medical Center';
+  phone?: string;
+  email?: string;
+  website?: string;
+  address?: string;
+  city?: string;
+  country?: string;
+  specialties?: string[]; // Services/specialties offered
+  notes?: string;
+  patients: string[]; // Patient IDs using this provider
+  doctors?: string[]; // Doctor IDs associated with this provider
+}
+
+// Medical Providers data
+export const medicalProvidersData: MedicalProvider[] = [
+  {
+    id: 'provider-1',
+    name: 'Maccabi HealthCare',
+    type: 'HMO',
+    phone: '+972-3-777-7777',
+    email: 'contact@maccabi.co.il',
+    website: 'https://www.maccabi4u.co.il',
+    address: '27 Hamered St',
+    city: 'Tel Aviv',
+    country: 'Israel',
+    specialties: ['Primary Care', 'Specialists', 'Emergency Care', 'Pharmacy'],
+    patients: ['patient-1', 'patient-2', 'patient-3'],
+    doctors: ['doctor-1', 'doctor-2', 'doctor-4', 'doctor-5'],
+  },
+  {
+    id: 'provider-2',
+    name: 'Sheba Medical Center',
+    type: 'Hospital',
+    phone: '+972-3-530-3030',
+    email: 'info@sheba.co.il',
+    website: 'https://www.sheba.co.il',
+    address: 'Derech Sheba 2',
+    city: 'Ramat Gan',
+    country: 'Israel',
+    specialties: ['Oncology', 'Cardiology', 'Surgery', 'Emergency', 'Research'],
+    patients: ['patient-1', 'patient-2'],
+    doctors: ['doctor-3', 'doctor-7'],
+  },
+  {
+    id: 'provider-3',
+    name: 'Assuta Medical Center',
+    type: 'Medical Center',
+    phone: '+972-3-764-4444',
+    email: 'info@assuta.co.il',
+    website: 'https://www.assuta.co.il',
+    address: '20 Habarzel St',
+    city: 'Tel Aviv',
+    country: 'Israel',
+    specialties: ['Surgery', 'Oncology', 'Cardiology', 'Imaging', 'Laboratory'],
+    patients: ['patient-1'],
+    doctors: ['doctor-2', 'doctor-6', 'doctor-8'],
+  },
+];
+
+export function getMedicalProvidersByPatientId(patientId: string): MedicalProvider[] {
+  return medicalProvidersData.filter(provider => provider.patients.includes(patientId));
+}
+
+export function getMedicalProviderById(id: string): MedicalProvider | undefined {
+  return medicalProvidersData.find(provider => provider.id === id);
+}
+
+export function getMedicalProvidersByType(type: MedicalProvider['type']): MedicalProvider[] {
+  return medicalProvidersData.filter(provider => provider.type === type);
+}

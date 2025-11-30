@@ -1,18 +1,26 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import { config } from './config';
-import HomePage from './components/HomePage';
+import { useTranslations } from 'next-intl';
+import { useLocale } from 'next-intl';
+import { useRouter } from 'next/navigation';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import { config } from '../config';
+import HomePage from '../components/HomePage';
 
 export default function Home() {
+  const t = useTranslations('home');
+  const locale = useLocale();
+  const router = useRouter();
+  
   useEffect(() => {
     document.body.classList.add('home-page');
     return () => {
       document.body.classList.remove('home-page');
     };
   }, []);
+  
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
@@ -22,14 +30,11 @@ export default function Home() {
     setError('');
 
     if (!email || !email.includes('@')) {
-      setError('Please enter a valid email address');
+      setError(t('enterEmail'));
       return;
     }
 
-    // Here you would typically send the email to your backend/API
-    // For now, we'll just show a success message
     try {
-      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 500));
       setSubmitted(true);
       setEmail('');
@@ -48,11 +53,9 @@ export default function Home() {
     <>
       <Header />
 
-      {/* Coming Soon Hero Section */}
       <section className="hero-sketch" style={{ position: 'relative', zIndex: 1, background: '#fff', marginTop: '60px', minHeight: 'calc(100vh - 60px)', display: 'flex', alignItems: 'flex-start' }}>
         <div className="sketch-container" style={{ width: '100%' }}>
           <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center', padding: '2rem 2rem 2rem 2rem' }}>
-            {/* Coming Soon Badge */}
             <div className="coming-soon-badge" style={{ 
               fontSize: '1.5rem', 
               padding: '1rem 2.5rem', 
@@ -62,28 +65,23 @@ export default function Home() {
               fontWeight: '800',
               letterSpacing: '0.15em'
             }}>
-              COMING SOON
+              {t('comingSoon')}
             </div>
 
-            {/* Main Title */}
-            <h1 className="sketch-title" style={{ marginBottom: '1.5rem' }}>
-              HELP YOUR<br />
-              PARENTS STAY<br />
-              <span className="sketch-highlight">SAFE</span>
+            <h1 className="sketch-title" style={{ marginBottom: '1.5rem', whiteSpace: 'pre-line' }}>
+              {t('heroTitle')}
             </h1>
             
             <div className="sketch-underline" style={{ margin: '0 auto 2rem' }}></div>
 
-            {/* Mission Text */}
             <p className="hero-mission-text" style={{ 
               maxWidth: '600px', 
               margin: '0 auto 3rem',
               fontSize: 'clamp(1.125rem, 2.5vw, 1.375rem)'
             }}>
-              You care about them. We take on the responsibility of keeping them safe — guiding, checking, and protecting them from scammers.
+              {t('heroMission')}
             </p>
 
-            {/* Email Signup Form */}
             {!submitted ? (
               <form onSubmit={handleSubmit} className="coming-soon-form" style={{
                 maxWidth: '600px',
@@ -106,7 +104,7 @@ export default function Home() {
                   width: '100%',
                   maxWidth: '100%'
                 }}>
-                  GET NOTIFIED WHEN WE LAUNCH
+                  {t('getNotified')}
                 </label>
                 <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
                   <input
@@ -114,7 +112,7 @@ export default function Home() {
                     id="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter your email"
+                    placeholder={t('enterEmail')}
                     required
                     style={{
                       flex: '1',
@@ -140,8 +138,7 @@ export default function Home() {
                         zIndex: 2
                       }}
                     >
-                      <span style={{ position: 'relative', zIndex: 2 }}>NOTIFY ME</span>
-                      {/* Simple marker highlight - first line */}
+                      <span style={{ position: 'relative', zIndex: 2 }}>{t('notifyMe')}</span>
                       <div style={{
                         position: 'absolute',
                         bottom: '14px',
@@ -155,7 +152,6 @@ export default function Home() {
                         pointerEvents: 'none',
                         boxShadow: '0 2px 4px rgba(255, 235, 59, 0.5)'
                       }}></div>
-                      {/* Simple marker highlight - second line */}
                       <div style={{
                         position: 'absolute',
                         bottom: '12px',
@@ -199,12 +195,11 @@ export default function Home() {
                   color: '#166534',
                   margin: 0
                 }}>
-                  ✓ Thanks! We&apos;ll notify you when we launch.
+                  {t('thanksNotify')}
                 </p>
               </div>
             )}
 
-            {/* Stats Preview */}
             <div style={{ marginTop: '4rem' }}>
               <div className="sketch-stats-inline" style={{ 
                 gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
@@ -214,23 +209,22 @@ export default function Home() {
               }}>
                 <div className="sketch-stat-box sketch-rotation-1">
                   <div className="sketch-stat-number">$1T+</div>
-                  <div className="sketch-stat-label">Lost Annually</div>
+                  <div className="sketch-stat-label">{t('lostAnnually')}</div>
                 </div>
                 <div className="sketch-stat-box sketch-rotation-2">
                   <div className="sketch-stat-number">$10-30B</div>
-                  <div className="sketch-stat-label">Older Americans (60+)</div>
+                  <div className="sketch-stat-label">{t('olderAmericans')}</div>
                 </div>
                 <div className="sketch-stat-box sketch-rotation-4">
                   <div className="sketch-stat-number">1B+</div>
-                  <div className="sketch-stat-label">People Exposed</div>
+                  <div className="sketch-stat-label">{t('peopleExposed')}</div>
                 </div>
               </div>
             </div>
 
-            {/* Mission Statement */}
             <div className="mission-statement-section" style={{ marginTop: '4rem', marginBottom: '2rem' }}>
               <p className="mission-statement-text">
-                <strong>Our mission:</strong> Help you protect your parents before scammers reach them — with clear guides, checklists, and continuous protection.
+                <strong>{t('missionStatement').split(':')[0]}:</strong> {t('missionStatement').split(':').slice(1).join(':')}
               </p>
             </div>
           </div>

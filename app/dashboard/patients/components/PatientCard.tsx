@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+import { useLocale } from 'next-intl';
 import { Patient } from '../../data/mockData';
 
 interface PatientCardProps {
@@ -9,6 +11,8 @@ interface PatientCardProps {
 }
 
 export default function PatientCard({ patient, onEdit, onDelete }: PatientCardProps) {
+  const locale = useLocale();
+  
   return (
     <div className="patient-card">
       <div className="patient-card-header">
@@ -68,7 +72,24 @@ export default function PatientCard({ patient, onEdit, onDelete }: PatientCardPr
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
               <polyline points="22,6 12,13 2,6"></polyline>
             </svg>
-            {patient.email}
+            <a
+              href={`mailto:${patient.email}`}
+              style={{
+                color: '#059669',
+                textDecoration: 'none',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.textDecoration = 'underline';
+                e.currentTarget.style.color = '#047857';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.textDecoration = 'none';
+                e.currentTarget.style.color = '#059669';
+              }}
+            >
+              {patient.email}
+            </a>
           </div>
         )}
 

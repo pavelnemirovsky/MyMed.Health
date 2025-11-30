@@ -1791,7 +1791,7 @@ a {
 
 .footer-brand {
   margin-bottom: 3rem;
-  text-align: center;
+  text-align: left;
 }
 
 .footer-logo {
@@ -5500,7 +5500,7 @@ a {
 .footer-logo-img {
   height: 40px;
   width: auto;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
   display: block;
   filter: brightness(0) invert(1); /* Make logo white for dark footer */
 }
@@ -5511,7 +5511,9 @@ a {
 
 .footer-tagline {
   color: rgba(255, 255, 255, 0.7);
-  font-size: 0.9375rem;
+  font-size: 0.75rem;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .footer-grid {
@@ -8309,6 +8311,15 @@ a {
   background: #f9fafb;
   border-radius: 8px;
   border: 1px solid #e5e7eb;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.dashboard-patient-card:hover {
+  background: #f0fdf4;
+  border-color: #059669;
+  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.15);
+  transform: translateY(-1px);
 }
 
 .dashboard-patient-avatar {

@@ -69,22 +69,14 @@ export default function HomePage() {
               <p className="hero-description">
                 {t('mainDescription')}
               </p>
-              <p className="hero-providers-note">
-                <strong>{t('providersNote')}</strong>
-              </p>
               <div className="hero-cta">
                 <Link href={`/${locale}/login`} className="btn btn-primary btn-large">
                   <svg className="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M22.56 12.25c.13-.32.13-.68 0-1L18.16 2.5c-.13-.32-.45-.5-.78-.5h-4.76c-.33 0-.65.18-.78.5L7.44 11.25c-.13.32-.13.68 0 1l4.4 9.75c.13.32.45.5.78.5h4.76c.33 0 .65-.18.78-.5l4.4-9.75zM12 7.5l2.5 5.5h-5l2.5-5.5z" fill="currentColor"/>
                   </svg>
-                  {t('loginWithSocial')}
+                  {t('loginToDashboard')}
                 </Link>
-                <p className="hero-cta-subnote">{t('googleOrApple')}</p>
                 <p className="hero-cta-note">{t('freeToStart')}</p>
-                <div className="hero-trust-badge">
-                  <span className="trust-badge-icon">🛡️</span>
-                  <span className="trust-badge-text">{tCommon('hipaaCertified')}</span>
-                </div>
               </div>
             </div>
             <div className="hero-visual">
@@ -144,109 +136,34 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Calendar Section */}
-      <section id="calendar" className="section">
-        <div className="container">
-          <div className="section-header">
-            <h2 className="section-title">{t('smartCalendar')}</h2>
-            <p className="section-description">
-              {t('smartCalendarDesc')}
-            </p>
-          </div>
-          <div className="calendar-features">
-            <div className="calendar-feature">
-              <div className="calendar-feature-visual">
-                <div className="calendar-preview">
-                  <div className="calendar-month">{t('previewCalendarMonth')}</div>
-                  <div className="calendar-grid">
-                    {[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31].map((day) => {
-                      let dayClass = 'calendar-day';
-                      if (day === 15) dayClass += ' has-appointment';
-                      if (day === 22) dayClass += ' has-test';
-                      if (day === 8) dayClass += ' overdue';
-                      return (
-                        <div key={day} className={dayClass}>
-                          {day}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-              <div className="calendar-feature-content">
-                <h3 className="calendar-feature-title">{t('multipleViews')}</h3>
-                <ul className="calendar-feature-list">
-                  {t.raw('multipleViewsList').map((item: string, index: number) => (
-                    <li key={index}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-            <div className="calendar-feature">
-              <div className="calendar-feature-content">
-                <h3 className="calendar-feature-title">{t('customizableReminders')}</h3>
-                <ul className="calendar-feature-list">
-                  {t.raw('customizableRemindersList').map((item: string, index: number) => (
-                    <li key={index}>{item}</li>
-                  ))}
-                </ul>
-                <p className="calendar-feature-note">
-                  {t('remindersNote')}
-                </p>
-              </div>
-              <div className="calendar-feature-visual">
-                <div className="reminder-preview">
-                  <div className="reminder-item">
-                    <div className="reminder-icon">🔬</div>
-                    <div className="reminder-content">
-                      <div className="reminder-title">{t('previewReminderMRI')}</div>
-                      <div className="reminder-time">{t('previewReminderTimeTomorrow')}</div>
-                    </div>
-                  </div>
-                  <div className="reminder-item">
-                    <div className="reminder-icon">🏥</div>
-                    <div className="reminder-content">
-                      <div className="reminder-title">{t('previewReminderPT')}</div>
-                      <div className="reminder-time">{t('previewReminderTimeMarch22')}</div>
-                    </div>
-                  </div>
-                  <div className="reminder-item">
-                    <div className="reminder-icon">📊</div>
-                    <div className="reminder-content">
-                      <div className="reminder-title">{t('previewReminderAnalyses')}</div>
-                      <div className="reminder-time">{t('previewReminderTimeMarch25')}</div>
-                    </div>
-                  </div>
-                  <div className="reminder-item overdue">
-                    <div className="reminder-icon">⚠️</div>
-                    <div className="reminder-content">
-                      <div className="reminder-title">{t('previewReminderSchedule')}</div>
-                      <div className="reminder-time">{t('previewReminderOverdue')}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Document Management Section */}
+      {/* How It Works Section */}
       <section id="documents" className="section section-alt">
         <div className="container">
           <div className="section-header">
-            <h2 className="section-title">{t('organizedDocuments')}</h2>
+            <h2 className="section-title">{t('howItWorks')}</h2>
             <p className="section-description">
-              {t('organizedDocumentsDesc')}
+              {t('howItWorksDesc')}
             </p>
+          </div>
+          <div className="how-it-works">
+            <div className="step-card">
+              <div className="step-icon">👤</div>
+              <h3 className="step-title">{t('step1Title')}</h3>
+              <p className="step-text">{t('step1Desc')}</p>
+            </div>
+            <div className="step-card">
+              <div className="step-icon">📤</div>
+              <h3 className="step-title">{t('step2Title')}</h3>
+              <p className="step-text">{t('step2Desc')}</p>
+            </div>
+            <div className="step-card">
+              <div className="step-icon">📊</div>
+              <h3 className="step-title">{t('step3Title')}</h3>
+              <p className="step-text">{t('step3Desc')}</p>
+            </div>
           </div>
           <div className="document-features">
             <div className="document-feature-grid">
-              <div className="document-feature">
-                <div className="document-feature-icon">📤</div>
-                <h3 className="document-feature-title">{t('dragDrop')}</h3>
-                <p className="document-feature-text">{t('dragDropDesc')}</p>
-              </div>
               <div className="document-feature">
                 <div className="document-feature-icon">📁</div>
                 <h3 className="document-feature-title">{t('autoOrganized')}</h3>
@@ -267,78 +184,52 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* How It Works Section */}
-      <section className="section">
-        <div className="container">
-          <div className="section-header">
-            <h2 className="section-title">{t('howItWorks')}</h2>
-            <p className="section-description">
-              {t('howItWorksDesc')}
-            </p>
-          </div>
-          <div className="how-it-works">
-            <div className="step-card">
-              <div className="step-icon">🔐</div>
-              <h3 className="step-title">{t('step1Title')}</h3>
-              <p className="step-text">{t('step1Desc')}</p>
-            </div>
-            <div className="step-card">
-              <div className="step-icon">👤</div>
-              <h3 className="step-title">{t('step2Title')}</h3>
-              <p className="step-text">{t('step2Desc')}</p>
-            </div>
-            <div className="step-card">
-              <div className="step-icon">📊</div>
-              <h3 className="step-title">{t('step3Title')}</h3>
-              <p className="step-text">{t('step3Desc')}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Benefits Section */}
       <section className="section section-alt">
         <div className="container">
           <div className="section-header">
             <h2 className="section-title">{t('whyChooseUs')}</h2>
+            <p className="section-description">
+              {t('whyChooseUsDesc')}
+            </p>
           </div>
           <div className="benefits-grid">
             <div className="benefit-card">
-              <div className="benefit-icon">😌</div>
-              <h3 className="benefit-title">{t('lessStress')}</h3>
-              <p className="benefit-text">{t('lessStressDesc')}</p>
+              <div className="benefit-icon">👤</div>
+              <h3 className="benefit-title">{t('patientProfiles')}</h3>
+              <p className="benefit-text">{t('benefitPatientProfiles')}</p>
             </div>
             <div className="benefit-card">
-              <div className="benefit-icon">📚</div>
-              <h3 className="benefit-title">{t('allPapers')}</h3>
-              <p className="benefit-text">{t('allPapersDesc')}</p>
+              <div className="benefit-icon">🗂️</div>
+              <h3 className="benefit-title">{t('documentManagement')}</h3>
+              <p className="benefit-text">{t('benefitDocumentManagement')}</p>
             </div>
             <div className="benefit-card">
-              <div className="benefit-icon">✅</div>
-              <h3 className="benefit-title">{t('neverMiss')}</h3>
-              <p className="benefit-text">{t('neverMissDesc')}</p>
+              <div className="benefit-icon">📅</div>
+              <h3 className="benefit-title">{t('calendarReminders')}</h3>
+              <p className="benefit-text">{t('benefitCalendarReminders')}</p>
             </div>
             <div className="benefit-card">
-              <div className="benefit-icon">👨‍⚕️</div>
-              <h3 className="benefit-title">{t('globalNetwork')}</h3>
-              <p className="benefit-text">{t('globalNetworkDesc')}</p>
+              <div className="benefit-icon">📋</div>
+              <h3 className="benefit-title">{t('carePlans')}</h3>
+              <p className="benefit-text">{t('benefitCarePlans')}</p>
             </div>
             <div className="benefit-card">
               <div className="benefit-icon">💬</div>
-              <h3 className="benefit-title">{t('easierCommunication')}</h3>
-              <p className="benefit-text">{t('easierCommunicationDesc')}</p>
+              <h3 className="benefit-title">{t('messagesNotes')}</h3>
+              <p className="benefit-text">{t('benefitMessagesNotes')}</p>
             </div>
             <div className="benefit-card">
-              <div className="benefit-icon">✈️</div>
-              <h3 className="benefit-title">{t('travelInsurance')}</h3>
-              <p className="benefit-text">{t('travelInsuranceDesc')}</p>
+              <div className="benefit-icon">🔍</div>
+              <h3 className="benefit-title">{t('scanComparison')}</h3>
+              <p className="benefit-text">{t('benefitScanComparison')}</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Pricing Section */}
-      <section className="section">
+      <section id="pricing" className="section">
         <div className="container">
           <div className="section-header">
             <div className="pricing-tagline">{t('pricing')}</div>
@@ -429,7 +320,7 @@ export default function HomePage() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="section section-alt">
+      <section id="testimonials" className="section section-alt">
         <div className="container">
           <div className="section-header">
             <h2 className="section-title">{t('trustedByCaregivers')}</h2>
@@ -458,7 +349,7 @@ export default function HomePage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="section section-faq">
+      <section id="faq" className="section section-faq">
         <div className="container">
           <div className="section-header">
             <h2 className="section-title">{t('faqTitle')}</h2>

@@ -37,10 +37,9 @@ export default function Footer() {
             <ul className="footer-links">
               <li><Link href={`/${locale}`}>{t('home')}</Link></li>
               <li><Link href={`/${locale}/about`}>{t('about')}</Link></li>
-              <li><Link href={`/${locale}#dashboard`}>{t('dashboard')}</Link></li>
-              <li><Link href={`/${locale}#calendar`}>{t('calendar')}</Link></li>
-              <li><Link href={`/${locale}#patients`}>{t('patients')}</Link></li>
-              <li><Link href={`/${locale}#documents`}>{t('documents')}</Link></li>
+              <li><Link href={`/${locale}#dashboard`}>{t('services')}</Link></li>
+              <li><Link href={`/${locale}#documents`}>{t('howItWorks')}</Link></li>
+              <li><Link href={`/${locale}#faq`}>{t('faq')}</Link></li>
             </ul>
           </div>
 

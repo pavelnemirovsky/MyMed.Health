@@ -436,16 +436,23 @@ export default function DashboardContent() {
             <div className="dashboard-widget-content">
               <div className="dashboard-patients-list">
                 {patientProfiles.map((profile, index) => (
-                  <div key={index} className="dashboard-patient-card">
+                  <Link 
+                    key={index} 
+                    href={`/${locale}/dashboard/patients`}
+                    className="dashboard-patient-card"
+                    style={{ textDecoration: 'none', color: 'inherit' }}
+                  >
                     <div className="dashboard-patient-avatar">{profile.initials}</div>
                     <div className="dashboard-patient-info">
                       <div className="dashboard-patient-name">{profile.name}</div>
                       <div className="dashboard-patient-meta">{profile.meta}</div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
-              <button className="dashboard-add-patient-btn">{t('addPerson')}</button>
+              <Link href={`/${locale}/dashboard/patients`}>
+                <button className="dashboard-add-patient-btn">{t('addPerson')}</button>
+              </Link>
             </div>
           </div>
 

@@ -33,17 +33,20 @@ function checkBasicAuth(request: NextRequest): boolean {
 }
 
 export default function middleware(request: NextRequest) {
-  // Check basic authentication first
-  if (!checkBasicAuth(request)) {
-    return new NextResponse('Authentication required', {
-      status: 401,
-      headers: {
-        'WWW-Authenticate': 'Basic realm="Secure Area"',
-      },
-    });
+  // Check if basic auth is enabled
+  if (authConfig.basicAuth.enabled) {
+    // Check basic authentication first
+    if (!checkBasicAuth(request)) {
+      return new NextResponse('Authentication required', {
+        status: 401,
+        headers: {
+          'WWW-Authenticate': 'Basic realm="Secure Area"',
+        },
+      });
+    }
   }
 
-  // If authenticated, proceed with internationalization middleware
+  // If authenticated (or auth disabled), proceed with internationalization middleware
   return intlMiddleware(request);
 }
 

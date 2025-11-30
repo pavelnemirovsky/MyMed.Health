@@ -261,22 +261,32 @@ export const statsData = {
 
 // Document folders
 export const documentFolders = [
-  { id: 'folder-1', name: 'Lab Results', count: 24, color: '#3b82f6' },
-  { id: 'folder-2', name: 'Imaging', count: 18, color: '#8b5cf6' },
-  { id: 'folder-3', name: 'Prescriptions', count: 12, color: '#10b981' },
-  { id: 'folder-4', name: 'Insurance', count: 8, color: '#f59e0b' },
-  { id: 'folder-5', name: 'Doctors Notes', count: 15, color: '#ef4444' },
+  { id: 'folder-1', name: 'Lab Results', count: 24, color: '#3b82f6', icon: '🧪', trend: '+3', trendType: 'positive' },
+  { id: 'folder-2', name: 'Imaging', count: 18, color: '#8b5cf6', icon: '📷', trend: '+2', trendType: 'positive' },
+  { id: 'folder-3', name: 'Prescriptions', count: 12, color: '#10b981', icon: '💊', trend: '+1', trendType: 'positive' },
+  { id: 'folder-4', name: 'Insurance', count: 8, color: '#f59e0b', icon: '📄', trend: '0', trendType: '' },
+  { id: 'folder-5', name: 'Doctors Notes', count: 15, color: '#ef4444', icon: '📝', trend: '+2', trendType: 'positive' },
 ];
 
 // Patient profiles
-export const patientProfiles = patientsData.map(patient => ({
-  id: patient.id,
-  name: patient.name,
-  initials: patient.initials,
-  age: patient.age,
-  conditions: patient.medicalConditions || [],
-  nextAppointment: '2025-02-15',
-}));
+export const patientProfiles = patientsData.map(patient => {
+  const metaParts: string[] = [];
+  if (patient.age) {
+    metaParts.push(`Age ${patient.age}`);
+  }
+  if (patient.medicalConditions && patient.medicalConditions.length > 0) {
+    metaParts.push(patient.medicalConditions.slice(0, 2).join(', '));
+  }
+  return {
+    id: patient.id,
+    name: patient.name,
+    initials: patient.initials,
+    age: patient.age,
+    conditions: patient.medicalConditions || [],
+    nextAppointment: '2025-02-15',
+    meta: metaParts.join(' • ') || '',
+  };
+});
 
 // Second opinion data
 export const secondOpinionData = {

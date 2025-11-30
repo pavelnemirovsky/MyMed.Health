@@ -491,10 +491,10 @@ export default function DashboardContent() {
             <div className="dashboard-widget-content">
               {(() => {
                 const activePlans = carePlansData.filter(p => p.status === 'active');
-                const totalMilestones = carePlansData.reduce((sum, plan) => sum + plan.milestones.length, 0);
-                const completedMilestones = carePlansData.reduce((sum, plan) => 
+                const totalMilestones = carePlansData.reduce((sum: number, plan) => sum + plan.milestones.length, 0);
+                const completedMilestones = carePlansData.reduce((sum: number, plan) => 
                   sum + plan.milestones.filter(m => m.status === 'completed').length, 0
-                , 0);
+                );
                 const overallCompletion = totalMilestones > 0 ? Math.round((completedMilestones / totalMilestones) * 100) : 0;
                 
                 return (

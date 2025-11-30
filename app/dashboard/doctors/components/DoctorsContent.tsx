@@ -21,9 +21,7 @@ export default function DoctorsContent() {
     const matchesSearch = doctor.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          doctor.specialty.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          doctor.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         doctor.phone?.includes(searchQuery) ||
-                         doctor.hospital?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         doctor.clinic?.toLowerCase().includes(searchQuery.toLowerCase());
+                         doctor.phone?.includes(searchQuery);
     
     const matchesSpecialty = filterSpecialty === 'all' || doctor.specialty === filterSpecialty;
     

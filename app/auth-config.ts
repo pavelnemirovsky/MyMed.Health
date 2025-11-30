@@ -29,9 +29,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.id = user.id;
       }
       if (profile) {
-        token.email = profile.email;
-        token.name = profile.name;
-        token.picture = profile.picture;
+        token.email = profile.email || undefined;
+        token.name = profile.name || undefined;
+        token.picture = profile.picture || undefined;
       }
       return token;
     },

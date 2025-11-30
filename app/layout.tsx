@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import Providers from './providers';
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
+import { defaultLocale } from '@/i18n';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://mymed.health';
 
@@ -73,15 +76,22 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Load default locale messages for non-localized pages
+  const messages = await getMessages({ locale: defaultLocale });
+
   return (
     <html lang="en" style={{ height: '100%' }}>
       <body style={{ margin: 0, padding: 0, minHeight: '100%', height: 'auto' }} suppressHydrationWarning>
-          {children}
+        <Providers>
+          <NextIntlClientProvider messages={messages} locale={defaultLocale}>
+            {children}
+          </NextIntlClientProvider>
+        </Providers>
       </body>
     </html>
   );

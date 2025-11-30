@@ -6,7 +6,10 @@ import { useTranslations, useLocale } from 'next-intl';
 import LanguageSwitcher from './LanguageSwitcher';
 
 export default function Header() {
-  const { data: session, status } = useSession();
+  // useSession will return { data: null, status: 'unauthenticated' } if SessionProvider is not available
+  const sessionResult = useSession();
+  const session = sessionResult?.data ?? null;
+  const status = sessionResult?.status ?? 'unauthenticated';
   const t = useTranslations('common');
   const locale = useLocale();
 

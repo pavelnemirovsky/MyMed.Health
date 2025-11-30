@@ -5,9 +5,7 @@ export const routing = {
   locales,
   defaultLocale,
   // Always show the locale prefix
-  localePrefix: 'always',
-  // Don't redirect to trailing slash
-  localePrefixAsNeeded: false
+  localePrefix: 'always' as const,
 };
 
 export default createMiddleware(routing);

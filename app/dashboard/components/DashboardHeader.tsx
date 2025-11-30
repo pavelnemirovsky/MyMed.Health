@@ -102,7 +102,9 @@ export default function DashboardHeader({ onMenuClick, user }: DashboardHeaderPr
       </div>
       
       <div className="dashboard-header-right">
-        <LanguageSwitcher />
+        <div className="dashboard-header-language-desktop">
+          <LanguageSwitcher />
+        </div>
         {mounted && (
           <button 
             className="dashboard-header-icon" 
@@ -146,49 +148,55 @@ export default function DashboardHeader({ onMenuClick, user }: DashboardHeaderPr
           </button>
           
           {notificationsOpen && (
-            <div className="dashboard-notifications-dropdown">
-              <div className="dashboard-notifications-header">
-                <h3>{t('notifications')}</h3>
-                {unreadCount > 0 && (
-                  <span className="dashboard-notifications-unread">{unreadCount} {t('unread')}</span>
-                )}
-              </div>
-              <div className="dashboard-notifications-list">
-                {notificationsData.length === 0 ? (
-                  <div className="dashboard-notifications-empty">
-                    {t('noNotifications')}
-                  </div>
-                ) : (
-                  notificationsData.map((notification) => (
-                    <Link
-                      key={notification.id}
-                      href={`/${locale}${notification.link || '#'}`}
-                      className={`dashboard-notification-item ${!notification.read ? 'unread' : ''}`}
-                      onClick={() => setNotificationsOpen(false)}
-                    >
-                      <div className="dashboard-notification-icon">
-                        {getNotificationIcon(notification.type)}
-                      </div>
-                      <div className="dashboard-notification-content">
-                        <div className="dashboard-notification-title">{notification.title}</div>
-                        <div className="dashboard-notification-message">{notification.message}</div>
-                        <div className="dashboard-notification-time">{formatTimestamp(notification.timestamp)}</div>
-                      </div>
-                      {!notification.read && (
-                        <div className="dashboard-notification-dot"></div>
-                      )}
-                    </Link>
-                  ))
-                )}
-              </div>
-              {notificationsData.length > 0 && (
-                <div className="dashboard-notifications-footer">
-                  <Link href={`/${locale}/dashboard/messages`} onClick={() => setNotificationsOpen(false)}>
-                    {t('viewAll')}
-                  </Link>
+            <>
+              <div 
+                className="dashboard-notifications-overlay"
+                onClick={() => setNotificationsOpen(false)}
+              />
+              <div className={`dashboard-notifications-dropdown ${notificationsOpen ? 'open' : ''}`}>
+                <div className="dashboard-notifications-header">
+                  <h3>{t('notifications')}</h3>
+                  {unreadCount > 0 && (
+                    <span className="dashboard-notifications-unread">{unreadCount} {t('unread')}</span>
+                  )}
                 </div>
-              )}
-            </div>
+                <div className="dashboard-notifications-list">
+                  {notificationsData.length === 0 ? (
+                    <div className="dashboard-notifications-empty">
+                      {t('noNotifications')}
+                    </div>
+                  ) : (
+                    notificationsData.map((notification) => (
+                      <Link
+                        key={notification.id}
+                        href={`/${locale}${notification.link || '#'}`}
+                        className={`dashboard-notification-item ${!notification.read ? 'unread' : ''}`}
+                        onClick={() => setNotificationsOpen(false)}
+                      >
+                        <div className="dashboard-notification-icon">
+                          {getNotificationIcon(notification.type)}
+                        </div>
+                        <div className="dashboard-notification-content">
+                          <div className="dashboard-notification-title">{notification.title}</div>
+                          <div className="dashboard-notification-message">{notification.message}</div>
+                          <div className="dashboard-notification-time">{formatTimestamp(notification.timestamp)}</div>
+                        </div>
+                        {!notification.read && (
+                          <div className="dashboard-notification-dot"></div>
+                        )}
+                      </Link>
+                    ))
+                  )}
+                </div>
+                {notificationsData.length > 0 && (
+                  <div className="dashboard-notifications-footer">
+                    <Link href={`/${locale}/dashboard/messages`} onClick={() => setNotificationsOpen(false)}>
+                      {t('viewAll')}
+                    </Link>
+                  </div>
+                )}
+              </div>
+            </>
           )}
         </div>
         <Link href={`/${locale}`} className="dashboard-header-icon" aria-label="Home" title={t('returnToHome')}>

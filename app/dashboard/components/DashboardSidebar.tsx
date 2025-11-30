@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 import { signOut } from 'next-auth/react';
+import LanguageSwitcher from '../../components/LanguageSwitcher';
 
 interface DashboardSidebarProps {
   isOpen: boolean;
@@ -113,6 +114,12 @@ export default function DashboardSidebar({ isOpen, onClose, collapsed, onToggleC
             );
           })}
         </nav>
+
+        {!collapsed && (
+          <div className="dashboard-sidebar-language">
+            <LanguageSwitcher className="dashboard-sidebar-language-switcher" />
+          </div>
+        )}
 
         <div className="dashboard-sidebar-footer">
           {!collapsed && (

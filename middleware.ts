@@ -33,6 +33,25 @@ function checkBasicAuth(request: NextRequest): boolean {
 }
 
 export default function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+  
+  // Skip locale routing for API routes - they should always be at /api/...
+  if (pathname.startsWith('/api/')) {
+    // Check if basic auth is enabled for API routes
+    if (authConfig.basicAuth.enabled) {
+      if (!checkBasicAuth(request)) {
+        return new NextResponse('Authentication required', {
+          status: 401,
+          headers: {
+            'WWW-Authenticate': 'Basic realm="Secure Area"',
+          },
+        });
+      }
+    }
+    // Return early for API routes - don't apply locale routing
+    return NextResponse.next();
+  }
+
   // Check if basic auth is enabled
   if (authConfig.basicAuth.enabled) {
     // Check basic authentication first
@@ -51,8 +70,8 @@ export default function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // Match all routes for basic auth
-  // Excludes static files and Next.js internal routes
+  // Match all routes for basic auth and locale routing
+  // Excludes static files, Next.js internal routes, and API routes from locale routing
   matcher: [
     /*
      * Match all request paths except for:
@@ -60,6 +79,7 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico, robots.txt, sitemap.xml (root files)
      * - Files with extensions (images, fonts, etc.)
+     * Note: API routes are matched but handled separately in middleware
      */
     '/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|.*\\..*).*)',
   ],

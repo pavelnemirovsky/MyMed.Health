@@ -14,12 +14,7 @@ export async function GET() {
       ),
     },
     apple: {
-      enabled: !!(
-        process.env.APPLE_ID &&
-        process.env.APPLE_SECRET &&
-        process.env.APPLE_ID !== '' &&
-        process.env.APPLE_SECRET !== ''
-      ),
+      enabled: false, // Apple authentication is currently disabled
     },
   };
 

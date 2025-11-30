@@ -126,8 +126,8 @@ export default function LoginPage() {
                 onClick={() => handleSocialLogin('apple')}
                 className="btn-social btn-apple"
                 type="button"
-                disabled={isLoading || isCheckingProviders || !providerStatus.apple.enabled}
-                title={!providerStatus.apple.enabled ? 'Apple OAuth is not configured' : ''}
+                disabled={true}
+                title="Apple Sign In is coming soon"
                 style={{
                   width: '100%',
                   maxWidth: '320px',

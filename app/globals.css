@@ -5931,9 +5931,16 @@ a {
 }
 
 .btn-social:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
   pointer-events: none;
+  background-color: #f3f4f6;
+  border-color: #d1d5db;
+  color: #9ca3af;
+}
+
+.btn-social:disabled .btn-social-icon {
+  opacity: 0.5;
 }
 
 .btn-social-icon {

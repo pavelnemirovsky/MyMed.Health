@@ -11,7 +11,7 @@
     "lint": "next lint",
     "pages:build": "GENERATE_SOURCEMAP=false npx @cloudflare/next-on-pages",
     "preview": "npm run build:cf && wrangler pages dev .vercel/output/static",
-    "deploy": "npm run build:cf && wrangler pages deploy .vercel/output/static"
+    "deploy": "npm run build:cf && wrangler pages deploy .vercel/output/static && scripts/purge-cloudflare-cache.sh"
   },
   "dependencies": {
     "mermaid": "^11.12.1",

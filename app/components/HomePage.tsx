@@ -150,7 +150,7 @@ export default function HomePage() {
               <div className="step-icon">👤</div>
               <h3 className="step-title">{t('step1Title')}</h3>
               <p className="step-text">{t('step1Desc')}</p>
-            </div>
+                        </div>
             <div className="step-card">
               <div className="step-icon">📤</div>
               <h3 className="step-title">{t('step2Title')}</h3>

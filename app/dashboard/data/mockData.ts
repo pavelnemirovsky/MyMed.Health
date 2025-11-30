@@ -288,9 +288,114 @@ export const patientProfiles = patientsData.map(patient => {
   };
 });
 
+// Notification interface
+export interface Notification {
+  id: string;
+  type: 'reminder' | 'document' | 'secondOpinion' | 'appointment' | 'test' | 'medication' | 'carePlan';
+  title: string;
+  message: string;
+  timestamp: string; // ISO date string
+  read: boolean;
+  link?: string; // Optional link to related page
+  patientId?: string;
+  patientName?: string;
+}
+
+// Notification data
+export const notificationsData: Notification[] = [
+  {
+    id: 'notif-1',
+    type: 'reminder',
+    title: 'Appointment Reminder',
+    message: 'You have an appointment with Dr. Emily Carter tomorrow at 10:00 AM',
+    timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(), // 2 hours ago
+    read: false,
+    link: '/dashboard/calendar',
+  },
+  {
+    id: 'notif-2',
+    type: 'document',
+    title: 'New Medical Record Added',
+    message: 'CT scan results for John Feldman have been uploaded',
+    timestamp: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString(), // 5 hours ago
+    read: false,
+    link: '/dashboard/records',
+    patientId: 'patient-1',
+    patientName: 'John Feldman',
+  },
+  {
+    id: 'notif-3',
+    type: 'secondOpinion',
+    title: 'Second Opinion Obtained',
+    message: 'Dr. Emily Carter has completed the second opinion consultation for Keytruda treatment',
+    timestamp: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(), // 1 day ago
+    read: false,
+    link: '/dashboard/care-plans',
+    patientId: 'patient-1',
+    patientName: 'John Feldman',
+  },
+  {
+    id: 'notif-4',
+    type: 'test',
+    title: 'Test Results Available',
+    message: 'Blood test results for Juli Feldman are now available',
+    timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(), // 2 days ago
+    read: true,
+    link: '/dashboard/records',
+    patientId: 'patient-2',
+    patientName: 'Juli Feldman',
+  },
+  {
+    id: 'notif-5',
+    type: 'medication',
+    title: 'Medication Reminder',
+    message: 'Time to take Metformin for Juli Feldman',
+    timestamp: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(), // 3 hours ago
+    read: false,
+    link: '/dashboard/medications',
+    patientId: 'patient-2',
+    patientName: 'Juli Feldman',
+  },
+  {
+    id: 'notif-6',
+    type: 'carePlan',
+    title: 'Care Plan Milestone Due',
+    message: 'HbA1c Target milestone is due in 2 days for Diabetes Management Plan',
+    timestamp: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(), // 6 hours ago
+    read: false,
+    link: '/dashboard/care-plans',
+    patientId: 'patient-2',
+    patientName: 'Juli Feldman',
+  },
+];
+
+export function getUnreadNotificationCount(): number {
+  return notificationsData.filter(n => !n.read).length;
+}
+
+// Second Opinion interface
+export interface SecondOpinion {
+  id: string;
+  title: string;
+  patient: string;
+  condition: string;
+  currentDoctor: string;
+  doctor: string; // Doctor providing the second opinion
+  doctorId?: string; // Reference to doctor ID
+  status: 'Waiting' | 'Completed';
+  statusType: 'waiting' | 'completed';
+  startDate: string; // ISO date string
+  endDate?: string; // ISO date string (optional, only for completed)
+  recommendation?: string; // Doctor's recommendation
+  requestedDate: string; // ISO date string
+  description?: string;
+  carePlanId?: string; // Reference to care plan ID
+  milestoneId?: string; // Reference to milestone ID
+}
+
 // Second opinion data
 export const secondOpinionData = {
-  pending: 1,
+  pending: 1, // Count of waiting requests
   completed: 1,
   requests: [
     {
@@ -299,10 +404,15 @@ export const secondOpinionData = {
       patient: 'John Feldman',
       condition: 'Left Kidney Cancer',
       currentDoctor: 'Dr. Sarah Johnson',
-      status: 'Pending',
-      statusType: 'pending',
-      requestedDate: '2025-01-10',
-      description: 'Seeking second opinion on treatment options',
+      doctor: 'Dr. Emily Carter',
+      doctorId: 'doctor-3',
+      status: 'Waiting' as const,
+      statusType: 'waiting' as const,
+      startDate: '2026-02-05',
+      requestedDate: '2026-01-28',
+      description: 'Second opinion review of CT scan results and treatment plan after metastases in kidneys were identified',
+      carePlanId: 'plan-1', // Link to Keytruda care plan
+      milestoneId: 'm8a', // Link to milestone
     },
     {
       id: 'so-2',
@@ -310,13 +420,19 @@ export const secondOpinionData = {
       patient: 'Juli Feldman',
       condition: 'Type 2 Diabetes',
       currentDoctor: 'Dr. Sarah Johnson',
-      status: 'Completed',
-      statusType: 'completed',
+      doctor: 'Dr. Lisa Wang',
+      doctorId: 'doctor-5',
+      status: 'Completed' as const,
+      statusType: 'completed' as const,
+      startDate: '2024-12-15',
+      endDate: '2025-01-05',
       requestedDate: '2024-12-15',
-      completedDate: '2025-01-05',
-      description: 'Scheduled for review',
+      recommendation: 'Continue current Metformin regimen. Recommend adding regular exercise program and dietary consultation. Monitor HbA1c levels every 3 months. Consider adding GLP-1 receptor agonist if HbA1c remains above 7% after 6 months.',
+      description: 'Second opinion on diabetes management plan',
+      carePlanId: 'plan-2', // Link to Diabetes Management Plan
+      milestoneId: 'm3', // Link to milestone
     },
-  ],
+  ] as SecondOpinion[],
 };
 
 // Care Plan interface
@@ -348,6 +464,7 @@ export interface CarePlanMilestone {
   dueDate: string; // ISO date string
   completedDate?: string; // ISO date string
   type?: 'treatment' | 'test' | 'appointment' | 'checkup' | 'other';
+  secondOpinionId?: string; // Reference to second opinion ID
 }
 
 // Care plans data
@@ -372,65 +489,83 @@ export const carePlansData: CarePlan[] = [
         id: 'm1',
         title: 'Initial Treatment Cycle',
         description: 'First infusion of Keytruda',
-        status: 'pending',
+        status: 'completed',
         dueDate: '2025-11-05',
+        completedDate: '2025-11-05',
         type: 'treatment',
       },
       {
         id: 'm2',
         title: 'Second Treatment Cycle',
         description: 'Second infusion (3 weeks after first)',
-        status: 'pending',
+        status: 'completed',
         dueDate: '2025-11-26',
+        completedDate: '2025-11-26',
         type: 'treatment',
       },
       {
         id: 'm3',
         title: 'Baseline CT Scan',
         description: 'CT scan to establish baseline before treatment',
-        status: 'pending',
+        status: 'completed',
         dueDate: '2025-11-01',
+        completedDate: '2025-10-28',
         type: 'test',
       },
       {
         id: 'm4',
         title: 'First Follow-up CT Scan',
         description: 'CT scan after 3 cycles to assess response',
-        status: 'pending',
+        status: 'completed',
         dueDate: '2025-12-17',
+        completedDate: '2025-12-17',
         type: 'test',
       },
       {
         id: 'm5',
         title: 'Oncology Consultation',
         description: 'Review treatment progress and side effects',
-        status: 'pending',
+        status: 'completed',
         dueDate: '2025-12-20',
+        completedDate: '2025-12-20',
         type: 'appointment',
       },
       {
         id: 'm6',
         title: 'Third Treatment Cycle',
         description: 'Third infusion',
-        status: 'pending',
+        status: 'completed',
         dueDate: '2025-12-17',
+        completedDate: '2025-12-17',
         type: 'treatment',
       },
       {
         id: 'm7',
         title: 'Fourth Treatment Cycle',
         description: 'Fourth infusion',
-        status: 'pending',
+        status: 'completed',
         dueDate: '2026-01-07',
+        completedDate: '2026-01-07',
         type: 'treatment',
       },
       {
         id: 'm8',
         title: 'Second Follow-up CT Scan',
         description: 'CT scan after 6 cycles',
-        status: 'pending',
+        status: 'completed',
         dueDate: '2026-01-28',
+        completedDate: '2026-01-28',
         type: 'test',
+      },
+      {
+        id: 'm8a',
+        title: 'Second Opinion Consultation',
+        description: 'Second opinion review of CT scan results and treatment plan after metastases in kidneys were identified',
+        status: 'completed',
+        dueDate: '2026-02-05',
+        completedDate: '2026-02-05',
+        type: 'appointment',
+        secondOpinionId: 'so-1', // Link to second opinion
       },
       {
         id: 'm9',
@@ -485,6 +620,16 @@ export const carePlansData: CarePlan[] = [
     milestones: [
       { id: 'm1', title: 'HbA1c Target', description: 'Achieve HbA1c below 7%', status: 'in-progress', dueDate: '2025-02-01', type: 'checkup' },
       { id: 'm2', title: 'Weight Management', description: 'Lose 10 pounds', status: 'in-progress', dueDate: '2025-03-01', type: 'checkup' },
+      {
+        id: 'm3',
+        title: 'Second Opinion Consultation',
+        description: 'Second opinion on diabetes management plan and treatment approach',
+        status: 'completed',
+        dueDate: '2025-01-05',
+        completedDate: '2025-01-05',
+        type: 'appointment',
+        secondOpinionId: 'so-2', // Link to second opinion
+      },
     ],
   },
 ];

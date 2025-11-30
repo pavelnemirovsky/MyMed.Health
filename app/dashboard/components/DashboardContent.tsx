@@ -476,8 +476,36 @@ export default function DashboardContent() {
                 {secondOpinionData.requests.map((request, index) => (
                   <div key={index} className="dashboard-second-opinion-card">
                     <div className="dashboard-second-opinion-title">{request.title}</div>
-                    <div className="dashboard-second-opinion-meta">{request.patient} • {request.status}</div>
-                    <div className={`dashboard-second-opinion-status ${request.statusType}`}>{request.description}</div>
+                    <div className="dashboard-second-opinion-meta">
+                      {request.patient} • {request.condition}
+                    </div>
+                    <div style={{ marginTop: '0.5rem', fontSize: '0.75rem', color: '#6b7280' }}>
+                      <div style={{ marginBottom: '0.25rem' }}>
+                        <strong>{t('doctor')}:</strong> {request.doctor}
+                      </div>
+                      <div style={{ marginBottom: '0.25rem' }}>
+                        <strong>{t('status')}:</strong>{' '}
+                        <span className={`dashboard-second-opinion-status ${request.statusType}`}>
+                          {request.status}
+                        </span>
+                      </div>
+                      <div style={{ marginBottom: '0.25rem' }}>
+                        <strong>{t('startDate')}:</strong> {new Date(request.startDate).toLocaleDateString()}
+                      </div>
+                      {request.endDate && (
+                        <div style={{ marginBottom: '0.25rem' }}>
+                          <strong>{t('endDate')}:</strong> {new Date(request.endDate).toLocaleDateString()}
+                        </div>
+                      )}
+                      {request.recommendation && (
+                        <div style={{ marginTop: '0.5rem', paddingTop: '0.5rem', borderTop: '1px solid #e5e7eb' }}>
+                          <strong style={{ color: '#374151' }}>{t('recommendation')}:</strong>
+                          <div style={{ marginTop: '0.25rem', color: '#1f2937', lineHeight: '1.5' }}>
+                            {request.recommendation}
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 ))}
               </div>

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
-import { carePlansData, CarePlan, getCarePlansByPatientId, getActiveCarePlansByPatientId } from '../../data/mockData';
+import { carePlansData, CarePlan, getCarePlansByPatientId, getActiveCarePlansByPatientId, secondOpinionData } from '../../data/mockData';
 import { patientsData } from '../../data/mockData';
 
 export default function CarePlansContent() {
@@ -346,6 +346,19 @@ export default function CarePlansContent() {
                                   <span style={{ fontSize: '0.875rem', fontWeight: 600, color: '#1f2937' }}>
                                     {milestone.title}
                                   </span>
+                                  {milestone.secondOpinionId && (
+                                    <span
+                                      title={t('hasSecondOpinion')}
+                                      style={{
+                                        fontSize: '0.875rem',
+                                        cursor: 'help',
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                      }}
+                                    >
+                                      ⚠️
+                                    </span>
+                                  )}
                                   <span
                                     style={{
                                       padding: '0.125rem 0.5rem',
@@ -359,6 +372,41 @@ export default function CarePlansContent() {
                                     {t(milestone.status)}
                                   </span>
                                 </div>
+                                {milestone.secondOpinionId && (() => {
+                                  const secondOpinion = secondOpinionData.requests.find(so => so.id === milestone.secondOpinionId);
+                                  return secondOpinion ? (
+                                    <div style={{ 
+                                      marginTop: '0.5rem', 
+                                      padding: '0.5rem', 
+                                      background: '#fef3c7', 
+                                      borderRadius: '4px',
+                                      border: '1px solid #fbbf24',
+                                    }}>
+                                      <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#92400e', marginBottom: '0.25rem' }}>
+                                        ⚠️ {t('secondOpinion')}: {secondOpinion.status}
+                                      </div>
+                                      <div style={{ fontSize: '0.75rem', color: '#78350f' }}>
+                                        <div><strong>{t('doctor')}:</strong> {secondOpinion.doctor}</div>
+                                        <div style={{ marginTop: '0.25rem' }}>
+                                          <strong>{t('startDate')}:</strong> {new Date(secondOpinion.startDate).toLocaleDateString()}
+                                        </div>
+                                        {secondOpinion.endDate && (
+                                          <div style={{ marginTop: '0.25rem' }}>
+                                            <strong>{t('endDate')}:</strong> {new Date(secondOpinion.endDate).toLocaleDateString()}
+                                          </div>
+                                        )}
+                                        {secondOpinion.recommendation && (
+                                          <div style={{ marginTop: '0.5rem', paddingTop: '0.5rem', borderTop: '1px solid #fbbf24' }}>
+                                            <strong>{t('recommendation')}:</strong>
+                                            <div style={{ marginTop: '0.25rem', fontSize: '0.6875rem', lineHeight: '1.4' }}>
+                                              {secondOpinion.recommendation}
+                                            </div>
+                                          </div>
+                                        )}
+                                      </div>
+                                    </div>
+                                  ) : null;
+                                })()}
                                 {milestone.description && (
                                   <div style={{ fontSize: '0.8125rem', color: '#6b7280', marginBottom: '0.25rem' }}>
                                     {milestone.description}

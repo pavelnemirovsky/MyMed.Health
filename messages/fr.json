@@ -51,7 +51,7 @@
     "calendarReminders": "Calendrier et rappels",
     "calendarRemindersDesc": "Ne manquez jamais un rendez-vous ou un test. Définissez des rappels par email, SMS ou appels téléphoniques.",
     "carePlans": "Plans de soins et deuxième avis",
-    "carePlansDesc": "Suivez les plans de traitement, les médicaments et les suivis. Nous aidons également à organiser des deuxièmes avis auprès de spécialistes qualifiés lorsque nécessaire.",
+    "carePlansDesc": "Suivez les plans de traitement, les médicaments et les suivis. Nous aidons à organiser des deuxièmes avis auprès de spécialistes qualifiés lorsque nécessaire—comme lorsque des métastases dans les reins ont été identifiées pendant le traitement d'immunothérapie Keytruda.",
     "messagesNotes": "Messages et notes",
     "messagesNotesDesc": "Conservez des notes des visites chez le médecin et des conversations importantes. Partagez facilement avec les membres de la famille.",
     "scanComparison": "Comparaison de scanners",
@@ -195,7 +195,7 @@
     "benefitPatientProfiles": "Gérez plusieurs profils de personnes avec des photos ou des initiales. Chaque profil garde toutes les informations médicales organisées et facilement accessibles en un seul endroit.",
     "benefitDocumentManagement": "Dossiers auto-organisés pour les scans IRM, CT, PT, les tests de laboratoire et les dossiers médicaux. Trouvez instantanément ce dont vous avez besoin avec l'étiquetage intelligent et la recherche.",
     "benefitCalendarReminders": "Ne manquez jamais un rendez-vous ou un test. Configurez des rappels personnalisables par e-mail, SMS ou appels téléphoniques pour rester au top de tous vos engagements médicaux.",
-    "benefitCarePlans": "Suivez les plans de traitement, les médicaments et les suivis. Obtenez de l'aide pour organiser des deuxièmes avis de spécialistes qualifiés lorsque nécessaire.",
+    "benefitCarePlans": "Suivez les plans de traitement, les médicaments et les suivis. Obtenez de l'aide pour organiser des deuxièmes avis de spécialistes qualifiés lorsque nécessaire—comme lorsque des métastases dans les reins ont été identifiées pendant le traitement d'immunothérapie Keytruda.",
     "benefitMessagesNotes": "Gardez des notes détaillées des visites chez le médecin et des conversations importantes. Partagez facilement les informations avec les membres de la famille et les aidants.",
     "benefitScanComparison": "Comparez les scans IRM, CT et PT côte à côte pour suivre les progrès dans le temps. La comparaison visuelle aide à identifier les changements et les améliorations."
   },
@@ -265,6 +265,12 @@
     "pendingRequests": "Demandes en attente",
     "completed": "Terminé",
     "requestSecondOpinion": "Demander un deuxième avis",
+    "status": "Statut",
+    "waiting": "En attente",
+    "recommendation": "Recommandation",
+    "doctor": "Médecin",
+    "startDate": "Date de début",
+    "endDate": "Date de fin",
     "carePlansProgress": "Progression des plans de soins",
     "activeCarePlans": "Plans de soins actifs",
     "overallCompletion": "Achèvement global : {percentage}%",
@@ -308,10 +314,17 @@
       "toggleDarkMode": "Basculer le mode sombre",
       "switchToLightMode": "Passer en mode clair",
       "switchToDarkMode": "Passer en mode sombre",
-      "notifications": "Notifications",
-      "settings": "Paramètres",
-      "returnToHome": "Retour à la page d'accueil"
-    },
+            "notifications": "Notifications",
+            "settings": "Paramètres",
+            "returnToHome": "Retour à la page d'accueil",
+            "unread": "non lues",
+            "viewAll": "Voir tout",
+            "noNotifications": "Aucune notification",
+            "justNow": "À l'instant",
+            "minutesAgo": "min il y a",
+            "hoursAgo": "h il y a",
+            "daysAgo": "jours il y a"
+          },
     "doctors": {
       "title": "Mes médecins",
       "subtitle": "Gérez vos prestataires de soins et spécialistes",
@@ -569,7 +582,10 @@
       "notes": "Notes",
       "in-progress": "En cours",
       "pending": "En attente",
-      "overdue": "En retard"
+      "overdue": "En retard",
+      "hasSecondOpinion": "Ce jalon a un deuxième avis associé",
+      "secondOpinion": "Deuxième avis",
+      "recommendation": "Recommandation"
     }
   },
   "privacy": {

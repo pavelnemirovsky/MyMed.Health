@@ -54,7 +54,7 @@
     "calendarReminders": "Calendar & Reminders",
     "calendarRemindersDesc": "Never miss an appointment or test. Set reminders via email, SMS, or phone calls.",
     "carePlans": "Care Plans & Second Opinion",
-    "carePlansDesc": "Track treatment plans, medications, and follow-ups. We also help arrange second opinions from qualified specialists when needed.",
+    "carePlansDesc": "Track treatment plans, medications, and follow-ups. We help arrange second opinions from qualified specialists when needed—like when metastases in kidneys were identified during Keytruda Immunotherapy Treatment.",
     "messagesNotes": "Messages & Notes",
     "messagesNotesDesc": "Keep notes from doctor visits and important conversations. Share with family members easily.",
     "scanComparison": "Scan Comparison",
@@ -98,7 +98,7 @@
     "benefitPatientProfiles": "Manage multiple person profiles with photos or initials. Each profile keeps all medical information organized and easily accessible in one place.",
     "benefitDocumentManagement": "Auto-organized folders for MRI, CT, PT scans, lab tests, and medical records. Find what you need instantly with smart tagging and search.",
     "benefitCalendarReminders": "Never miss an appointment or test. Set customizable reminders via email, SMS, or phone calls to stay on top of all medical commitments.",
-    "benefitCarePlans": "Track treatment plans, medications, and follow-ups. Get help arranging second opinions from qualified specialists when needed.",
+    "benefitCarePlans": "Track treatment plans, medications, and follow-ups. Get help arranging second opinions from qualified specialists when needed—like when metastases in kidneys were identified during Keytruda Immunotherapy Treatment.",
     "benefitMessagesNotes": "Keep detailed notes from doctor visits and important conversations. Share information easily with family members and caregivers.",
     "benefitScanComparison": "Compare MRI, CT, and PT scans side-by-side to track progress over time. Visual comparison helps identify changes and improvements.",
     "pricing": "PRICING",
@@ -267,6 +267,12 @@
           "pendingRequests": "Pending Requests",
           "completed": "Completed",
           "requestSecondOpinion": "Request Second Opinion",
+          "status": "Status",
+          "waiting": "Waiting",
+          "recommendation": "Recommendation",
+          "doctor": "Doctor",
+          "startDate": "Start Date",
+          "endDate": "End Date",
           "carePlansProgress": "Care Plans Progress",
           "activeCarePlans": "Active Care Plans",
           "overallCompletion": "Overall completion: {percentage}%",
@@ -312,7 +318,14 @@
             "switchToDarkMode": "Switch to dark mode",
             "notifications": "Notifications",
             "settings": "Settings",
-            "returnToHome": "Return to home page"
+            "returnToHome": "Return to home page",
+            "unread": "unread",
+            "viewAll": "View All",
+            "noNotifications": "No notifications",
+            "justNow": "Just now",
+            "minutesAgo": "min ago",
+            "hoursAgo": "hrs ago",
+            "daysAgo": "days ago"
           },
           "doctors": {
             "title": "My Doctors",
@@ -572,7 +585,10 @@
             "completed": "Completed",
             "in-progress": "In Progress",
             "pending": "Pending",
-            "overdue": "Overdue"
+            "overdue": "Overdue",
+            "hasSecondOpinion": "This milestone has an associated second opinion",
+            "secondOpinion": "Second Opinion",
+            "recommendation": "Recommendation"
           }
         },
   "privacy": {

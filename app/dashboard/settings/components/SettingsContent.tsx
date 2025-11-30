@@ -16,6 +16,7 @@ interface SettingsContentProps {
 export default function SettingsContent({ user, isSSO }: SettingsContentProps) {
   const t = useTranslations('dashboard.settings');
   const [activeSection, setActiveSection] = useState<string>('profile');
+  const [imageError, setImageError] = useState(false);
   const [notifications, setNotifications] = useState({
     email: true,
     sms: false,
@@ -198,13 +199,14 @@ export default function SettingsContent({ user, isSSO }: SettingsContentProps) {
                       overflow: 'hidden',
                       flexShrink: 0,
                     }}>
-                      {user.image ? (
+                      {user.image && !imageError ? (
                         <Image 
                           src={user.image} 
                           alt={user.name || 'User'} 
                           width={80}
                           height={80}
                           style={{ objectFit: 'cover' }}
+                          onError={() => setImageError(true)}
                         />
                       ) : (
                         <div style={{ fontSize: '1.5rem' }}>

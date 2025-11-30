@@ -50,7 +50,7 @@
     "calendarReminders": "Calendario e promemoria",
     "calendarRemindersDesc": "Non perdere mai un appuntamento o un test. Imposta promemoria via email, SMS o chiamate telefoniche.",
     "carePlans": "Piani di assistenza e secondo parere",
-    "carePlansDesc": "Tieni traccia dei piani di trattamento, farmaci e follow-up. Aiutiamo anche ad organizzare secondi pareri da specialisti qualificati quando necessario.",
+    "carePlansDesc": "Tieni traccia dei piani di trattamento, farmaci e follow-up. Aiutiamo ad organizzare secondi pareri da specialisti qualificati quando necessario—come quando sono state identificate metastasi nei reni durante il trattamento di immunoterapia con Keytruda.",
     "messagesNotes": "Messaggi e note",
     "messagesNotesDesc": "Mantieni note delle visite dal medico e conversazioni importanti. Condividi facilmente con i membri della famiglia.",
     "scanComparison": "Confronto scansioni",
@@ -194,7 +194,7 @@
     "benefitPatientProfiles": "Gestisci più profili di persone con foto o iniziali. Ogni profilo mantiene tutte le informazioni mediche organizzate e facilmente accessibili in un unico posto.",
     "benefitDocumentManagement": "Cartelle auto-organizzate per scansioni MRI, CT, PT, test di laboratorio e cartelle cliniche. Trova istantaneamente ciò di cui hai bisogno con etichettatura intelligente e ricerca.",
     "benefitCalendarReminders": "Non perdere mai un appuntamento o un test. Imposta promemoria personalizzabili via e-mail, SMS o chiamate telefoniche per rimanere al passo con tutti gli impegni medici.",
-    "benefitCarePlans": "Traccia piani di trattamento, farmaci e follow-up. Ottieni aiuto per organizzare seconde opinioni da specialisti qualificati quando necessario.",
+    "benefitCarePlans": "Traccia piani di trattamento, farmaci e follow-up. Ottieni aiuto per organizzare seconde opinioni da specialisti qualificati quando necessario—come quando sono state identificate metastasi nei reni durante il trattamento di immunoterapia con Keytruda.",
     "benefitMessagesNotes": "Mantieni note dettagliate delle visite dal medico e delle conversazioni importanti. Condividi facilmente le informazioni con i membri della famiglia e i caregiver.",
     "benefitScanComparison": "Confronta le scansioni MRI, CT e PT affiancate per tracciare i progressi nel tempo. Il confronto visivo aiuta a identificare cambiamenti e miglioramenti."
   },
@@ -264,6 +264,12 @@
     "pendingRequests": "Richieste in sospeso",
     "completed": "Completato",
     "requestSecondOpinion": "Richiedi seconda opinione",
+    "status": "Stato",
+    "waiting": "In attesa",
+    "recommendation": "Raccomandazione",
+    "doctor": "Medico",
+    "startDate": "Data di inizio",
+    "endDate": "Data di fine",
     "carePlansProgress": "Progresso piani di assistenza",
     "activeCarePlans": "Piani di assistenza attivi",
     "overallCompletion": "Completamento complessivo: {percentage}%",
@@ -309,7 +315,14 @@
       "switchToDarkMode": "Passa alla modalità scura",
       "notifications": "Notifiche",
       "settings": "Impostazioni",
-      "returnToHome": "Torna alla home"
+      "returnToHome": "Torna alla home",
+      "unread": "non lette",
+      "viewAll": "Vedi tutto",
+      "noNotifications": "Nessuna notifica",
+      "justNow": "Proprio ora",
+      "minutesAgo": "min fa",
+      "hoursAgo": "ore fa",
+      "daysAgo": "giorni fa"
     },
     "doctors": {
       "title": "I miei medici",
@@ -568,7 +581,10 @@
       "notes": "Note",
       "in-progress": "In corso",
       "pending": "In attesa",
-      "overdue": "In ritardo"
+      "overdue": "In ritardo",
+      "hasSecondOpinion": "Questa tappa ha un secondo parere associato",
+      "secondOpinion": "Seconda opinione",
+      "recommendation": "Raccomandazione"
     }
   },
   "privacy": {

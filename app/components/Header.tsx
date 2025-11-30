@@ -59,12 +59,12 @@ export default function Header() {
                 width: '100px',
                 textAlign: 'center',
                 display: 'inline-flex',
-                justifyContent: 'center',
+                    justifyContent: 'center',
                 alignItems: 'center'
               }}
             >
               {t('dashboard')}
-            </Link>
+              </Link>
           ) : (
             <Link 
               href={`/${locale}/login`} 

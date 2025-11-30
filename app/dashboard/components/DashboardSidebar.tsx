@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
@@ -22,6 +23,7 @@ export default function DashboardSidebar({ isOpen, onClose, collapsed, onToggleC
   const locale = useLocale();
   const t = useTranslations('dashboard.sidebar');
   const pathname = usePathname();
+  const [imageError, setImageError] = useState(false);
 
   const menuItems = [
     { href: 'dashboard', label: t('dashboard'), icon: '📊' },
@@ -116,8 +118,14 @@ export default function DashboardSidebar({ isOpen, onClose, collapsed, onToggleC
           {!collapsed && (
             <div className="dashboard-user-profile">
               <div className="dashboard-user-avatar">
-                {user.image ? (
-                  <Image src={user.image} alt={user.name || 'User'} width={48} height={48} />
+                {user.image && !imageError ? (
+                  <Image 
+                    src={user.image} 
+                    alt={user.name || 'User'} 
+                    width={48} 
+                    height={48}
+                    onError={() => setImageError(true)}
+                  />
                 ) : (
                   <span>{user.name?.charAt(0).toUpperCase() || 'U'}</span>
                 )}

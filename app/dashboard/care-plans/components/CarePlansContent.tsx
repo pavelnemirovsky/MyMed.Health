@@ -1,18 +1,35 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 import { carePlansData, CarePlan, getCarePlansByPatientId, getActiveCarePlansByPatientId, secondOpinionData } from '../../data/mockData';
 import { patientsData } from '../../data/mockData';
 
 export default function CarePlansContent() {
   const locale = useLocale();
   const t = useTranslations('dashboard.carePlansPage');
+  const searchParams = useSearchParams();
   const [filterPatient, setFilterPatient] = useState<string>('all');
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedPlan, setExpandedPlan] = useState<string | null>(null);
+
+  // Auto-expand plan if planId is in URL
+  useEffect(() => {
+    const planId = searchParams.get('planId');
+    if (planId) {
+      setExpandedPlan(planId);
+      // Scroll to the expanded plan after a short delay
+      setTimeout(() => {
+        const element = document.getElementById(`care-plan-${planId}`);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 100);
+    }
+  }, [searchParams]);
 
   // Filter care plans
   const filteredPlans = carePlansData.filter(plan => {
@@ -213,9 +230,11 @@ export default function CarePlansContent() {
             return (
               <div
                 key={plan.id}
+                id={`care-plan-${plan.id}`}
                 className="dashboard-widget"
                 style={{
                   borderLeft: `4px solid ${getStatusBadgeColor(plan.status)}`,
+                  scrollMarginTop: '100px',
                 }}
               >
                 <div className="dashboard-widget-content">

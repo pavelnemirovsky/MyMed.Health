@@ -119,7 +119,7 @@ export default function CalendarContent() {
         </div>
         <div className="calendar-header-actions">
           <select 
-            className="calendar-patient-select"
+            className="dashboard-patient-select"
             value={selectedPatient}
             onChange={(e) => setSelectedPatient(e.target.value)}
           >
@@ -185,9 +185,7 @@ export default function CalendarContent() {
                 key={index}
                 className={`calendar-day-cell ${
                   !dayData.isCurrentMonth ? 'other-month' : ''
-                } ${dayData.isToday ? 'today' : ''} ${
-                  dayData.events.length > 0 ? 'has-events' : ''
-                }`}
+                } ${dayData.isToday ? 'today' : ''}`}
               >
                 {dayData.day !== null && (
                   <>
@@ -204,28 +202,30 @@ export default function CalendarContent() {
                           {event.time && (
                             <span className="calendar-event-time">{event.time}</span>
                           )}
-                          <span className="calendar-event-title">{event.title}</span>
-                          {selectedPatient === 'all' && (
-                            <Link
-                              href={`/${locale}/dashboard/patients`}
-                              className="calendar-event-patient"
-                              style={{
-                                color: 'inherit',
-                                textDecoration: 'none',
-                                transition: 'all 0.2s ease'
-                              }}
-                              onMouseEnter={(e) => {
-                                e.currentTarget.style.textDecoration = 'underline';
-                                e.currentTarget.style.color = '#059669';
-                              }}
-                              onMouseLeave={(e) => {
-                                e.currentTarget.style.textDecoration = 'none';
-                                e.currentTarget.style.color = 'inherit';
-                              }}
-                            >
-                              {event.patientName}
-                            </Link>
-                          )}
+                          <div className="calendar-event-content">
+                            {selectedPatient === 'all' && (
+                              <Link
+                                href={`/${locale}/dashboard/patients`}
+                                className="calendar-event-patient"
+                                style={{
+                                  color: 'inherit',
+                                  textDecoration: 'none',
+                                  transition: 'all 0.2s ease'
+                                }}
+                                onMouseEnter={(e) => {
+                                  e.currentTarget.style.textDecoration = 'underline';
+                                  e.currentTarget.style.color = '#059669';
+                                }}
+                                onMouseLeave={(e) => {
+                                  e.currentTarget.style.textDecoration = 'none';
+                                  e.currentTarget.style.color = 'inherit';
+                                }}
+                              >
+                                {event.patientName}
+                              </Link>
+                            )}
+                            <span className="calendar-event-title">{event.title}</span>
+                          </div>
                         </div>
                       ))}
                       {dayData.events.length > 3 && (
